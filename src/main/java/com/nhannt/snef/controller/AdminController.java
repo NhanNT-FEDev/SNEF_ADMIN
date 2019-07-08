@@ -28,10 +28,12 @@ public class AdminController {
         return "home";
     }
 
-    @RequestMapping(value = "/admin/edit")
-    public String editStore(@RequestParam(value = "storeId") String storeId) throws SQLException, ClassNotFoundException {
+    @RequestMapping(value = "edit")
+    public String editStore(@RequestParam(value = "storeId") String storeId, Model model) throws SQLException, ClassNotFoundException {
         int getId = Integer.parseInt(storeId);
         List<Store> getDetail = storeService.getStoreById(getId);
+
+        model.addAttribute("STOREDETAIL", getDetail);
         return "edit";
     }
 

@@ -50,7 +50,7 @@
                 <td>${rs.openHour}</td>
                 <td>${rs.closeHour}</td>
                 <td>
-                    <input type="checkbox" name="chkStatus" value="${rs.status}"
+                    <input type="checkbox" name="chkStatus" value="${rs.status}" disabled="true"
                     <c:if test="${rs.status}">
                            checked="checked"
                     </c:if>
