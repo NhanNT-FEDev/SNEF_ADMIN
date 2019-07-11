@@ -38,7 +38,7 @@
 
 
     </tr>
-    <c:if test="${search == null}">
+    <c:if test="${empty search }">
         <c:forEach var="rs" items="${get}">
             <tr>
                 <td>${rs.storeId}</td>

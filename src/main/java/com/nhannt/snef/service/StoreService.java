@@ -41,5 +41,12 @@ public class StoreService {
         }
         return false;
     }
-    
+
+    public boolean insertNewStore(String name, int local, float rat, String ava, String open, String close, int mana, boolean stt) throws SQLException, ClassNotFoundException {
+        boolean rs = storeDAO.insertNewStore(name, local, rat, ava, open, close, mana, stt);
+        if (rs){
+            return true;
+        }
+        return false;
+    }
 }

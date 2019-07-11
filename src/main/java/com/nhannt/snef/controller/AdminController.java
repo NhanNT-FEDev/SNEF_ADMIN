@@ -21,7 +21,7 @@ public class AdminController {
     @Autowired
     private StoreService storeService;
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchByName(@RequestParam(value = "name") String name, Model model) throws SQLException, ClassNotFoundException {
         List<Store> getList = storeService.searchByName(name);
 
@@ -69,14 +69,32 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String reDirectCreate(){
+    public String reDirectCreate() throws SQLException, ClassNotFoundException {
+
+
         return "create";
     }
 
-//    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-//    public String insertNewStore(){
-//
-//        return "redirect:/home";
-//    }
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public String insertNewStore(@RequestParam(name = "stName") String name,
+                                 @RequestParam(name = "stLocal") String local,
+                                 @RequestParam(name = "stRat") String rat,
+                                 @RequestParam(name = "stAva") String ava,
+                                 @RequestParam(name = "stOpen") String open,
+                                 @RequestParam(name = "stClose") String close,
+                                 @RequestParam(name = "stMana") String mana,
+                                 @RequestParam(name = "chkStatus") String stt, Model model) throws SQLException, ClassNotFoundException {
+        int parseLocal = Integer.parseInt(local);
+        float parseRating = Float.parseFloat(rat);
+        int parseManager = Integer.parseInt(mana);
+        boolean status = Boolean.parseBoolean(stt);
+
+        boolean rs = storeService.insertNewStore(name, parseLocal, parseRating, ava, open, close, parseManager, status);
+        if (rs){
+            return "redirect:/home";
+        }
+        model.addAttribute("ERR", "Insert not successful");
+        return "create";
+    }
 
 }

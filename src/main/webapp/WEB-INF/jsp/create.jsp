@@ -40,5 +40,9 @@
         <input type="reset" value="reset" />
 
     </form>
+    <c:set var="err" value="${requestScope.ERR}"/>
+    <c:if test="${err}">
+        <h3 style="color: red">${err}</h3>
+    </c:if>
 </body>
 </html>
