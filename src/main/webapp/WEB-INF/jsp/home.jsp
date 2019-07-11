@@ -86,11 +86,12 @@
                     <a href="${pageContext.request.contextPath}/admin/edit?storeId=${rs.storeId}">Edit Store</a>
                 </td>
 
+
             </tr>
         </c:forEach>
     </c:if>
 
 </table>
-
+<a href="${pageContext.request.contextPath}/admin/create">Create New Store</a>
 </body>
 </html>

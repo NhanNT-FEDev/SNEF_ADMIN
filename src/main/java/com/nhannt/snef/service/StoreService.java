@@ -31,4 +31,15 @@ public class StoreService {
         List<Store> storeDetail = storeDAO.getStoreById(id);
         return storeDetail;
     }
+
+    public boolean updateStoreById(int id, String name, int storeMana, int local, float rating,
+                                   String ava, String open, String close, boolean status) throws SQLException, ClassNotFoundException {
+        boolean rs = storeDAO.updateStoreById(id, name, storeMana, local, rating, ava, open, close, status);
+
+        if (rs){
+            return  true;
+        }
+        return false;
+    }
+    
 }

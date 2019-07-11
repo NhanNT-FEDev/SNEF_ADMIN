@@ -139,4 +139,60 @@ public class StoreDAO {
         }
         return  null;
     }
+
+    public boolean
+    updateStoreById(int id, String name, int storeManager, int local, float rating, String avata,  String open,
+                    String close, boolean status) throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "UPDATE dbo.Store " +
+                        "SET StoreName = ?, LocationId =?, RatingPoint =?, Avatar= ?, OpenHour= ?, CloseHour= ?, StoreManagerId= ?, Status= ? " +
+                        "WHERE dbo.Store.StoreId = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setInt(2, local);
+                stm.setFloat(3, rating);
+                stm.setString(4, avata);
+                stm.setString(5, open);
+                stm.setString(6, close);
+                stm.setInt(7, storeManager);
+                stm.setBoolean(8, status);
+                stm.setInt(9, id);
+                int row = stm.executeUpdate();
+                if (row > 0){
+                    return true;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return false;
+    }
+
+    public boolean
+    insertNewStore(String name, int local, float rating, String ava, String open, String close, int storeMana, boolean status) throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "INSERT INTO dbo.Store VALUES( ?,?,?,?,?,?,?,?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setInt(2, local);
+                stm.setFloat(3, rating);
+                stm.setString(4, ava);
+                stm.setString(5, open);
+                stm.setString(6, close);
+                stm.setInt(7, storeMana);
+                stm.setBoolean(8, status);
+                int row = stm.executeUpdate();
+                if (row > 0){
+                    return  true;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return false;
+    }
 }
