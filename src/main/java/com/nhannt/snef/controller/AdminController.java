@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ import com.cloudinary.Cloudinary;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    private static final String CLOUDINARY_CLOUD_NAME = "dr4hpc9gi";
+    private static final String CLOUDINARY_API_KEY = "166957351197671";
+    private static final String CLOUDINARY_API_SECRET = "zakaWJRkTxjvVutIlhrhqOxpWDk";
 
     @Autowired
     private StoreService storeService;
@@ -119,10 +123,20 @@ public class AdminController {
             byte[] bytes =file.getBytes();
             Path path = Paths.get("" + file.getOriginalFilename());
             System.out.println("Rs: " + Files.write(path, bytes));
-            Cloudinary cloudinary = new Cloudinary();
+//            Cloudinary cloudinary = new Cloudinary();
             File myFile = new File(String.valueOf(Files.write(path, bytes)));
-            Map uploadResult= cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+//
+            HashMap<String, String> config = new HashMap<>();
+            config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
+            config.put("api_key", CLOUDINARY_API_KEY);
+            config.put("api_secret", CLOUDINARY_API_SECRET);
+            Cloudinary cloudinary = new Cloudinary(config);
+            System.out.println("Cloudinary: " + cloudinary);
+            HashMap<String, String> uploadResult= (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
             System.out.println("Upload File: " + uploadResult.values());
+
+            String getUrl = String.valueOf(uploadResult.get("url"));
+            System.out.println("Get Url: " + getUrl);
 
         }catch (IOException e){
             e.printStackTrace();
