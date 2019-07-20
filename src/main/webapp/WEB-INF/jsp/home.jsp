@@ -93,5 +93,8 @@
 
 </table>
 <a href="${pageContext.request.contextPath}/admin/create">Create New Store</a>
+<h3>
+    <a href="${pageContext.request.contextPath}/admin/cloud">Please Choose Image</a>
+</h3>
 </body>
 </html>

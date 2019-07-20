@@ -1,5 +1,6 @@
 package com.nhannt.snef.controller;
 
+import com.cloudinary.utils.ObjectUtils;
 import com.nhannt.snef.model.Store;
 import com.nhannt.snef.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+
+import com.cloudinary.Cloudinary;
 
 @Controller
 @RequestMapping("/admin")
@@ -97,4 +107,27 @@ public class AdminController {
         return "create";
     }
 
+    @RequestMapping(value = "/cloud", method = RequestMethod.GET)
+    public String getPath(){
+        return "uploadcloud";
+    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public String uploadImg(@RequestParam(value = "file") MultipartFile file){
+        try{
+            //Get the file
+            byte[] bytes =file.getBytes();
+            Path path = Paths.get("" + file.getOriginalFilename());
+            System.out.println("Rs: " + Files.write(path, bytes));
+            Cloudinary cloudinary = new Cloudinary();
+            File myFile = new File(String.valueOf(Files.write(path, bytes)));
+            Map uploadResult= cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+            System.out.println("Upload File: " + uploadResult.values());
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return "uploadcloud";
+    }
 }
