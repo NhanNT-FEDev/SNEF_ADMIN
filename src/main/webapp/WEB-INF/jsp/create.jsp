@@ -11,7 +11,7 @@
 </head>
 <body>
     <h3>Create New Store</h3>
-    <form method="POST" action="/admin/insert">
+    <form method="POST" action="/admin/insert" enctype="multipart/form-data">
         <label>Store Name</label>
         <input type="text" name="stName" value="" />
         <br/>
@@ -22,7 +22,7 @@
         <input type="text" name="stRat" value="" />
         <br/>
         <label>Avatar</label>
-        <input type="text" name="stAva" value="" />
+        <input type="file" name="file" value="" />
         <br/>
         <label>Open Hour</label>
         <input type="text" name="stOpen" value=""/>

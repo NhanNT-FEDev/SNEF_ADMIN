@@ -9,12 +9,14 @@ public class Store {
     private String avatar;
     private String openHour;
     private String closeHour;
+    private float longitude;
+    private float latitude;
     private boolean status;
-
+    private String address;
     public Store() {
     }
 
-    public Store(int storeId, String storeName, int storeManagerId, int locationId, float ratingPoint, String avatar, String openHour, String closeHour, boolean status) {
+    public Store(int storeId, String storeName, int storeManagerId, int locationId, float ratingPoint, String avatar, String openHour, String closeHour, float longitude, float latitude, boolean status) {
         this.storeId = storeId;
         this.storeName = storeName;
         this.storeManagerId = storeManagerId;
@@ -23,7 +25,21 @@ public class Store {
         this.avatar = avatar;
         this.openHour = openHour;
         this.closeHour = closeHour;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.status = status;
+    }
+
+    public Store(int storeId, String storeName, int storeManagerId, float ratingPoint, String avatar, String openHour, String closeHour, boolean status, String address) {
+        this.storeId = storeId;
+        this.storeName = storeName;
+        this.storeManagerId = storeManagerId;
+        this.ratingPoint = ratingPoint;
+        this.avatar = avatar;
+        this.openHour = openHour;
+        this.closeHour = closeHour;
+        this.status = status;
+        this.address = address;
     }
 
     public int getStoreId() {
@@ -94,7 +110,31 @@ public class Store {
         return status;
     }
 
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

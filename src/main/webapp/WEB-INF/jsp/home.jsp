@@ -18,6 +18,9 @@
 <c:set var="get" value="${requestScope.LISTSTORE}"/>
 <c:set var="search" value="${requestScope.SEARCHVALUE}" />
 <%--<c:url var="urlAction" value="/admin" />--%>
+<h4>
+    <a href="${pageContext.request.contextPath}/admin/customer">Change to Account Manage</a>
+</h4>
 <form method="POST" action="/admin/search">
     <label>Enter Name Store</label>
     <input type="text" name="name" value="${name}">

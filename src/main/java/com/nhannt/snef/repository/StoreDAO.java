@@ -38,22 +38,23 @@ public class StoreDAO {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "SELECT StoreId, StoreName,StoreManagerId, LocationId, RatingPoint, Avatar, OpenHour, CloseHour, Status " +
-                        "FROM Store";
+                String sql = "SELECT s.StoreId, s.StoreName,s.StoreManagerId, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, " +
+                        "s.Status, l.Address as Address " +
+                        "FROM Store s, Location l WHERE s.LocationId = l.LocationId";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int storeId = rs.getInt("StoreId");
                     String storeName = rs.getString("StoreName");
                     int storeManagerId = rs.getInt("StoreManagerId");
-                    int loId = rs.getInt("LocationId");
+                    String address = rs.getString("Address");
                     float rating = rs.getFloat("RatingPoint");
                     String avatar = rs.getString("Avatar");
                     String open = rs.getString("OpenHour");
                     String close = rs.getString("CloseHour");
                     boolean status = rs.getBoolean("Status");
 
-                    Store dto = new Store(storeId, storeName, storeManagerId, loId, rating, avatar, open, close, status);
+                    Store dto = new Store(storeId, storeName, storeManagerId, rating, avatar, open, close, status, address);
                     if (result == null) {
                         result = new ArrayList<>();
                     }
@@ -69,35 +70,38 @@ public class StoreDAO {
 
     public List<Store> searchStoreByName(String name) throws SQLException, ClassNotFoundException {
         List<Store> searchValue = null;
-        try{
+        try {
             con = MyConnection.myConnection();
-            if (con != null){
-                String sql = "SELECT * FROM dbo.Store WHERE StoreName LIKE ?";
+            if (con != null) {
+                String sql = "SELECT s.StoreId, s.StoreName,s.StoreManagerId, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, " +
+                        "s.Status, l.Address as Address " +
+                        "FROM Store s, Location l WHERE s.LocationId = l.LocationId " +
+                        "AND StoreName LIKE ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, "%" + name + "%");
                 rs = stm.executeQuery();
-                while (rs.next()){
+                while (rs.next()) {
                     int storeId = rs.getInt("StoreId");
                     String storeName = rs.getString("StoreName");
                     int storeManagerId = rs.getInt("StoreManagerId");
-                    int loId = rs.getInt("LocationId");
+                    String address = rs.getString("Address");
                     float rating = rs.getFloat("RatingPoint");
                     String avatar = rs.getString("Avatar");
                     String open = rs.getString("OpenHour");
                     String close = rs.getString("CloseHour");
                     boolean status = rs.getBoolean("Status");
 
-                    Store dto = new Store(storeId, storeName, storeManagerId, loId, rating, avatar, open, close, status);
-                    if (searchValue == null){
+                    Store dto = new Store(storeId, storeName, storeManagerId, rating, avatar, open, close, status, address);
+                    if (searchValue == null) {
                         searchValue = new ArrayList<>();
                     }
                     searchValue.add(dto);
 
                 }
-                return  searchValue;
+                return searchValue;
 
             }
-        }finally {
+        } finally {
             closeConnection();
         }
         return null;
@@ -105,28 +109,29 @@ public class StoreDAO {
 
     public List<Store> getStoreById(int id) throws SQLException, ClassNotFoundException {
         List<Store> storeById = null;
-        try{
+        try {
             con = MyConnection.myConnection();
-            if (con != null){
-                String sql = "SELECT storeId, StoreName, LocationId, RatingPoint, Avatar, OpenHour, CloseHour, StoreManagerId, status " +
-                        "FROM dbo.Store " +
-                        "WHERE store.StoreId = ?";
+            if (con != null) {
+                String sql = "SELECT s.StoreId, s.StoreName,s.StoreManagerId, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, " +
+                        "s.Status, l.Address as Address " +
+                        "FROM Store s, Location l WHERE s.LocationId = l.LocationId " +
+                        "AND s.StoreId = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
                 rs = stm.executeQuery();
-                while (rs.next()){
+                while (rs.next()) {
                     int storeId = rs.getInt("StoreId");
                     String storeName = rs.getString("StoreName");
                     int storeManagerId = rs.getInt("StoreManagerId");
-                    int loId = rs.getInt("LocationId");
+                    String address = rs.getString("Address");
                     float rating = rs.getFloat("RatingPoint");
                     String avatar = rs.getString("Avatar");
                     String open = rs.getString("OpenHour");
                     String close = rs.getString("CloseHour");
                     boolean status = rs.getBoolean("Status");
 
-                    Store dto = new Store(storeId, storeName, storeManagerId, loId, rating, avatar, open, close, status);
-                    if (storeById == null){
+                    Store dto = new Store(storeId, storeName, storeManagerId, rating, avatar, open, close, status,address);
+                    if (storeById == null) {
                         storeById = new ArrayList<>();
                     }
                     storeById.add(dto);
@@ -134,21 +139,21 @@ public class StoreDAO {
                 }
                 return storeById;
             }
-        }finally {
+        } finally {
             closeConnection();
         }
-        return  null;
+        return null;
     }
 
     public boolean
-    updateStoreById(int id, String name, int storeManager, int local, float rating, String avata,  String open,
+    updateStoreById(int id, String name, int storeManager, int local, float rating, String avata, String open,
                     String close, boolean status) throws SQLException, ClassNotFoundException {
-        try{
+        try {
             con = MyConnection.myConnection();
-            if (con != null){
-                String sql = "UPDATE dbo.Store " +
+            if (con != null) {
+                String sql = "UPDATE Store " +
                         "SET StoreName = ?, LocationId =?, RatingPoint =?, Avatar= ?, OpenHour= ?, CloseHour= ?, StoreManagerId= ?, Status= ? " +
-                        "WHERE dbo.Store.StoreId = ?";
+                        "WHERE StoreId = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, name);
                 stm.setInt(2, local);
@@ -160,11 +165,11 @@ public class StoreDAO {
                 stm.setBoolean(8, status);
                 stm.setInt(9, id);
                 int row = stm.executeUpdate();
-                if (row > 0){
+                if (row > 0) {
                     return true;
                 }
             }
-        }finally {
+        } finally {
             closeConnection();
         }
         return false;
@@ -172,10 +177,10 @@ public class StoreDAO {
 
     public boolean
     insertNewStore(String name, int local, float rating, String ava, String open, String close, int storeMana, boolean status) throws SQLException, ClassNotFoundException {
-        try{
+        try {
             con = MyConnection.myConnection();
-            if (con != null){
-                String sql = "INSERT INTO dbo.Store VALUES( ?,?,?,?,?,?,?,?)";
+            if (con != null) {
+                String sql = "INSERT INTO Store(StoreName,LocationId, RatingPoint, Avatar, OpenHour,CloseHour,StoreManagerId,Status) VALUES(?,?,?,?,?,?,?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, name);
                 stm.setInt(2, local);
@@ -185,12 +190,15 @@ public class StoreDAO {
                 stm.setString(6, close);
                 stm.setInt(7, storeMana);
                 stm.setBoolean(8, status);
+                System.out.println("Xung toi day");
                 int row = stm.executeUpdate();
-                if (row > 0){
-                    return  true;
+                System.out.println("Row: " + row);
+
+                if (row > 0) {
+                    return true;
                 }
             }
-        }finally {
+        } finally {
             closeConnection();
         }
         return false;
