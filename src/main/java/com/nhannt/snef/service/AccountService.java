@@ -12,16 +12,16 @@ public class AccountService {
     @Autowired
     AccountDAO accountDAO = new AccountDAO();
 
-    public String insertNewAccount(String username, String password, String firstName, String lastName, String phone, String email, int gender) throws SQLException, ClassNotFoundException {
+    public int insertNewAccount(String username, String password, String firstName, String lastName, String phone, String email, int gender) throws SQLException, ClassNotFoundException {
         boolean checkExistName = accountDAO.checkExistAccount(username);
         //If true -> this name is used
         //If false -> create
         if (!checkExistName){
-            String accountId = accountDAO.insertNewStoreAccount(username, password, firstName, lastName, phone, email, gender );
+            int accountId = accountDAO.insertNewStoreAccount(username, password, firstName, lastName, phone, email, gender );
 
             return accountId;
         }
-        return null;
+        return 0;
     }
 
 

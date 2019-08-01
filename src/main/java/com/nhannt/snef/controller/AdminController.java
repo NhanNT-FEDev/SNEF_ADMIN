@@ -132,19 +132,36 @@ public class AdminController {
             @RequestParam(value = "txtContact") String phone,
             @RequestParam(value = "txtEmail") String email,
             @RequestParam(value = "slGender") String gender,
+            @RequestParam(value = "txtStoreName")String storeName,
+            @RequestParam(value = "txtStoreAddress") String address,
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "txtOpenHour") String open,
+            @RequestParam(value = "txtCloseHour") String close,
+            @RequestParam(value = "txtPhoneStore") String phoneStore,
             Model model) throws SQLException, ClassNotFoundException {
         try {
             int parseGender = Integer.parseInt(gender);
-            String accountId = accountService.insertNewAccount(username, password, firstName, lastName, phone, email, parseGender);
+            int accountId = accountService.insertNewAccount(username, password, firstName, lastName, phone, email, parseGender);
 
             //If accountId == null -> message error name
-            if (accountId != null){
+            if (accountId > 0){
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get("" + file.getOriginalFilename());
+                File myFile = new File(String.valueOf(Files.write(path, bytes)));
+                HashMap<String, String> config = new HashMap<>();
+                config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
+                config.put("api_key", CLOUDINARY_API_KEY);
+                config.put("api_secret", CLOUDINARY_API_SECRET);
+                Cloudinary cloudinary = new Cloudinary(config);
+                HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+                String getUrl = String.valueOf(uploadResult.get("url"));
                 // Create new Store
+                boolean createStore = storeService.insertNewStore(storeName, address,getUrl ,open, close, phoneStore, accountId);
+                if (createStore){
+                    return "homepage";
+                }
 
             }
-
-
-
             model.addAttribute("ERR", "Insert not successful");
         } catch (Exception e) {
             e.printStackTrace();

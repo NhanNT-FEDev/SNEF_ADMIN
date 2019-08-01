@@ -46,7 +46,7 @@ public class AccountDAO {
     }
 
     //Insert new Store Account Information
-    public String
+    public int
     insertNewStoreAccount(String username, String password, String firstName,
                           String lastName, String phone,
                           String email, int gender)
@@ -67,7 +67,7 @@ public class AccountDAO {
 
                 int row = stm.executeUpdate();
                 if (row > 0 ){
-                    String accountId = rs.getString("AccountId");
+                    int accountId = rs.getInt("AccountId");
                     return accountId;
                 }
 
@@ -76,6 +76,6 @@ public class AccountDAO {
         }finally {
             closeConnection();
         }
-        return null;
+        return 0;
     }
 }
