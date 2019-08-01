@@ -16,7 +16,7 @@ public class StoreService {
     StoreDAO storeDAO = new StoreDAO();
 
 
-//    @RequestMapping(method = RequestMethod.GET, path = "/store", produces = "application/json")
+    //    @RequestMapping(method = RequestMethod.GET, path = "/store", produces = "application/json")
     public List<Store> getAllStores() throws SQLException, ClassNotFoundException {
         List<Store> getList = storeDAO.getAllStore();
         return getList;
@@ -24,10 +24,10 @@ public class StoreService {
 
     public List<Store> searchByName(String name) throws SQLException, ClassNotFoundException {
         List<Store> rs = storeDAO.searchStoreByName(name);
-        return  rs;
+        return rs;
     }
 
-    public List<Store> getStoreById (int id) throws SQLException, ClassNotFoundException{
+    public List<Store> getStoreById(int id) throws SQLException, ClassNotFoundException {
         List<Store> storeDetail = storeDAO.getStoreById(id);
         return storeDetail;
     }
@@ -36,11 +36,21 @@ public class StoreService {
                                    String closeHour, boolean status, String account, String phone) throws SQLException, ClassNotFoundException {
         boolean rs = storeDAO.updateStoreById(id, storeName, address, avatar, openHour, closeHour, status, account, phone);
 
-        if (rs){
-            return  true;
+        if (rs) {
+            return true;
         }
         return false;
     }
 
+    public boolean insertNewStore(String storeName, String address, String avatar, String openHour, String closeHour, String phone, int accountID) throws SQLException, ClassNotFoundException {
+        boolean checkExist = storeDAO.checkExistName(storeName);
+        if (!checkExist){
+        boolean result = storeDAO.insertNewStore(storeName, address, avatar, openHour, closeHour, phone, accountID);
+            if (result) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -24,11 +24,7 @@ public class AccountService {
         return null;
     }
 
-    public boolean insertNewStore(String storeName, String address, String avatar, String openHour, String closeHour, String phone, String accountID){
 
-        boolean result = accountDAO.
-        return false;
-    }
 
 
 }
