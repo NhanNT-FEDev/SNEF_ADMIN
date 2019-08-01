@@ -211,7 +211,8 @@
                                         <th>Avatar</th>
                                         <th>Open Hour</th>
                                         <th>Close Hour</th>
-<%--                                        <th>Account</th>--%>
+                                        <th>Store Manager</th>
+                                        <th>Store Contact</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
@@ -220,13 +221,14 @@
                                     <c:forEach var="rs" items="${list}">
                                         <tr>
                                             <td>${rs.storeId}</td>
-                                            <td>${rs.storeName}</td>
+                                            <td style="width: 100px">${rs.storeName}</td>
                                             <td>${rs.address}</td>
                                             <td>${rs.ratingPoint}</td>
                                             <td><img src="${rs.avatar}" width="100px" height="100px"/></td>
                                             <td>${rs.openHour}</td>
                                             <td>${rs.closeHour}</td>
-<%--                                            <td>${rs.storeManagerId}</td>--%>
+                                            <td style="width: 150px;">${rs.phone}</td>
+                                            <td>${rs.storeManager}</td>
                                             <c:choose>
                                                 <c:when test="${rs.status}">
                                                     <td><p>InActive</p></td>
@@ -256,7 +258,8 @@
                                         <th>Avatar</th>
                                         <th>Open Hour</th>
                                         <th>Close Hour</th>
-<%--                                        <th>Account</th>--%>
+                                        <th>Store Contact</th>
+                                        <th>Store Manager</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
@@ -271,7 +274,8 @@
                                             <td><img src="${rs.avatar}" width="100px" height="100px"/></td>
                                             <td>${rs.openHour}</td>
                                             <td>${rs.closeHour}</td>
-                                            <td>${rs.storeManagerId}</td>
+                                            <td>${rs.phone}</td>
+                                            <td>${rs.storeManager}</td>
                                             <c:choose>
                                                 <c:when test="${rs.status}">
                                                     <td><p>InActive</p></td>

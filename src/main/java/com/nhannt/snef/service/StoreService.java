@@ -15,7 +15,7 @@ public class StoreService {
     @Autowired
     StoreDAO storeDAO = new StoreDAO();
 
-    // 6/17/2019 TinLM Create getAllStores
+
 //    @RequestMapping(method = RequestMethod.GET, path = "/store", produces = "application/json")
     public List<Store> getAllStores() throws SQLException, ClassNotFoundException {
         List<Store> getList = storeDAO.getAllStore();
@@ -32,9 +32,9 @@ public class StoreService {
         return storeDetail;
     }
 
-    public boolean updateStoreById(int id, String name, int storeMana, int local, float rating,
-                                   String ava, String open, String close, boolean status) throws SQLException, ClassNotFoundException {
-        boolean rs = storeDAO.updateStoreById(id, name, storeMana, local, rating, ava, open, close, status);
+    public boolean updateStoreById(int id, String storeName, String address, String avatar, String openHour,
+                                   String closeHour, boolean status, String account, String phone) throws SQLException, ClassNotFoundException {
+        boolean rs = storeDAO.updateStoreById(id, storeName, address, avatar, openHour, closeHour, status, account, phone);
 
         if (rs){
             return  true;
@@ -42,11 +42,5 @@ public class StoreService {
         return false;
     }
 
-    public boolean insertNewStore(String name, int local, float rat, String ava, String open, String close, int mana, boolean stt) throws SQLException, ClassNotFoundException {
-        boolean rs = storeDAO.insertNewStore(name, local, rat, ava, open, close, mana, stt);
-        if (rs){
-            return true;
-        }
-        return false;
-    }
+
 }

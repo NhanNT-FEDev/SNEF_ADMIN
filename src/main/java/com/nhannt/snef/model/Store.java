@@ -3,43 +3,32 @@ package com.nhannt.snef.model;
 public class Store {
     private int storeId;
     private String storeName;
-    private int storeManagerId;
-    private int locationId;
+    private String address;
     private float ratingPoint;
     private String avatar;
     private String openHour;
     private String closeHour;
-    private float longitude;
-    private float latitude;
+    private double longitude;
+    private double latitude;
     private boolean status;
-    private String address;
+    private String phone;
+    private int accountId;
+    private String storeManager;
+
     public Store() {
     }
 
-    public Store(int storeId, String storeName, int storeManagerId, int locationId, float ratingPoint, String avatar, String openHour, String closeHour, float longitude, float latitude, boolean status) {
+    public Store(int storeId, String storeName, String address, float ratingPoint, String avatar, String openHour, String closeHour, boolean status, String phone, String storeManager) {
         this.storeId = storeId;
         this.storeName = storeName;
-        this.storeManagerId = storeManagerId;
-        this.locationId = locationId;
-        this.ratingPoint = ratingPoint;
-        this.avatar = avatar;
-        this.openHour = openHour;
-        this.closeHour = closeHour;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.status = status;
-    }
-
-    public Store(int storeId, String storeName, int storeManagerId, float ratingPoint, String avatar, String openHour, String closeHour, boolean status, String address) {
-        this.storeId = storeId;
-        this.storeName = storeName;
-        this.storeManagerId = storeManagerId;
-        this.ratingPoint = ratingPoint;
-        this.avatar = avatar;
-        this.openHour = openHour;
-        this.closeHour = closeHour;
-        this.status = status;
         this.address = address;
+        this.ratingPoint = ratingPoint;
+        this.avatar = avatar;
+        this.openHour = openHour;
+        this.closeHour = closeHour;
+        this.status = status;
+        this.phone = phone;
+        this.storeManager = storeManager;
     }
 
     public int getStoreId() {
@@ -58,20 +47,12 @@ public class Store {
         this.storeName = storeName;
     }
 
-    public int getStoreManagerId() {
-        return storeManagerId;
+    public String getAddress() {
+        return address;
     }
 
-    public void setStoreManagerId(int storeManagerId) {
-        this.storeManagerId = storeManagerId;
-    }
-
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public float getRatingPoint() {
@@ -106,35 +87,51 @@ public class Store {
         this.closeHour = closeHour;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public boolean isStatus() {
+        return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getStoreManager() {
+        return storeManager;
+    }
+
+    public void setStoreManager(String storeManager) {
+        this.storeManager = storeManager;
     }
 }

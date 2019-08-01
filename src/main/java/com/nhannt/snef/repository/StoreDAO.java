@@ -38,23 +38,24 @@ public class StoreDAO {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "SELECT s.StoreId, s.StoreName,s.StoreManagerId, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, " +
-                        "s.Status, l.Address as Address " +
-                        "FROM Store s, Location l WHERE s.LocationId = l.LocationId";
+                String sql = "Select s.StoreId, s.StoreName, s.Address, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, s.Status, s.Phone, a.UserName " +
+                        "From Store s, Account a " +
+                        "WHERE s.accountId = a.AccountId";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int storeId = rs.getInt("StoreId");
                     String storeName = rs.getString("StoreName");
-                    int storeManagerId = rs.getInt("StoreManagerId");
                     String address = rs.getString("Address");
                     float rating = rs.getFloat("RatingPoint");
                     String avatar = rs.getString("Avatar");
                     String open = rs.getString("OpenHour");
                     String close = rs.getString("CloseHour");
                     boolean status = rs.getBoolean("Status");
+                    String phone = rs.getString("Phone");
+                    String storeManager = rs.getString("Username");
 
-                    Store dto = new Store(storeId, storeName, storeManagerId, rating, avatar, open, close, status, address);
+                    Store dto = new Store(storeId, storeName, address, rating, avatar, open, close, status, phone, storeManager);
                     if (result == null) {
                         result = new ArrayList<>();
                     }
@@ -73,9 +74,9 @@ public class StoreDAO {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "SELECT s.StoreId, s.StoreName,s.StoreManagerId, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, " +
-                        "s.Status, l.Address as Address " +
-                        "FROM Store s, Location l WHERE s.LocationId = l.LocationId " +
+                String sql = "Select s.StoreId, s.StoreName, s.Address, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, s.Status, s.Phone, a.UserName " +
+                        "From Store s, Account a " +
+                        "WHERE s.accountId = a.AccountId " +
                         "AND StoreName LIKE ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, "%" + name + "%");
@@ -83,15 +84,16 @@ public class StoreDAO {
                 while (rs.next()) {
                     int storeId = rs.getInt("StoreId");
                     String storeName = rs.getString("StoreName");
-                    int storeManagerId = rs.getInt("StoreManagerId");
                     String address = rs.getString("Address");
                     float rating = rs.getFloat("RatingPoint");
                     String avatar = rs.getString("Avatar");
                     String open = rs.getString("OpenHour");
                     String close = rs.getString("CloseHour");
                     boolean status = rs.getBoolean("Status");
+                    String phone = rs.getString("Phone");
+                    String storeManager = rs.getString("Username");
 
-                    Store dto = new Store(storeId, storeName, storeManagerId, rating, avatar, open, close, status, address);
+                    Store dto = new Store(storeId, storeName, address, rating, avatar, open, close, status, phone, storeManager);
                     if (searchValue == null) {
                         searchValue = new ArrayList<>();
                     }
@@ -112,9 +114,9 @@ public class StoreDAO {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "SELECT s.StoreId, s.StoreName,s.StoreManagerId, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, " +
-                        "s.Status, l.Address as Address " +
-                        "FROM Store s, Location l WHERE s.LocationId = l.LocationId " +
+                String sql = "Select s.StoreId, s.StoreName, s.Address, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, s.Status, s.Phone, a.UserName " +
+                        "From Store s, Account a " +
+                        "WHERE s.accountId = a.AccountId " +
                         "AND s.StoreId = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, id);
@@ -122,15 +124,16 @@ public class StoreDAO {
                 while (rs.next()) {
                     int storeId = rs.getInt("StoreId");
                     String storeName = rs.getString("StoreName");
-                    int storeManagerId = rs.getInt("StoreManagerId");
                     String address = rs.getString("Address");
                     float rating = rs.getFloat("RatingPoint");
                     String avatar = rs.getString("Avatar");
                     String open = rs.getString("OpenHour");
                     String close = rs.getString("CloseHour");
                     boolean status = rs.getBoolean("Status");
+                    String phone = rs.getString("Phone");
+                    String storeManager = rs.getString("Username");
 
-                    Store dto = new Store(storeId, storeName, storeManagerId, rating, avatar, open, close, status,address);
+                    Store dto = new Store(storeId, storeName, address, rating, avatar, open, close, status, phone, storeManager);
                     if (storeById == null) {
                         storeById = new ArrayList<>();
                     }
@@ -146,23 +149,24 @@ public class StoreDAO {
     }
 
     public boolean
-    updateStoreById(int id, String name, int storeManager, int local, float rating, String avata, String open,
-                    String close, boolean status) throws SQLException, ClassNotFoundException {
+    updateStoreById(int id, String storeName, String address, String avatar, String openHour,
+                    String closeHour, boolean status, String account, String phone) throws SQLException, ClassNotFoundException {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "UPDATE Store " +
-                        "SET StoreName = ?, LocationId =?, RatingPoint =?, Avatar= ?, OpenHour= ?, CloseHour= ?, StoreManagerId= ?, Status= ? " +
-                        "WHERE StoreId = ?";
+                String sql = "UPDATE (Store s, Account a) " +
+                        "SET s.StoreName = ?, s.Address =?, s.Avatar=?, s.OpenHour= ?, s.CloseHour= ?, a.Username= ?, s.Status= ?, s.Phone = ? " +
+                        "WHERE s.StoreId = ? " +
+                        "AND s.AccountId = a.AccountID";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, name);
-                stm.setInt(2, local);
-                stm.setFloat(3, rating);
-                stm.setString(4, avata);
-                stm.setString(5, open);
-                stm.setString(6, close);
-                stm.setInt(7, storeManager);
-                stm.setBoolean(8, status);
+                stm.setString(1, storeName);
+                stm.setString(2, address);
+                stm.setString(3, avatar);
+                stm.setString(4, openHour);
+                stm.setString(5, closeHour);
+                stm.setString(6, account);
+                stm.setBoolean(7, status);
+                stm.setString(8, phone );
                 stm.setInt(9, id);
                 int row = stm.executeUpdate();
                 if (row > 0) {
@@ -175,30 +179,49 @@ public class StoreDAO {
         return false;
     }
 
-    public boolean
-    insertNewStore(String name, int local, float rating, String ava, String open, String close, int storeMana, boolean status) throws SQLException, ClassNotFoundException {
-        try {
-            con = MyConnection.myConnection();
-            if (con != null) {
-                String sql = "INSERT INTO Store(StoreName,LocationId, RatingPoint, Avatar, OpenHour,CloseHour,StoreManagerId,Status) VALUES(?,?,?,?,?,?,?,?)";
-                stm = con.prepareStatement(sql);
-                stm.setString(1, name);
-                stm.setInt(2, local);
-                stm.setFloat(3, rating);
-                stm.setString(4, ava);
-                stm.setString(5, open);
-                stm.setString(6, close);
-                stm.setInt(7, storeMana);
-                stm.setBoolean(8, status);
-                System.out.println("Xung toi day");
-                int row = stm.executeUpdate();
-                System.out.println("Row: " + row);
+    public boolean checkExistName(String storeName) throws SQLException, ClassNotFoundException {
+            try{
+                con = MyConnection.myConnection();
+                if (con != null){
+                    String sql = "Select StoreName From Store WHERE StoreName = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, storeName);
+                    rs = stm.executeQuery();
+                    if (rs.next()){
+                        return true;
+                    }
 
-                if (row > 0) {
+                }
+            }finally {
+                closeConnection();
+            }
+
+        return false;
+    }
+
+    public boolean insertNewStore
+            (String storeName, String address, String avatar, String open, String close, String phone, int accountId) throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql =
+                        "INSERT INTO Store(StoreName, Address, Avatar, OpenHour, CloseHour, Status, Phone, AccountId) " +
+                        "VALUES(?,?,?,?,?,1,?,?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, storeName);
+                stm.setString(2, address);
+                stm.setString(3, avatar);
+                stm.setString(4, open);
+                stm.setString(5, close);
+                stm.setString(6, phone);
+                stm.setInt(7, accountId);
+                int row = stm.executeUpdate();
+                if (row > 0){
                     return true;
                 }
+
             }
-        } finally {
+        }finally {
             closeConnection();
         }
         return false;

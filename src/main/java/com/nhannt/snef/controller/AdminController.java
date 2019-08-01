@@ -2,6 +2,7 @@ package com.nhannt.snef.controller;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.nhannt.snef.model.Store;
+import com.nhannt.snef.service.AccountService;
 import com.nhannt.snef.service.StoreService;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.cloudinary.Cloudinary;
 
@@ -34,11 +36,13 @@ public class AdminController {
     /**
      * All function belong to Management Store
      * At this moment some field still not update validation
-     *
-     * */
+     */
 
     @Autowired
     private StoreService storeService;
+
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchByName(@RequestParam(value = "name") String name, Model model) throws SQLException, ClassNotFoundException {
@@ -58,29 +62,46 @@ public class AdminController {
         return "createpage";
     }
 
+    //Edit Store
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public  String saveStore(@RequestParam(value = "txtId") String id,
-                             @RequestParam(value = "txtName") String name,
-                             @RequestParam(value = "txtManager") String manager,
-                             @RequestParam(value = "txtLocation") String local,
-                             @RequestParam(value = "txtRating") String rating,
-//                             @RequestParam(value = "txtAva") String ava,
-                             @RequestParam(value = "txtOpen") String open,
-                             @RequestParam(value = "txtClose") String close,
-                             @RequestParam(name = "chkStatus") String chkStatus,
-                             Model model) throws SQLException, ClassNotFoundException {
+    public String saveStore(@RequestParam(value = "txtId") String id,
+                            @RequestParam(value = "txtName") String name,
+
+                            @RequestParam(value = "txtAddress") String address,
+//                            @RequestParam(value = "txtRating") String rating,
+                            @RequestParam(value = "file") MultipartFile file,
+                            @RequestParam(value = "txtOpen") String open,
+                            @RequestParam(value = "txtClose") String close,
+                            @RequestParam(value = "txtAccount") String account,
+                            @RequestParam(value = "txtPhone") String phone,
+                            @RequestParam(name = "chkStatus") boolean chkStatus,
+                            Model model) throws SQLException, ClassNotFoundException {
         int parseId = Integer.parseInt(id);
 
-        int storeManager = Integer.parseInt(manager);
-        int location = Integer.parseInt(local);
-        float rat = Float.parseFloat(rating);
-        boolean status = Boolean.parseBoolean(chkStatus);
-        System.out.println("Status: " + chkStatus );
+//        int storeManager = Integer.parseInt(manager);
+//        int location = Integer.parseInt(local);
+//        float rat = Float.parseFloat(rating);
+//        boolean status = Boolean.parseBoolean(chkStatus);
+        try {
+            //Insert Image to DB
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get("" + file.getOriginalFilename());
+            File myFile = new File(String.valueOf(Files.write(path, bytes)));
+            HashMap<String, String> config = new HashMap<>();
+            config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
+            config.put("api_key", CLOUDINARY_API_KEY);
+            config.put("api_secret", CLOUDINARY_API_SECRET);
+            Cloudinary cloudinary = new Cloudinary(config);
+            HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+            String getUrl = String.valueOf(uploadResult.get("url"));
+            boolean rs = storeService.updateStoreById(parseId, name, address, getUrl, open, close, chkStatus, account, phone);
+            if (rs) {
+                return "redirect:/home";
+            }
 
-        boolean rs = storeService.updateStoreById(parseId,name, storeManager, location, rat, null, open, close, status);
-        System.out.println("rs: " + rs);
-        if (rs){
-            return "redirect:/homepage";
+
+        } catch (IOException e) {
+            Logger.getLogger("SAVE FILE ERROR" + e);
         }
 
         model.addAttribute("msg", "Update not successful");
@@ -97,48 +118,38 @@ public class AdminController {
      * 1:
      * Process Param of Address => return locationId
      * Insert Store Information
-     *
+     * <p>
      * 2:
      * Write one query method to insert Store
-     * */
+     */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public String insertNewStore(@RequestParam(name = "stName") String name,
-                                 @RequestParam(name = "stLocal") String local,
-                                 @RequestParam(name = "stRat") String rat,
-                                 @RequestParam(name = "file") MultipartFile file,
-                                 @RequestParam(name = "stOpen") String open,
-                                 @RequestParam(name = "stClose") String close,
-                                 @RequestParam(name = "stMana") String mana,
-                                 @RequestParam(name = "chkStatus") Boolean status, Model model) throws SQLException, ClassNotFoundException {
-        try{
-            int parseLocal = Integer.parseInt(local);
-            float parseRating = Float.parseFloat(rat);
-            int parseManager = Integer.parseInt(mana);
-//            boolean status = Boolean.parseBoolean(stt);
-            //INsert address to Location
+    public String
+    insertNewStore(
+            @RequestParam(value = "txtUsername") String username,
+            @RequestParam(value = "txtPassword") String password,
+            @RequestParam(value = "txtFirstname") String firstName,
+            @RequestParam(value = "txtLastName") String lastName,
+            @RequestParam(value = "txtContact") String phone,
+            @RequestParam(value = "txtEmail") String email,
+            @RequestParam(value = "slGender") String gender,
+            Model model) throws SQLException, ClassNotFoundException {
+        try {
+            int parseGender = Integer.parseInt(gender);
+            String accountId = accountService.insertNewAccount(username, password, firstName, lastName, phone, email, parseGender);
 
-            //Insert Image to DB
-            byte[] bytes =file.getBytes();
-            Path path = Paths.get("" + file.getOriginalFilename());
-            File myFile = new File(String.valueOf(Files.write(path, bytes)));
-            HashMap<String, String> config = new HashMap<>();
-            config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
-            config.put("api_key", CLOUDINARY_API_KEY);
-            config.put("api_secret", CLOUDINARY_API_SECRET);
-            Cloudinary cloudinary = new Cloudinary(config);
-            HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
-            String getUrl = String.valueOf(uploadResult.get("url"));
+            //If accountId == null -> message error name
+            if (accountId != null){
+                // Create new Store
 
-            //Call Service
-            boolean rs = storeService.insertNewStore(name, parseLocal, parseRating, getUrl, open, close, parseManager, status);
-            if (rs){
-                return "redirect:/home";
             }
+
+
+
             model.addAttribute("ERR", "Insert not successful");
-        }catch (IOException e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return "create";
+        return "createpage";
     }
 
     /*
@@ -148,10 +159,10 @@ public class AdminController {
     /**
      * Manage all request about customer
      * At the moment some field still not validation
-     * */
+     */
 
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
-    public String loadAllCustomer(Model model){
+    public String loadAllCustomer(Model model) {
 
         return "home";
     }
