@@ -158,7 +158,7 @@ public class AdminController {
                 // Create new Store
                 boolean createStore = storeService.insertNewStore(storeName, address,getUrl ,open, close, phoneStore, accountId);
                 if (createStore){
-                    return "homepage";
+                    return "home";
                 }
 
             }

@@ -30,16 +30,16 @@ public class AccountDAO {
     public boolean checkExistAccount(String accountName) throws SQLException, ClassNotFoundException {
         try {
             con = MyConnection.myConnection();
-            if (con != null){
+            if (con != null) {
                 String sql = "SELECT Username FROM Account WHERE UserName = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, accountName);
                 rs = stm.executeQuery();
-                if (rs.next()){
+                if (rs.next()) {
                     return true;
                 }
             }
-        }finally {
+        } finally {
             closeConnection();
         }
         return false;
@@ -51,9 +51,9 @@ public class AccountDAO {
                           String lastName, String phone,
                           String email, int gender)
             throws SQLException, ClassNotFoundException {
-        try{
+        try {
             con = MyConnection.myConnection();
-            if (con != null){
+            if (con != null) {
                 String sql = "INSERT INTO Account(Username,Password,FirstName,LastName,Phone,Email,isActive,Gender,RoleId) " +
                         "VALUES (?,?,?,?,?, ?,?,1, (Select roleId From Role where roleId = 2 ))";
                 stm = con.prepareStatement(sql);
@@ -66,14 +66,22 @@ public class AccountDAO {
                 stm.setInt(7, gender);
 
                 int row = stm.executeUpdate();
-                if (row > 0 ){
-                    int accountId = rs.getInt("AccountId");
-                    return accountId;
+                if (row > 0) {
+                    String query = "Select AccountId From Account WHERE UserName = ?";
+                    stm  = con.prepareStatement(query);
+                    stm.setString(1, username);
+                    rs = stm.executeQuery();
+                    if (rs.next()) {
+                        int accountId = rs.getInt("AccountId");
+                        System.out.println("accountID: "+accountId);
+                        return accountId;
+
+                    }
                 }
 
             }
 
-        }finally {
+        } finally {
             closeConnection();
         }
         return 0;

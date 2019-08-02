@@ -286,7 +286,7 @@
 														       value="" name="txtFirstname">
 												</div>
 												<div class="form-group">
-														<label for="txtLastName">First Name</label>
+														<label for="txtLastName">Last Name</label>
 														<input type="text" id="txtLastName" class="form-control" placeholder="Enter Account Last Name"
 														       value="" name="txtLastName">
 												</div>
@@ -327,7 +327,7 @@
 
 												<div class="form-group">
 														<label for="file">Upload Avatar</label>
-														<input type="file" class="form-control" id="file" name="txtAvatar" value="">
+														<input type="file" class="form-control" id="file" name="file" value="">
 
 												</div>
 
@@ -344,7 +344,7 @@
 												</div>
 
 												<div class="form-group">
-														<label for="txtPhoneStore">Store Close Hour</label>
+														<label for="txtPhoneStore">Store Phone</label>
 														<input type="text" id="txtPhoneStore" class="form-control" placeholder="Enter Store Phone"
 														       value="" name="txtPhoneStore">
 												</div>
