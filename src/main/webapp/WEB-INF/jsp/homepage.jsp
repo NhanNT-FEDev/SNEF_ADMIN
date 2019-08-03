@@ -49,7 +49,6 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center"
            href="${pageContext.request.contextPath}/home">
@@ -58,10 +57,8 @@
             </div>
             <div class="sidebar-brand-text mx-3">Admin Management</div>
         </a>
-
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
-
         <!-- Nav Item - Stores -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
@@ -78,7 +75,6 @@
                 </div>
             </div>
         </li>
-
         <!-- Nav Item - Customer Account -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="account.html" data-toggle="collapse" data-target="#collapseUtilities"
@@ -94,19 +90,16 @@
                 </div>
             </div>
         </li>
-
         <!-- Nav Item - Product-->
         <li class="nav-item">
             <a class="nav-link" href="product.html">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Configuration Settings</span></a>
         </li>
-
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-
     </ul>
     <!-- End of Sidebar -->
 

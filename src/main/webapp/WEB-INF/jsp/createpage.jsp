@@ -487,7 +487,7 @@
 
 		<!-- Page level custom scripts -->
 		<%--<script src="js/datatables-demo.js"></script>--%>
-
+</div>
 </body>
 
 </html>
