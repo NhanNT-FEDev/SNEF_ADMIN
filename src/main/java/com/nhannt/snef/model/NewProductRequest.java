@@ -12,6 +12,7 @@ public class NewProductRequest {
     }
 
 
+
     public int getnPRId() {
         return nPRId;
     }

@@ -42,8 +42,7 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.LISTSTORE}"/>
-<c:set var="search" value="${requestScope.SEARCHVALUE}"/>
+<c:set var="rs" value="${requestScope.CUSTOMER}"/>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -73,7 +72,6 @@
 						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/create">Add Store</a>
-										<%--                    <a class="collapse-item" href="${pageContext.request.contextPath}/admin/update">Update Store</a>--%>
 										<a class="collapse-item" href="${pageContext.request.contextPath}/home">Store Data</a>
 								</div>
 						</div>
@@ -88,9 +86,7 @@
 						</a>
 						<div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
-										<a class="collapse-item" href="createUpdateCus.html">Create New Customer</a>
-										<%--                    <a class="collapse-item" href="createUpdateCus.html">Update Customer</a>--%>
-										<a class="collapse-item" href="account.html">Customer Data</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/customer">Customer Data</a>
 								</div>
 						</div>
 				</li>
@@ -198,94 +194,35 @@
 										<div class="card-header py-3">
 												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
 										</div>
-										<div class="card-body">		<c:if test="${info == null}">
-												<form action="/admin/insert" method="POST" enctype="multipart/form-data">
-														<h3>Create New Store Account</h3>
-														<div class="form-group">
-																<label for="txtUsername">Username</label>
-																<input type="text" id="txtUsername" class="form-control" placeholder="Enter Store Account"
-																       value="" name="txtUsername">
-														</div>
-
-														<div class="form-group">
-																<label for="txtPassword">Password</label>
-																<input type="text" id="txtPassword" class="form-control" placeholder="Enter Account Password"
-																       value="" name="txtPassword">
-														</div>
-
-														<div class="form-group">
-																<label for="txtFirstname">First Name</label>
-																<input type="text" id="txtFirstname" class="form-control" placeholder="Enter Account First Name"
-																       value="" name="txtFirstname">
-														</div>
-														<div class="form-group">
-																<label for="txtLastName">Last Name</label>
-																<input type="text" id="txtLastName" class="form-control" placeholder="Enter Account Last Name"
-																       value="" name="txtLastName">
-														</div>
-
-														<div class="form-group">
-																<label for="txtContact"> Account Contact </label>
-																<input type="text" id="txtContact" class="form-control" placeholder="Enter Account Contact"
-																       value="" name="txtContact">
-														</div>
-
-														<div class="form-group">
-																<label for="txtEmail"> Account Email </label>
-																<input type="text" id="txtEmail" class="form-control" placeholder="Enter Account Email"
-																       value="" name="txtEmail">
-														</div>
-														<div class="form-group">
-																<label for="slGender"></label>
-																<select class="mdb-select md-form" id="slGender" name="slGender">
-																		<option selected>Choose Gender</option>
-																		<option value="0">Female</option>
-																		<option value="1">Male</option>
-																		<option value="2">Other</option>
-																</select>
-														</div>
-
-																<%-- Insert new Store --%>
-														<div class="form-group">
-																<label for="txtStoreName">Store Name</label>
-																<input type="text" id="txtStoreName" class="form-control" placeholder="Enter Store Name"
-																       value="" name="txtStoreName">
-														</div>
-
-														<div class="form-group">
-																<label for="txtStoreAddress">Store Address</label>
-																<input type="text" id="txtStoreAddress" class="form-control" placeholder="Enter Store Name"
-																       value="" name="txtStoreAddress">
-														</div>
-
-														<div class="form-group">
-																<label for="file">Upload Avatar</label>
-																<input type="file" class="form-control" id="file" name="file" value="">
-
-														</div>
-
-														<div class="form-group">
-																<label for="txtOpenHour">Store Open Hour</label>
-																<input type="text" id="txtOpenHour" class="form-control" placeholder="Enter Store Open Hour"
-																       value="" name="txtOpenHour">
-														</div>
-
-														<div class="form-group">
-																<label for="txtCloseHour">Store Close Hour</label>
-																<input type="text" id="txtCloseHour" class="form-control" placeholder="Enter Store Close Hour"
-																       value="" name="txtCloseHour">
-														</div>
-
-														<div class="form-group">
-																<label for="txtPhoneStore">Store Phone</label>
-																<input type="text" id="txtPhoneStore" class="form-control" placeholder="Enter Store Phone"
-																       value="" name="txtPhoneStore">
-														</div>
-
-														<input type="submit" class="btn btn-primary" name="Save">
-														<input type="reset" name="Reset" class="btn btn-secondary">
-												</form>
-										</c:if>
+										<div class="card-body">
+												<div class="table-responsive">
+														<c:if test="${rs != null}">
+																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+																		<thead>
+																		<tr>
+																				<th>No.</th>
+																				<th>User Name</th>
+																				<th>Phone</th>
+																				<th>Email</th>
+																				<th>Avatar</th>
+																				<th>Change Status</th>
+																		</tr>
+																		</thead>
+																		<tbody>
+																		<c:forEach var="list" items="${rs}">
+																				<tr>
+																						<td>${list.accountId}</td>
+																						<td>${list.userName}</td>
+																						<td>${list.phone}</td>
+																						<td>${list.email}</td>
+																						<td><img src="${list.avatar}" width="100px" height="100px" /> </td>
+																						<td><input type="checkbox" name="chkAdmin" value="${list.accountId}" />  </td>
+																				</tr>
+																		</c:forEach>
+																		</tbody>
+																</table>
+														</c:if>
+												</div>
 										</div>
 								</div>
 
@@ -315,6 +252,9 @@
 <a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
 </a>
+
+<%--Script select all--%>
+
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

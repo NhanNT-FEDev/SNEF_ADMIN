@@ -1,6 +1,7 @@
 package com.nhannt.snef.controller;
 
 import com.cloudinary.utils.ObjectUtils;
+import com.nhannt.snef.model.Account;
 import com.nhannt.snef.model.Store;
 import com.nhannt.snef.service.AccountService;
 import com.nhannt.snef.service.StoreService;
@@ -59,7 +60,7 @@ public class AdminController {
         List<Store> getDetail = storeService.getStoreById(getId);
 
         model.addAttribute("STOREDETAIL", getDetail);
-        return "createpage";
+        return "editpage";
     }
 
     //Edit Store
@@ -158,7 +159,7 @@ public class AdminController {
                 // Create new Store
                 boolean createStore = storeService.insertNewStore(storeName, address,getUrl ,open, close, phoneStore, accountId);
                 if (createStore){
-                    return "home";
+                    return "redirect:/home";
                 }
 
             }
@@ -179,8 +180,9 @@ public class AdminController {
      */
 
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
-    public String loadAllCustomer(Model model) {
-
-        return "home";
+    public String loadAllCustomer(Model model) throws SQLException, ClassNotFoundException {
+        List<Account> rs = accountService.getAllAccount();
+        model.addAttribute("CUSTOMER", rs);
+        return "customerpage";
     }
 }

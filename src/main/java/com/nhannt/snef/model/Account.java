@@ -28,6 +28,18 @@ public class Account {
         this.roleId = roleId;
     }
 
+    public Account(int accountId, String userName, String password, String firstName, String lastName, String phone, String email, String avatar, int gender) {
+        this.accountId = accountId;
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.avatar = avatar;
+        this.gender = gender;
+    }
+
     public int getAccountId() {
         return accountId;
     }

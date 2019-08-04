@@ -1,10 +1,12 @@
 package com.nhannt.snef.service;
 
+import com.nhannt.snef.model.Account;
 import com.nhannt.snef.repository.AccountDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 public class AccountService {
@@ -24,6 +26,10 @@ public class AccountService {
         return 0;
     }
 
+    public List<Account> getAllAccount() throws SQLException, ClassNotFoundException {
+        List<Account> result = accountDAO.getAllAccount();
+        return result;
+    }
 
 
 
