@@ -74,14 +74,14 @@ public class AdminController {
                             @RequestParam(value = "txtClose") String close,
                             @RequestParam(value = "txtAccount") String account,
                             @RequestParam(value = "txtPhone") String phone,
-                            @RequestParam(name = "chkStatus") boolean chkStatus,
+                            @RequestParam(name = "chkStatus") String chkStatus,
                             Model model) throws SQLException, ClassNotFoundException {
         int parseId = Integer.parseInt(id);
 
 //        int storeManager = Integer.parseInt(manager);
 //        int location = Integer.parseInt(local);
 //        float rat = Float.parseFloat(rating);
-//        boolean status = Boolean.parseBoolean(chkStatus);
+        boolean status = Boolean.parseBoolean(chkStatus);
         try {
             //Insert Image to DB
             byte[] bytes = file.getBytes();
@@ -94,7 +94,7 @@ public class AdminController {
             Cloudinary cloudinary = new Cloudinary(config);
             HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
             String getUrl = String.valueOf(uploadResult.get("url"));
-            boolean rs = storeService.updateStoreById(parseId, name, address, getUrl, open, close, chkStatus, account, phone);
+            boolean rs = storeService.updateStoreById(parseId, name, address, getUrl, open, close, status, account, phone);
             if (rs) {
                 return "redirect:/home";
             }
