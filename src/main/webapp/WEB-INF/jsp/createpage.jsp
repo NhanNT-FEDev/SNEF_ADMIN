@@ -321,65 +321,71 @@
                 <c:if test="${info != null}">
                     <form action="/admin/save" method="POST" enctype="multipart/form-data">
                         <c:forEach var="rs" items="${info}">
-                        <input type="text" value="${rs.storeId}" name="txtId" hidden/>
-                        <div class="form-group">
-                            <label for="txtName">Store Name</label>
-                            <input type="text" id="txtName" class="form-control" placeholder="Enter Store Name"
-                                   value="${rs.storeName}" name="txtName">
-                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                        </div>
-                        <div class="form-group">
-                            <label for="txtAddress">Address</label>
-                            <input type="text" class="form-control" id="txtAddress" placeholder="Address"
-                                   name="txtAddress" value="${rs.address}">
-                        </div>
-                        <div class="form-group">
-                            <label for="customFile"> Choose Store Image</label>
-                            <img src="${rs.avatar}" width="100px" height="100px">
-                            <input type="file" class="form-control" id="customFile" name="file" value="">
-                                <%--                        <label class="custom-file-label" for="customFile">Choose file</label>--%>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="txtOpen">Open Hour</label>
-                            <input type="text" class="form-control" id="txtOpen" placeholder="Open Hour"
-                                   value="${rs.openHour}" name="txtOpen">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="txtClose">Close Hour</label>
-                            <input type="text" class="form-control" id="txtClose" placeholder="Close Hour"
-                                   value="${rs.closeHour}" name="txtClose">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="txtPhone">Store Contact</label>
-                            <input type="text" class="form-control" id="txtPhone" placeholder="Store Phone"
-                                   value="${rs.phone}" name="txtPhone">
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="txtAccount">Account Manager</label>
-                            <input type="text" class="form-control" id="txtAccount" placeholder="Open Hour"
-                                   value="${rs.storeManager}" name="txtAccount">
-                        </div>
-                        <div class="form-group">
-<%--                            <div class="checkbox">--%>
-<%--                                <label><input type="checkbox" name="chkStatus" value="${rs.status}"--%>
-<%--                                <c:if test="${rs.status}">--%>
-<%--                                              checked="checked"--%>
-<%--                                </c:if>>(Check if Active)</label>--%>
+                            <input type="text" value="${rs.storeId}" name="txtId" hidden/>
+                            <div class="form-group">
+                                <label for="txtName">Store Name</label>
+                                <input type="text" id="txtName" class="form-control" placeholder="Enter Store Name"
+                                       value="${rs.storeName}" name="txtName">
+                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
-                            <input type="checkbox" name="chkStatus" checked>
-<%--                                   value="${rs.status}"--%>
-<%--                            <c:if test="${rs.status}">--%>
-<%--                                   checked="checked"--%>
-<%--                            </c:if>--%>
+                            <div class="form-group">
+                                <label for="txtAddress">Address</label>
+                                <input type="text" class="form-control" id="txtAddress" placeholder="Address"
+                                       name="txtAddress" value="${rs.address}">
+                            </div>
+                            <div class="form-group">
+                                <label for="customFile"> Choose Store Image</label>
+                                <img src="${rs.avatar}" width="100px" height="100px">
+                                <input type="file" class="form-control" id="customFile" name="file" value="">
+                                    <%--                        <label class="custom-file-label" for="customFile">Choose file</label>--%>
+                            </div>
 
-<%--                            </div>--%>
-                        </div>
+
+                            <div class="form-group">
+                                <label for="txtOpen">Open Hour</label>
+                                <input type="text" class="form-control" id="txtOpen" placeholder="Open Hour"
+                                       value="${rs.openHour}" name="txtOpen">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtClose">Close Hour</label>
+                                <input type="text" class="form-control" id="txtClose" placeholder="Close Hour"
+                                       value="${rs.closeHour}" name="txtClose">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="txtPhone">Store Contact</label>
+                                <input type="text" class="form-control" id="txtPhone" placeholder="Store Phone"
+                                       value="${rs.phone}" name="txtPhone">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="txtAccount">Account Manager</label>
+                                <input type="text" class="form-control" id="txtAccount" placeholder="Open Hour"
+                                       value="${rs.storeManager}" name="txtAccount">
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox-inline">
+                                    <label><input type="checkbox" value="${rs.status}" id="chkStatus" name="chkStatus"
+                                    <c:if test="${rs.status}">
+                                                  checked="checked"
+                                    </c:if>>(Check if Active)</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="chkStatus" id="true" value="true" style="opacity: 0"
+                                        <c:if test="${rs.status}">
+                                               checked="checked"
+                                        </c:if>>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="chkStatus" id="false" value="false" style="opacity: 0"
+                                        <c:if test="${not rs.status}">
+                                               checked="checked"
+                                        </c:if>>
+                                    </label>
+                                </div>
+
+                            </div>
                             <input type="submit" class="btn btn-primary" value="Save">
                         </c:forEach>
                     </form>
@@ -454,6 +460,18 @@
 
     <!-- Page level custom scripts -->
     <%--<script src="js/datatables-demo.js"></script>--%>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#chkStatus').click(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#true").prop("checked", true);
+                } else if ($(this).prop("checked") == false) {
+                    $("#false").prop("checked", true);
+
+                }
+            });
+        });
+    </script>
 </div>
 </body>
 
