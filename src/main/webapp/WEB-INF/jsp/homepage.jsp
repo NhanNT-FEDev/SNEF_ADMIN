@@ -92,14 +92,15 @@
             </div>
         </li>
 
-        <!-- Nav Item - Product-->
+        <!-- Nav Item - Process New Request-->
 
         <li class="nav-item">
-            <a class="nav-link" href="product.html">
+            <a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Process New Request</span></a>
         </li>
 
+        <!-- Nav Item - Process New Configuration-->
         <li class="nav-item">
             <a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/config" data-toggle="collapse"
                data-target="#collapseThree"

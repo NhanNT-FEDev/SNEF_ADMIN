@@ -62,6 +62,7 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
 
+
 				<!-- Nav Item - Stores -->
 				<li class="nav-item">
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
@@ -92,14 +93,15 @@
 						</div>
 				</li>
 
-				<!-- Nav Item - Product-->
+				<!-- Nav Item - Process New Request-->
 
 				<li class="nav-item">
-						<a class="nav-link" href="product.html">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
 								<i class="fas fa-fw fa-cog"></i>
 								<span>Process New Request</span></a>
 				</li>
 
+				<!-- Nav Item - Process New Configuration-->
 				<li class="nav-item">
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/config" data-toggle="collapse"
 						   data-target="#collapseThree"
@@ -109,11 +111,12 @@
 						</a>
 						<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin//config/create">Add New Configuration</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New Configuration</a>
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
 								</div>
 						</div>
 				</li>
+
 
 
 

@@ -3,9 +3,11 @@ package com.nhannt.snef.controller;
 import com.cloudinary.utils.ObjectUtils;
 import com.nhannt.snef.model.Account;
 import com.nhannt.snef.model.Configuration;
+import com.nhannt.snef.model.NewProductRequest;
 import com.nhannt.snef.model.Store;
 import com.nhannt.snef.service.AccountService;
 import com.nhannt.snef.service.ConfigurationService;
+import com.nhannt.snef.service.NewProductRequestService;
 import com.nhannt.snef.service.StoreService;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,9 @@ public class AdminController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private NewProductRequestService nprService;
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchByName(@RequestParam(value = "name") String name, Model model) throws SQLException, ClassNotFoundException {
@@ -206,4 +211,15 @@ public class AdminController {
     public String addNewConfig(){
         return "createconfigpage";
     }
+
+    /** Manage all CRUD of Process new Request
+     *
+     * */
+    @RequestMapping(value = "/request", method = RequestMethod.GET)
+    public String showAllRequest(Model model) throws SQLException, ClassNotFoundException {
+        List<NewProductRequest> list = nprService.getAllRequest();
+        model.addAttribute("REQUEST", list);
+        return "processpage";
+    }
+
 }

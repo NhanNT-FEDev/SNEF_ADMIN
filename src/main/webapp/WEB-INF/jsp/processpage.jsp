@@ -15,8 +15,8 @@
 		<title>SNEF - Admin Page</title>
 
 		<!-- Custom fonts for this template -->
-		<link href="../css/all.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="../css/sb-admin-2.css">
+		<link href="../../css/all.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../../css/sb-admin-2.css">
 		<link
 										href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 										rel="stylesheet">
@@ -43,7 +43,7 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.CUSTOMER}"/>
+<c:set var="list" value="${requestScope.REQUEST}"/>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -62,7 +62,6 @@
 
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
-
 
 				<!-- Nav Item - Stores -->
 				<li class="nav-item">
@@ -117,6 +116,8 @@
 								</div>
 						</div>
 				</li>
+
+
 
 
 		</ul>
@@ -189,59 +190,42 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Change Status Accounts</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
 														<c:if test="${list != null}">
-																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
 																		<thead>
 																		<tr>
 																				<th>No.</th>
-																				<th>Username</th>
-																				<th>FirstName</th>
-																				<th>LastName</th>
-																				<th>Avatar</th>
-																				<th>Phone</th>
-																				<th>Email</th>
-																				<th>Gender</th>
+																				<th>Store Name</th>
+																				<th>Product Name</th>
 																				<th>Status</th>
-
 																		</tr>
 																		</thead>
 																		<tbody>
-
-																		<c:forEach var="rs" items="${list}">
+																		<c:forEach var="rs" items="${list}" varStatus="count">
 																				<tr>
-																						<td>${rs.accountId}</td>
-																						<td style="width: 100px">${rs.userName}</td>
-																						<td>${rs.firstName}</td>
-																						<td>${rs.lastName}</td>
-																						<td><img src="${rs.avatar}" width="100px" height="100px"/></td>
-																						<td>${rs.phone}</td>
-																						<td>${rs.email}</td>
-																						<td style="width: 150px;">
-																								<select class="mdb-select md-form" id="slGender" name="slGender">
-																										<option value="0">Female</option>
-																										<option value="1" selected>Male</option>
-																										<option value="2">Other</option>
-																								</select>
+																						<td>${count.count}
+																								<input type="text" value="${rs.nPRId}" name="txtId" hidden>
 																						</td>
-																						<td>
-																								<select name="slStatus">
-																										<option>Active</option>
-																										<option>Deactive</option>
-																								</select>
-																						</td>
+																						<td>${rs.storeName}</td>
+																						<td>${rs.productName}</td>
+																						<c:choose>
+																								<c:when test="${rs.status}">
+																										<td><p>InActive</p></td>
+																								</c:when>
+																								<c:otherwise>
+																										<td><p>Active</p></td>
+																								</c:otherwise>
+																						</c:choose>
 																				</tr>
 																		</c:forEach>
 																		</tbody>
 																</table>
-																<input type="submit" class="btn btn-primary" value="Change Status">
-																<button class="btn btn-secondary">
-																		<a href="${pageContext.request.contextPath}/admin" style="color: white">Back</a>
-																</button>
 														</c:if>
+
 
 												</div>
 										</div>
@@ -273,6 +257,7 @@
 <a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
 </a>
+
 
 
 <!-- Bootstrap core JavaScript-->

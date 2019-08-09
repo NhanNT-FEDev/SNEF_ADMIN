@@ -78,8 +78,19 @@ public class NewProductRequest {
         this.productId = productId;
     }
 
-    public NewProductRequest(String storeName, String productName) {
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
         this.storeName = storeName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
         this.productName = productName;
     }
 }

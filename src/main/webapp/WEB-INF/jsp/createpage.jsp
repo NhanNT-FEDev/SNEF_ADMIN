@@ -62,6 +62,7 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
 
+
 				<!-- Nav Item - Stores -->
 				<li class="nav-item">
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
@@ -73,7 +74,6 @@
 						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/create">Add Store</a>
-										<%--                    <a class="collapse-item" href="${pageContext.request.contextPath}/admin/update">Update Store</a>--%>
 										<a class="collapse-item" href="${pageContext.request.contextPath}/home">Store Data</a>
 								</div>
 						</div>
@@ -81,26 +81,42 @@
 
 				<!-- Nav Item - Customer Account -->
 				<li class="nav-item">
-						<a class="nav-link collapsed" href="account.html" data-toggle="collapse" data-target="#collapseUtilities"
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"  data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
 								<i class="fas fa-fw fa-cog"></i>
 								<span>Customer Account</span>
 						</a>
 						<div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
-										<a class="collapse-item" href="createUpdateCus.html">Create New Customer</a>
-										<%--                    <a class="collapse-item" href="createUpdateCus.html">Update Customer</a>--%>
-										<a class="collapse-item" href="account.html">Customer Data</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/customer">Customer Data</a>
 								</div>
 						</div>
 				</li>
 
-				<!-- Nav Item - Product-->
+				<!-- Nav Item - Process New Request-->
+
 				<li class="nav-item">
-						<a class="nav-link" href="product.html">
+						<a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
 								<i class="fas fa-fw fa-cog"></i>
-								<span>Configuration Settings</span></a>
+								<span>Process New Request</span></a>
 				</li>
+
+				<!-- Nav Item - Process New Configuration-->
+				<li class="nav-item">
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/config" data-toggle="collapse"
+						   data-target="#collapseThree"
+						   aria-expanded="true" aria-controls="collapseThree">
+								<i class="fas fa-fw fa-cog"></i>
+								<span>Configuration</span>
+						</a>
+						<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+								<div class="bg-white py-2 collapse-inner rounded">
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New Configuration</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
+								</div>
+						</div>
+				</li>
+
 
 				<!-- Sidebar Toggler (Sidebar) -->
 				<div class="text-center d-none d-md-inline">
