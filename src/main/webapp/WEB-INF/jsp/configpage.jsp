@@ -43,8 +43,7 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.CUSTOMER}"/>
-
+<c:set var="list" value="${requestScope.CONFIGURATION}" />
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -81,8 +80,7 @@
 
 				<!-- Nav Item - Customer Account -->
 				<li class="nav-item">
-						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
-						   data-target="#collapseUtilities"
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"  data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
 								<i class="fas fa-fw fa-cog"></i>
 								<span>Customer Account</span>
@@ -103,10 +101,21 @@
 				</li>
 
 				<li class="nav-item">
-						<a class="nav-link" href="product.html">
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/config" data-toggle="collapse"
+						   data-target="#collapseThree"
+						   aria-expanded="true" aria-controls="collapseThree">
 								<i class="fas fa-fw fa-cog"></i>
-								<span>Configuration Settings</span></a>
+								<span>Configuration</span>
+						</a>
+						<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+								<div class="bg-white py-2 collapse-inner rounded">
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New Configuration</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
+								</div>
+						</div>
 				</li>
+
+
 
 
 		</ul>
@@ -179,7 +188,7 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Change Status Accounts</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
@@ -188,49 +197,26 @@
 																		<thead>
 																		<tr>
 																				<th>No.</th>
-																				<th>Username</th>
-																				<th>FirstName</th>
-																				<th>LastName</th>
-																				<th>Avatar</th>
-																				<th>Phone</th>
-																				<th>Email</th>
-																				<th>Gender</th>
-																				<th>Status</th>
-
+																				<th>Configuration Name</th>
+																				<th>Configuration Value</th>
+																				<th></th>
 																		</tr>
 																		</thead>
 																		<tbody>
-
 																		<c:forEach var="rs" items="${list}">
 																				<tr>
-																						<td>${rs.accountId}</td>
-																						<td style="width: 100px">${rs.userName}</td>
-																						<td>${rs.firstName}</td>
-																						<td>${rs.lastName}</td>
-																						<td><img src="${rs.avatar}" width="100px" height="100px"/></td>
-																						<td>${rs.phone}</td>
-																						<td>${rs.email}</td>
-																						<td style="width: 150px;">
-																								<select class="mdb-select md-form" id="slGender" name="slGender">
-																										<option value="0">Female</option>
-																										<option value="1" selected>Male</option>
-																										<option value="2">Other</option>
-																								</select>
-																						</td>
+																					<td>${rs.configurationId}</td>
+																						<td>${rs.configurationName}</td>
+																						<td>${rs.configurationValue}</td>
 																						<td>
-																								<select name="slStatus">
-																										<option>Active</option>
-																										<option>Deactive</option>
-																								</select>
+																								<a href="${pageContext.request.contextPath}/admin/edit?configurationId=${rs.configurationId}">
+																										Edit Configuration
+																								</a>
 																						</td>
 																				</tr>
 																		</c:forEach>
 																		</tbody>
 																</table>
-																<input type="submit" class="btn btn-primary" value="Change Status">
-																<button class="btn btn-secondary">
-																		<a href="${pageContext.request.contextPath}/admin" style="color: white">Back</a>
-																</button>
 														</c:if>
 
 												</div>
@@ -263,6 +249,7 @@
 <a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
 </a>
+
 
 
 <!-- Bootstrap core JavaScript-->

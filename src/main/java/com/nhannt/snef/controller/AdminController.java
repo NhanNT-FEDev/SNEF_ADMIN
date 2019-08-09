@@ -2,8 +2,10 @@ package com.nhannt.snef.controller;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.nhannt.snef.model.Account;
+import com.nhannt.snef.model.Configuration;
 import com.nhannt.snef.model.Store;
 import com.nhannt.snef.service.AccountService;
+import com.nhannt.snef.service.ConfigurationService;
 import com.nhannt.snef.service.StoreService;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class AdminController {
      * All function belong to Management Store
      * At this moment some field still not update validation
      */
+    @Autowired
+    private ConfigurationService service;
+
 
     @Autowired
     private StoreService storeService;
@@ -60,7 +65,7 @@ public class AdminController {
         List<Store> getDetail = storeService.getStoreById(getId);
 
         model.addAttribute("STOREDETAIL", getDetail);
-        return "editpage";
+        return "createpage";
     }
 
     //Edit Store
@@ -184,5 +189,21 @@ public class AdminController {
         List<Account> rs = accountService.getAllAccount();
         model.addAttribute("CUSTOMER", rs);
         return "customerpage";
+    }
+
+    /**
+    * Manage all CRUD of Configuration
+    *
+    * */
+    @RequestMapping(value = "/config", method = RequestMethod.GET)
+    public String showAllConfi(Model model) throws SQLException, ClassNotFoundException {
+        List<Configuration> list = service.getAllConfi();
+        model.addAttribute("CONFIGURATION", list);
+        return "configpage";
+    }
+
+    @RequestMapping(value = "/config/create", method = RequestMethod.GET)
+    public String addNewConfig(){
+        return "createconfigpage";
     }
 }

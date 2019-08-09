@@ -7,11 +7,28 @@ public class NewProductRequest {
     private boolean status;
     private String message;
     private int productId;
+    private String storeName;
+    private String productName;
+
 
     public NewProductRequest() {
     }
 
+    public NewProductRequest(int nPRId, int storeId, int adminId, boolean status, String message, int productId) {
+        this.nPRId = nPRId;
+        this.storeId = storeId;
+        this.adminId = adminId;
+        this.status = status;
+        this.message = message;
+        this.productId = productId;
+    }
 
+    public NewProductRequest(int nPRId, boolean status, String storeName, String productName) {
+        this.nPRId = nPRId;
+        this.status = status;
+        this.storeName = storeName;
+        this.productName = productName;
+    }
 
     public int getnPRId() {
         return nPRId;
@@ -60,4 +77,10 @@ public class NewProductRequest {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
+    public NewProductRequest(String storeName, String productName) {
+        this.storeName = storeName;
+        this.productName = productName;
+    }
 }
+

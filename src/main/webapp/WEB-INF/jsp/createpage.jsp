@@ -15,7 +15,8 @@
 		<title>SNEF - Admin Page</title>
 
 		<!-- Custom fonts for this template -->
-		<link href="css/all.css" rel="stylesheet" type="text/css">
+		<link href="../css/all.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../css/sb-admin-2.css">
 		<link
 										href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 										rel="stylesheet">
@@ -42,8 +43,7 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.LISTSTORE}"/>
-<c:set var="search" value="${requestScope.SEARCHVALUE}"/>
+<c:set var="info" value="${requestScope.STOREDETAIL}" />
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -198,7 +198,8 @@
 										<div class="card-header py-3">
 												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
 										</div>
-										<div class="card-body">		<c:if test="${info == null}">
+										<div class="card-body">
+												<c:if test="${info == null}">
 												<form action="/admin/insert" method="POST" enctype="multipart/form-data">
 														<h3>Create New Store Account</h3>
 														<div class="form-group">
@@ -286,6 +287,62 @@
 														<input type="reset" name="Reset" class="btn btn-secondary">
 												</form>
 										</c:if>
+												<c:if test="${info != null}">
+														<form action="/admin/save" method="POST">
+																<c:forEach var="rs" items="${info}" >
+																		<h3>Edit Store Account</h3>
+																		<input type="text" value="${rs.storeId}" name="txtId" hidden>
+
+																		<%-- Edit Store --%>
+																		<div class="form-group">
+																				<label for="editStoreName">Store Name</label>
+																				<input type="text" id="editStoreName" class="form-control" placeholder="Enter Store Name"
+																				       value="${rs.storeName}" name="editStoreName">
+																		</div>
+
+																		<div class="form-group">
+																				<label for="editStoreAddress">Store Address</label>
+																				<input type="text" id="editStoreAddress" class="form-control" placeholder="Enter Store Name"
+																				       value="${rs.address}" name="editStoreAddress">
+																		</div>
+
+																		<div class="form-group">
+																				<img src="${rs.avatar}" width="100px" height="100px" >
+																				<input type="file" class="form-control" id="editfile" name="file" value="">
+
+																		</div>
+
+																		<div class="form-group">
+																				<label for="editOpenHour">Store Open Hour</label>
+																				<input type="text" id="editOpenHour" class="form-control" placeholder="Enter Store Open Hour"
+																				       value="${rs.openHour}" name="editOpenHour">
+																		</div>
+
+																		<div class="form-group">
+																				<label for="editCloseHour">Store Close Hour</label>
+																				<input type="text" id="editCloseHour" class="form-control" placeholder="Enter Store Close Hour"
+																				       value="${rs.openHour}" name="editCloseHour">
+																		</div>
+
+																		<div class="form-group">
+																				<label for="editPhoneStore">Store Phone</label>
+																				<input type="text" id="editPhoneStore" class="form-control" placeholder="Enter Store Phone"
+																				       value="${rs.phone}" name="editPhoneStore">
+																		</div>
+																		<div class="form-group">
+																				<label for="editPhoneStore">Change Status Of Store</label>
+																				<select name="slStatus">
+																						<option>Active</option>
+																						<option>Deactive</option>
+																				</select>
+																		</div>
+
+																</c:forEach>
+																<input type="submit" value="Back" class="btn-secondary">
+																<input type="submit" value="Save" class="btn-primary">
+
+														</form>
+												</c:if>
 										</div>
 								</div>
 

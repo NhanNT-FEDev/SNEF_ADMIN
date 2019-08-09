@@ -32,38 +32,39 @@ public class AccountDAO {
     //Load All Account
     public List<Account> getAllAccount() throws SQLException, ClassNotFoundException {
         List<Account> listAccount = null;
-        try{
+        try {
             con = MyConnection.myConnection();
-            if (con != null){
-                String sql = "Select AccountId,UserName, Password, FirstName, LastName, Phone, Email, Avatar, Gender From Account WHERE roleId = 3 and IsActive = 1";
+            if (con != null) {
+                String sql = "Select AccountId,UserName, Password, FirstName, LastName, Phone, Email, Avatar, Gender, isActive From Account WHERE roleId = 3 and IsActive = 1";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
-                while (rs.next()){
+                while (rs.next()) {
                     int accountId = rs.getInt("AccountId");
                     String username = rs.getString("UserName");
                     String password = rs.getString("Password");
                     String firstName = rs.getString("FirstName");
                     String lastName = rs.getString("LastName");
                     String phone = rs.getString("Phone");
+                    boolean isActive = rs.getBoolean("isActive");
                     String email = rs.getString("Email");
                     String avatar = rs.getString("Avatar");
                     int gender = rs.getInt("Gender");
-                    Account dto = new Account(accountId, username,password, firstName, lastName, phone, email, avatar, gender);
-                    if (listAccount == null){
+                    Account dto = new Account(accountId, username, password, firstName, lastName, phone, isActive, email, avatar, gender);
+                    if (listAccount == null) {
                         listAccount = new ArrayList<>();
                     }
                     listAccount.add(dto);
                 }
-                return  listAccount;
+                return listAccount;
             }
-        }finally {
+        } finally {
             closeConnection();
         }
         return null;
     }
 
     //Deactive Account
-    
+
 
     //Check If Account Exist
     public boolean checkExistAccount(String accountName) throws SQLException, ClassNotFoundException {
@@ -107,12 +108,12 @@ public class AccountDAO {
                 int row = stm.executeUpdate();
                 if (row > 0) {
                     String query = "Select AccountId From Account WHERE UserName = ?";
-                    stm  = con.prepareStatement(query);
+                    stm = con.prepareStatement(query);
                     stm.setString(1, username);
                     rs = stm.executeQuery();
                     if (rs.next()) {
                         int accountId = rs.getInt("AccountId");
-                        System.out.println("accountID: "+accountId);
+                        System.out.println("accountID: " + accountId);
                         return accountId;
 
                     }
@@ -124,5 +125,26 @@ public class AccountDAO {
             closeConnection();
         }
         return 0;
+    }
+
+    public boolean changeStatusAccount(int accountId, boolean stt) throws SQLException, ClassNotFoundException {
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "Update (Account) SET isActive = ? WHERE AccountId = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, stt);
+                stm.setInt(2, accountId);
+                int row = stm.executeUpdate();
+                if (row > 0){
+                    return true;
+                }
+
+            }
+
+        }finally {
+            closeConnection();
+        }
+        return false;
     }
 }
