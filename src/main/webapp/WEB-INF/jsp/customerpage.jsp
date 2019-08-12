@@ -82,7 +82,8 @@
 
 				<!-- Nav Item - Customer Account -->
 				<li class="nav-item">
-						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"  data-target="#collapseUtilities"
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
+						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
 								<i class="fas fa-fw fa-cog"></i>
 								<span>Customer Account</span>
@@ -112,7 +113,8 @@
 						</a>
 						<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New Configuration</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New
+												Configuration</a>
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
 								</div>
 						</div>
@@ -206,41 +208,44 @@
 																				<th>Email</th>
 																				<th>Gender</th>
 																				<th>Status</th>
-
+																				<th></th>
 																		</tr>
 																		</thead>
 																		<tbody>
-
 																		<c:forEach var="rs" items="${list}">
-																				<tr>
-																						<td>${rs.accountId}</td>
-																						<td style="width: 100px">${rs.userName}</td>
-																						<td>${rs.firstName}</td>
-																						<td>${rs.lastName}</td>
-																						<td><img src="${rs.avatar}" width="100px" height="100px"/></td>
-																						<td>${rs.phone}</td>
-																						<td>${rs.email}</td>
-																						<td style="width: 150px;">
-																								<select class="mdb-select md-form" id="slGender" name="slGender">
-																										<option value="0">Female</option>
-																										<option value="1" selected>Male</option>
-																										<option value="2">Other</option>
-																								</select>
-																						</td>
-																						<td>
-																								<select name="slStatus">
-																										<option>Active</option>
-																										<option>Deactive</option>
-																								</select>
-																						</td>
-																				</tr>
+																				<form action="admin/customer/changeStatus" method="POST">
+																						<tr>
+																								<td>${rs.accountId}</td>
+																								<td style="width: 100px">${rs.userName}</td>
+																								<td>${rs.firstName}</td>
+																								<td>${rs.lastName}</td>
+																								<td><img src="${rs.avatar}" width="100px" height="100px"/></td>
+																								<td>${rs.phone}</td>
+																								<td>${rs.email}</td>
+																								<td style="width: 150px;">
+																										<c:choose>
+																												<c:when test="${rs.gender}">
+																														<p>Male</p>
+																												</c:when>
+																												<c:otherwise>
+																														<p>Female</p>
+																												</c:otherwise>
+																										</c:choose>
+																								</td>
+																								<td>
+																										<select name="slStatus">
+																												<option value="1">Active</option>
+																												<option value="0">Deactive</option>
+																										</select>
+																								</td>
+																								<td style="width: 50px;"><input type="submit" class="btn btn-primary" value="Change Status">
+																								</td>
+																						</tr>
+																				</form>
 																		</c:forEach>
 																		</tbody>
 																</table>
-																<input type="submit" class="btn btn-primary" value="Change Status">
-																<button class="btn btn-secondary">
-																		<a href="${pageContext.request.contextPath}/admin" style="color: white">Back</a>
-																</button>
+
 														</c:if>
 
 												</div>

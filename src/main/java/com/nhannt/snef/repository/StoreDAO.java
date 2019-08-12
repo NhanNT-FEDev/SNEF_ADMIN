@@ -149,25 +149,25 @@ public class StoreDAO {
     }
 
     public boolean
-    updateStoreById(int id, String storeName, String address, String avatar, String openHour,
-                    String closeHour, boolean status, String account, String phone) throws SQLException, ClassNotFoundException {
+    updateStoreById(int id, String storeName, String address, String openHour,
+                    String closeHour, boolean status,  String phone) throws SQLException, ClassNotFoundException {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
                 String sql = "UPDATE (Store s, Account a) " +
-                        "SET s.StoreName = ?, s.Address =?, s.Avatar=?, s.OpenHour= ?, s.CloseHour= ?, a.Username= ?, s.Status= ?, s.Phone = ? " +
+                        "SET s.StoreName = ?, s.Address =?, s.OpenHour= ?, s.CloseHour= ?, s.Status= ?, s.Phone = ? " +
                         "WHERE s.StoreId = ? " +
                         "AND s.AccountId = a.AccountID";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, storeName);
                 stm.setString(2, address);
-                stm.setString(3, avatar);
-                stm.setString(4, openHour);
-                stm.setString(5, closeHour);
-                stm.setString(6, account);
-                stm.setBoolean(7, status);
-                stm.setString(8, phone );
-                stm.setInt(9, id);
+//                stm.setString(3, avatar);
+                stm.setString(3, openHour);
+                stm.setString(4, closeHour);
+//                stm.setString(5, account);
+                stm.setBoolean(5, status);
+                stm.setString(6, phone );
+                stm.setInt(7, id);
                 int row = stm.executeUpdate();
                 if (row > 0) {
                     return true;
@@ -200,21 +200,23 @@ public class StoreDAO {
     }
 
     public boolean insertNewStore
-            (String storeName, String address, String avatar, String open, String close, String phone, int accountId) throws SQLException, ClassNotFoundException {
+            (String storeName, String address, String avatar, String open, String close, String longitude, String latitude, String phone, int accountId) throws SQLException, ClassNotFoundException {
         try{
             con = MyConnection.myConnection();
             if (con != null){
                 String sql =
-                        "INSERT INTO Store(StoreName, Address, Avatar, OpenHour, CloseHour, Status, Phone, AccountId) " +
-                        "VALUES(?,?,?,?,?,1,?,?)";
+                        "INSERT INTO Store(StoreName, Address, Avatar, OpenHour, CloseHour, Longitude, Latitude,Status, Phone, AccountId) " +
+                        "VALUES(?,?,?,?,?,?,?,1,?,?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, storeName);
                 stm.setString(2, address);
                 stm.setString(3, avatar);
                 stm.setString(4, open);
                 stm.setString(5, close);
-                stm.setString(6, phone);
-                stm.setInt(7, accountId);
+                stm.setString(6, longitude);
+                stm.setString(7, latitude);
+                stm.setString(8, phone);
+                stm.setInt(9 , accountId);
                 int row = stm.executeUpdate();
                 if (row > 0){
                     return true;

@@ -48,7 +48,7 @@ public class AccountDAO {
                     boolean isActive = rs.getBoolean("isActive");
                     String email = rs.getString("Email");
                     String avatar = rs.getString("Avatar");
-                    int gender = rs.getInt("Gender");
+                    boolean gender = rs.getBoolean("Gender");
                     Account dto = new Account(accountId, username, password, firstName, lastName, phone, isActive, email, avatar, gender);
                     if (listAccount == null) {
                         listAccount = new ArrayList<>();

@@ -43,7 +43,7 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="info" value="${requestScope.STOREDETAIL}" />
+<c:set var="info" value="${requestScope.STOREDETAIL}"/>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -81,7 +81,8 @@
 
 				<!-- Nav Item - Customer Account -->
 				<li class="nav-item">
-						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"  data-target="#collapseUtilities"
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
+						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
 								<i class="fas fa-fw fa-cog"></i>
 								<span>Customer Account</span>
@@ -111,7 +112,8 @@
 						</a>
 						<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New Configuration</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New
+												Configuration</a>
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
 								</div>
 						</div>
@@ -176,30 +178,11 @@
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
-														<span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+														<span class="mr-2 d-none d-lg-inline text-gray-600 small">Log Out</span>
 														<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 												</a>
 												<!-- Dropdown - User Information -->
-												<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-												     aria-labelledby="userDropdown">
-														<a class="dropdown-item" href="#">
-																<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-																Profile
-														</a>
-														<a class="dropdown-item" href="#">
-																<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-																Settings
-														</a>
-														<a class="dropdown-item" href="#">
-																<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-																Activity Log
-														</a>
-														<div class="dropdown-divider"></div>
-														<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-																<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-																Logout
-														</a>
-												</div>
+
 										</li>
 
 								</ul>
@@ -216,96 +199,96 @@
 										</div>
 										<div class="card-body">
 												<c:if test="${info == null}">
-												<form action="/admin/insert" method="POST" enctype="multipart/form-data">
-														<h3>Create New Store Account</h3>
-														<div class="form-group">
-																<label for="txtUsername">Username</label>
-																<input type="text" id="txtUsername" class="form-control" placeholder="Enter Store Account"
-																       value="" name="txtUsername">
-														</div>
+														<form action="/admin/insert" method="POST" enctype="multipart/form-data">
+																<h3>Create New Store Account</h3>
+																<div class="form-group">
+																		<label for="txtUsername">Username</label>
+																		<input type="text" id="txtUsername" class="form-control" placeholder="Enter Store Account"
+																		       value="" name="txtUsername">
+																</div>
 
-														<div class="form-group">
-																<label for="txtPassword">Password</label>
-																<input type="text" id="txtPassword" class="form-control" placeholder="Enter Account Password"
-																       value="" name="txtPassword">
-														</div>
+																<div class="form-group">
+																		<label for="txtPassword">Password</label>
+																		<input type="text" id="txtPassword" class="form-control" placeholder="Enter Account Password"
+																		       value="" name="txtPassword">
+																</div>
 
-														<div class="form-group">
-																<label for="txtFirstname">First Name</label>
-																<input type="text" id="txtFirstname" class="form-control" placeholder="Enter Account First Name"
-																       value="" name="txtFirstname">
-														</div>
-														<div class="form-group">
-																<label for="txtLastName">Last Name</label>
-																<input type="text" id="txtLastName" class="form-control" placeholder="Enter Account Last Name"
-																       value="" name="txtLastName">
-														</div>
+																<div class="form-group">
+																		<label for="txtFirstname">First Name</label>
+																		<input type="text" id="txtFirstname" class="form-control" placeholder="Enter Account First Name"
+																		       value="" name="txtFirstname">
+																</div>
+																<div class="form-group">
+																		<label for="txtLastName">Last Name</label>
+																		<input type="text" id="txtLastName" class="form-control" placeholder="Enter Account Last Name"
+																		       value="" name="txtLastName">
+																</div>
 
-														<div class="form-group">
-																<label for="txtContact"> Account Contact </label>
-																<input type="text" id="txtContact" class="form-control" placeholder="Enter Account Contact"
-																       value="" name="txtContact">
-														</div>
+																<div class="form-group">
+																		<label for="txtContact"> Account Contact </label>
+																		<input type="text" id="txtContact" class="form-control" placeholder="Enter Account Contact"
+																		       value="" name="txtContact">
+																</div>
 
-														<div class="form-group">
-																<label for="txtEmail"> Account Email </label>
-																<input type="text" id="txtEmail" class="form-control" placeholder="Enter Account Email"
-																       value="" name="txtEmail">
-														</div>
-														<div class="form-group">
-																<label for="slGender"></label>
-																<select class="mdb-select md-form" id="slGender" name="slGender">
-																		<option selected>Choose Gender</option>
-																		<option value="0">Female</option>
-																		<option value="1">Male</option>
-																		<option value="2">Other</option>
-																</select>
-														</div>
+																<div class="form-group">
+																		<label for="txtEmail"> Account Email </label>
+																		<input type="text" id="txtEmail" class="form-control" placeholder="Enter Account Email"
+																		       value="" name="txtEmail">
+																</div>
+																<div class="form-group">
+																		<label for="slGender"></label>
+																		<select class="mdb-select md-form" id="slGender" name="slGender">
+																				<option selected>Choose Gender</option>
+																				<option value="0">Female</option>
+																				<option value="1">Male</option>
+																				<option value="2">Other</option>
+																		</select>
+																</div>
 
-																<%-- Insert new Store --%>
-														<div class="form-group">
-																<label for="txtStoreName">Store Name</label>
-																<input type="text" id="txtStoreName" class="form-control" placeholder="Enter Store Name"
-																       value="" name="txtStoreName">
-														</div>
+																		<%-- Insert new Store --%>
+																<div class="form-group">
+																		<label for="txtStoreName">Store Name</label>
+																		<input type="text" id="txtStoreName" class="form-control" placeholder="Enter Store Name"
+																		       value="" name="txtStoreName">
+																</div>
 
-														<div class="form-group">
-																<label for="txtStoreAddress">Store Address</label>
-																<input type="text" id="txtStoreAddress" class="form-control" placeholder="Enter Store Name"
-																       value="" name="txtStoreAddress">
-														</div>
+																<div class="form-group">
+																		<label for="txtStoreAddress">Store Address</label>
+																		<input type="text" id="txtStoreAddress" class="form-control" placeholder="Enter Store Name"
+																		       value="" name="txtStoreAddress">
+																</div>
 
-														<div class="form-group">
-																<label for="file">Upload Avatar</label>
-																<input type="file" class="form-control" id="file" name="file" value="">
+																<div class="form-group">
+																		<label for="file">Upload Avatar</label>
+																		<input type="file" class="form-control" id="file" name="file" value="">
 
-														</div>
+																</div>
 
-														<div class="form-group">
-																<label for="txtOpenHour">Store Open Hour</label>
-																<input type="text" id="txtOpenHour" class="form-control" placeholder="Enter Store Open Hour"
-																       value="" name="txtOpenHour">
-														</div>
+																<div class="form-group">
+																		<label for="txtOpenHour">Store Open Hour</label>
+																		<input type="text" id="txtOpenHour" class="form-control" placeholder="Enter Store Open Hour"
+																		       value="" name="txtOpenHour">
+																</div>
 
-														<div class="form-group">
-																<label for="txtCloseHour">Store Close Hour</label>
-																<input type="text" id="txtCloseHour" class="form-control" placeholder="Enter Store Close Hour"
-																       value="" name="txtCloseHour">
-														</div>
+																<div class="form-group">
+																		<label for="txtCloseHour">Store Close Hour</label>
+																		<input type="text" id="txtCloseHour" class="form-control" placeholder="Enter Store Close Hour"
+																		       value="" name="txtCloseHour">
+																</div>
 
-														<div class="form-group">
-																<label for="txtPhoneStore">Store Phone</label>
-																<input type="text" id="txtPhoneStore" class="form-control" placeholder="Enter Store Phone"
-																       value="" name="txtPhoneStore">
-														</div>
+																<div class="form-group">
+																		<label for="txtPhoneStore">Store Phone</label>
+																		<input type="text" id="txtPhoneStore" class="form-control" placeholder="Enter Store Phone"
+																		       value="" name="txtPhoneStore">
+																</div>
 
-														<input type="submit" class="btn btn-primary" name="Save">
-														<input type="reset" name="Reset" class="btn btn-secondary">
-												</form>
-										</c:if>
+																<input type="submit" class="btn btn-primary" name="Save">
+																<input type="reset" name="Reset" class="btn btn-secondary">
+														</form>
+												</c:if>
 												<c:if test="${info != null}">
 														<form action="/admin/save" method="POST">
-																<c:forEach var="rs" items="${info}" >
+																<c:forEach var="rs" items="${info}">
 																		<h3>Edit Store Account</h3>
 																		<input type="text" value="${rs.storeId}" name="txtId" hidden>
 
@@ -322,11 +305,11 @@
 																				       value="${rs.address}" name="editStoreAddress">
 																		</div>
 
-																		<div class="form-group">
-																				<img src="${rs.avatar}" width="100px" height="100px" >
-																				<input type="file" class="form-control" id="editfile" name="file" value="">
+<%--																		<div class="form-group">--%>
+<%--																				<img src="${rs.avatar}" width="100px" height="100px">--%>
+<%--																				<input type="file" class="form-control" id="editfile" name="file" value="">--%>
 
-																		</div>
+<%--																		</div>--%>
 
 																		<div class="form-group">
 																				<label for="editOpenHour">Store Open Hour</label>
@@ -346,11 +329,28 @@
 																				       value="${rs.phone}" name="editPhoneStore">
 																		</div>
 																		<div class="form-group">
-																				<label for="editPhoneStore">Change Status Of Store</label>
-																				<select name="slStatus">
-																						<option>Active</option>
-																						<option>Deactive</option>
-																				</select>
+																				<div class="checkbox-inline">
+																						<label>
+																								<input type="checkbox" value="${rs.status}" id="chkStatus" name=""
+																								<c:if test="${rs.status}">
+																								              checked="checked"
+																								</c:if>
+																								>
+																								(Check if Active)
+																						</label>
+																						<label class="radio-inline">
+																								<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 1"
+																								<c:if test="${rs.status}">
+																								       checked="checked"
+																								</c:if>>
+																						</label>
+																						<label class="radio-inline">
+																								<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 1 "
+																								<c:if test="${not rs.status}">
+																								       checked="checked"
+																								</c:if>>
+																						</label>
+																				</div>
 																		</div>
 
 																</c:forEach>
@@ -432,6 +432,17 @@
 
 <!-- Page level custom scripts -->
 <%--<script src="js/datatables-demo.js"></script>--%>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#chkStatus').click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#true").prop("checked", true);
+            } else if ($(this).prop("checked") == false) {
+                $("#false").prop("checked", true);
+            }
+        });
+    });
+</script>
 
 </body>
 

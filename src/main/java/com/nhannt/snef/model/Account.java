@@ -10,13 +10,13 @@ public class Account {
     private String email;
     private boolean isActive;
     private String avatar;
-    private int gender;
+    private boolean gender;
     private int roleId;
 
     public Account() {
     }
 
-    public Account(String userName, String password, String firstName, String lastName, String phone, String email, boolean isActive, int gender, int roleId) {
+    public Account(String userName, String password, String firstName, String lastName, String phone, String email, boolean isActive, boolean gender, int roleId) {
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
@@ -28,7 +28,7 @@ public class Account {
         this.roleId = roleId;
     }
 
-    public Account(int accountId, String userName, String password, String firstName, String lastName, String phone, boolean isActive, String email, String avatar, int gender) {
+    public Account(int accountId, String userName, String password, String firstName, String lastName, String phone, boolean isActive, String email, String avatar, boolean gender) {
         this.accountId = accountId;
         this.userName = userName;
         this.password = password;
@@ -113,11 +113,11 @@ public class Account {
         this.avatar = avatar;
     }
 
-    public int isGender() {
+    public boolean isGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(boolean gender) {
         this.gender = gender;
     }
 

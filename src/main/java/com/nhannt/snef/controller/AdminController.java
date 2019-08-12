@@ -1,15 +1,11 @@
 package com.nhannt.snef.controller;
 
 import com.cloudinary.utils.ObjectUtils;
-import com.nhannt.snef.model.Account;
-import com.nhannt.snef.model.Configuration;
-import com.nhannt.snef.model.NewProductRequest;
-import com.nhannt.snef.model.Store;
+import com.nhannt.snef.model.*;
 import com.nhannt.snef.service.AccountService;
 import com.nhannt.snef.service.ConfigurationService;
 import com.nhannt.snef.service.NewProductRequestService;
 import com.nhannt.snef.service.StoreService;
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +22,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.cloudinary.Cloudinary;
@@ -76,43 +73,43 @@ public class AdminController {
     //Edit Store
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveStore(@RequestParam(value = "txtId") String id,
-                            @RequestParam(value = "txtName") String name,
+                            @RequestParam(value = "editStoreName") String name,
 
-                            @RequestParam(value = "txtAddress") String address,
+                            @RequestParam(value = "editStoreAddress") String address,
 //                            @RequestParam(value = "txtRating") String rating,
-                            @RequestParam(value = "file") MultipartFile file,
-                            @RequestParam(value = "txtOpen") String open,
-                            @RequestParam(value = "txtClose") String close,
-                            @RequestParam(value = "txtAccount") String account,
-                            @RequestParam(value = "txtPhone") String phone,
-                            @RequestParam(name = "chkStatus") boolean chkStatus,
+//                            @RequestParam(value = "file") MultipartFile file,
+                            @RequestParam(value = "editOpenHour") String open,
+                            @RequestParam(value = "editCloseHour") String close,
+//                            @RequestParam(value = "txtAccount") String account,
+                            @RequestParam(value = "editPhoneStore") String phone,
+                            @RequestParam(name = "chkStatus") String chkStatus,
                             Model model) throws SQLException, ClassNotFoundException {
         int parseId = Integer.parseInt(id);
 
 //        int storeManager = Integer.parseInt(manager);
 //        int location = Integer.parseInt(local);
 //        float rat = Float.parseFloat(rating);
-//        boolean status = Boolean.parseBoolean(chkStatus);
+        boolean status = Boolean.parseBoolean(chkStatus);
         try {
             //Insert Image to DB
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get("" + file.getOriginalFilename());
-            File myFile = new File(String.valueOf(Files.write(path, bytes)));
-            HashMap<String, String> config = new HashMap<>();
-            config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
-            config.put("api_key", CLOUDINARY_API_KEY);
-            config.put("api_secret", CLOUDINARY_API_SECRET);
-            Cloudinary cloudinary = new Cloudinary(config);
-            HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
-            String getUrl = String.valueOf(uploadResult.get("url"));
-            boolean rs = storeService.updateStoreById(parseId, name, address, getUrl, open, close, chkStatus, account, phone);
+//            byte[] bytes = file.getBytes();
+//            Path path = Paths.get("" + file.getOriginalFilename());
+//            File myFile = new File(String.valueOf(Files.write(path, bytes)));
+//            HashMap<String, String> config = new HashMap<>();
+//            config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
+//            config.put("api_key", CLOUDINARY_API_KEY);
+//            config.put("api_secret", CLOUDINARY_API_SECRET);
+//            Cloudinary cloudinary = new Cloudinary(config);
+//            HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
+//            String getUrl = String.valueOf(uploadResult.get("url"));
+            boolean rs = storeService.updateStoreById(parseId, name, address, open, close, status, phone);
             if (rs) {
                 return "redirect:/home";
             }
 
 
-        } catch (IOException e) {
-            Logger.getLogger("SAVE FILE ERROR" + e);
+        } catch (Exception e) {
+            Logger.getLogger("SERVER ERROR" + e);
         }
 
         model.addAttribute("msg", "Update not successful");
@@ -153,9 +150,14 @@ public class AdminController {
         try {
             int parseGender = Integer.parseInt(gender);
             int accountId = accountService.insertNewAccount(username, password, firstName, lastName, phone, email, parseGender);
-
+            System.out.println("Insert Account Success: " + accountId);
             //If accountId == null -> message error name
             if (accountId > 0){
+
+                /**
+                 * Upload image to cloudinary
+                 * => return url and pass to service
+                 * */
                 byte[] bytes = file.getBytes();
                 Path path = Paths.get("" + file.getOriginalFilename());
                 File myFile = new File(String.valueOf(Files.write(path, bytes)));
@@ -166,8 +168,21 @@ public class AdminController {
                 Cloudinary cloudinary = new Cloudinary(config);
                 HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
                 String getUrl = String.valueOf(uploadResult.get("url"));
+                /**
+                 * Get param address
+                 * Convert to longitude and latitude
+                 * */
+                Map<String, Double> coords;
+                coords = LatLon.getInstance().getCoordinates(address);
+
+                System.out.println("latitude :" + coords.get("lat"));
+                System.out.println("longitude:" + coords.get("lon"));
+                String longitude = String.valueOf(coords.get("lon"));
+                String latitude = String.valueOf(coords.get("lat"));
+
                 // Create new Store
-                boolean createStore = storeService.insertNewStore(storeName, address,getUrl ,open, close, phoneStore, accountId);
+                boolean createStore =
+                        storeService.insertNewStore(storeName, address,getUrl ,open, close,longitude, latitude, phoneStore, accountId);
                 if (createStore){
                     return "redirect:/home";
                 }

@@ -15,7 +15,8 @@
     <title>SNEF - Admin Page</title>
 
     <!-- Custom fonts for this template -->
-    <link href="css/all.css" rel="stylesheet" type="text/css">
+    <link href="../css/all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/sb-admin-2.css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
@@ -212,9 +213,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="rs" items="${list}">
+                                    <c:forEach var="rs" items="${list}" varStatus="counter">
                                         <tr>
-                                            <td>${rs.storeId}</td>
+                                            <td>
+                                                ${counter.count}
+                                                    <input type="text" value="${rs.storeId}" hidden>
+                                            </td>
                                             <td style="width: 100px">${rs.storeName}</td>
                                             <td>${rs.address}</td>
                                             <td>${rs.ratingPoint}</td>
@@ -225,10 +229,10 @@
                                             <td>${rs.storeManager}</td>
                                             <c:choose>
                                                 <c:when test="${rs.status}">
-                                                    <td><p>InActive</p></td>
+                                                    <td><p>Active</p></td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td><p>Active</p></td>
+                                                    <td><p>InActive</p></td>
                                                 </c:otherwise>
                                             </c:choose>
                                             <td>
@@ -265,9 +269,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach var="rs" items="${search}">
+                                    <c:forEach var="rs" items="${search}" varStatus="counter">
                                         <tr>
-                                            <td>${rs.storeId}</td>
+                                            <td>
+                                                ${counter.count}
+                                                <input type="text" value="${rs.storeId}" hidden>
+                                            </td>
                                             <td>${rs.storeName}</td>
                                             <td>${rs.address}</td>
                                             <td>${rs.ratingPoint}</td>
@@ -276,12 +283,16 @@
                                             <td>${rs.closeHour}</td>
                                             <td>${rs.phone}</td>
                                             <td>${rs.storeManager}</td>
+
                                             <c:choose>
                                                 <c:when test="${rs.status}">
+                                                    <td><p>Active</p></td>
+                                                </c:when>
+                                                <c:when test="${!rs.status}">
                                                     <td><p>InActive</p></td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td><p>Active</p></td>
+                                                    <td><p>InActive</p></td>
                                                 </c:otherwise>
                                             </c:choose>
                                             <td>
