@@ -23,7 +23,7 @@
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
 		      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -32,13 +32,23 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
 		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 		<!-- Custom styles for this template -->
 		<link rel="stylesheet" href="css/sb-admin-2.css">
 		<!-- Custom styles for this page -->
 		<link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
 		<script src="https://kit.fontawesome.com/85cfd1cc6c.js"></script>
+		<style>
+				*{
+						box-sizing: border-box;
+
+				}
+				.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
+						color: rgba(255, 255, 255, 0.5);
+						opacity: 0;
+				}
+		</style>
 </head>
 
 <body id="page-top">
@@ -55,7 +65,7 @@
 				<a class="sidebar-brand d-flex align-items-center justify-content-center"
 				   href="${pageContext.request.contextPath}/home">
 						<div class="sidebar-brand-icon rotate-n-15">
-								<i class="fas fa-laugh-wink"></i>
+								<i class="fas fa-users-cog"></i>
 						</div>
 						<div class="sidebar-brand-text mx-3">Admin Management</div>
 				</a>
@@ -68,7 +78,7 @@
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
 						   data-target="#collapseTwo"
 						   aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-store-alt"></i>
 								<span>Stores</span>
 						</a>
 						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -84,7 +94,7 @@
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
 						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-users"></i>
 								<span>Customer Account</span>
 						</a>
 						<div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -98,7 +108,7 @@
 
 				<li class="nav-item">
 						<a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-bullhorn"></i>
 								<span>Process New Request</span></a>
 				</li>
 
@@ -364,10 +374,11 @@
 <%--<script src="js/jquery.dataTables.min.js"></script>--%>
 <script src="js/jquery.dataTables.js"></script>
 <%--<script src="js/dataTables.bootstrap4.min.js"></script>--%>
-<script src="js/dataTables.bootstrap4.js"></script>
+<%--<script src="js/dataTables.bootstrap4.js"></script>--%>
 
 <!-- Page level custom scripts -->
 <%--<script src="js/datatables-demo.js"></script>--%>
+<script src="https://use.fontawesome.com/7204477c6d.js"></script>
 
 </body>
 

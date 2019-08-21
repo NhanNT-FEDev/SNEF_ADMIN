@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-		<title>Login V1</title>
+		<title>Login Page</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--===============================================================================================-->
@@ -18,9 +18,10 @@
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
 		<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css">
+		<link rel="stylesheet" type="text/css"
+		      href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.1.3/hamburgers.min.css">
 		<!--===============================================================================================-->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet"/>
 
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="../../css/util.css">
@@ -36,29 +37,30 @@
 								<img src="https://res.cloudinary.com/dr4hpc9gi/image/upload/v1565864524/img-01.png" alt="IMG">
 						</div>
 						<form class="login100-form validate-form" action="/login/check" method="POST">
-							<span class="login100-form-title">
-								Admin Management
-							</span>
+								<h2 class="login100-form-title font-weight-bolder">
+											Admin Management
+								</h2>
 
-										<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-												<input class="input100" type="text" name="txtName" placeholder="Name">
-												<span class="focus-input100"></span>
-												<span class="symbol-input100">
-									<i class="fa fa-envelope" aria-hidden="true"></i>
+								<div class="wrap-input100 validate-input" data-validate="Name can't be blank">
+										<input class="input100" type="text" name="txtName" placeholder="Name">
+										<span class="focus-input100"></span>
+										<span class="symbol-input100">
+														<i class="fas fa-user" aria-hidden="true"></i>
+
 								</span>
-										</div>
+								</div>
 
-										<div class="wrap-input100 validate-input" data-validate="Password is required">
-												<input class="input100" type="password" name="txtPass" placeholder="Password">
-												<span class="focus-input100"></span>
-												<span class="symbol-input100">
+								<div class="wrap-input100 validate-input" data-validate="Password is required">
+										<input class="input100" type="password" name="txtPass" placeholder="Password" minlength="5" maxlength="6">
+										<span class="focus-input100"></span>
+										<span class="symbol-input100">
 									<i class="fa fa-lock" aria-hidden="true"></i>
 								</span>
-										</div>
+								</div>
 
-										<div class="container-login100-form-btn">
-												<input type="submit" class="login100-form-btn" value="Login"/>
-										</div>
+								<div class="container-login100-form-btn">
+										<input type="submit" class="login100-form-btn" value="Login"/>
+								</div>
 
 						</form>
 				</div>
@@ -73,13 +75,14 @@
 <!--===============================================================================================-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 <!--===============================================================================================-->
-<script>
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
-</script>
+<script src="https://use.fontawesome.com/7204477c6d.js"></script>
+<%--<script>--%>
+<%--    $('.js-tilt').tilt({--%>
+<%--        scale: 1.1--%>
+<%--    })--%>
+<%--</script>--%>
 <!--===============================================================================================-->
-<script src="js/main.js"></script>
+<script src="../../js/main.js"></script>
 
 </body>
 </html>
