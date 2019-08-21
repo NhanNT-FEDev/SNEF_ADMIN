@@ -1,5 +1,6 @@
 package com.nhannt.snef.controller;
 
+import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.nhannt.snef.model.*;
 import com.nhannt.snef.service.*;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import com.cloudinary.Cloudinary;
 
 @Controller
 @RequestMapping("/admin")
@@ -100,7 +99,7 @@ public class AdminController {
             String longitude = String.valueOf(coords.get("lon"));
             String latitude = String.valueOf(coords.get("lat"));
 
-            boolean rs = storeService.updateStoreById(parseId, name, address, open, close,longitude, latitude, status, phone);
+            boolean rs = storeService.updateStoreById(parseId, name, address, open, close, longitude, latitude, status, phone);
             if (rs) {
                 return "redirect:/home";
             }
@@ -138,7 +137,7 @@ public class AdminController {
             @RequestParam(value = "txtContact") String phone,
             @RequestParam(value = "txtEmail") String email,
             @RequestParam(value = "slGender") String gender,
-            @RequestParam(value = "txtStoreName")String storeName,
+            @RequestParam(value = "txtStoreName") String storeName,
             @RequestParam(value = "txtStoreAddress") String address,
             @RequestParam(value = "file") MultipartFile file,
             @RequestParam(value = "txtOpenHour") String open,
@@ -150,7 +149,7 @@ public class AdminController {
             int accountId = accountService.insertNewAccount(username, password, firstName, lastName, phone, email, parseGender);
             System.out.println("Insert Account Success: " + accountId);
             //If accountId == null -> message error name
-            if (accountId > 0){
+            if (accountId > 0) {
 
                 /**
                  * Upload image to cloudinary
@@ -180,8 +179,8 @@ public class AdminController {
 
                 // Create new Store
                 boolean createStore =
-                        storeService.insertNewStore(storeName, address,getUrl ,open, close,longitude, latitude, phoneStore, accountId);
-                if (createStore){
+                        storeService.insertNewStore(storeName, address, getUrl, open, close, longitude, latitude, phoneStore, accountId);
+                if (createStore) {
                     return "redirect:/home";
                 }
 
@@ -226,7 +225,7 @@ public class AdminController {
         int accountId = Integer.parseInt(txtId);
 
         boolean result = accountService.changeStatus(accountId, status);
-        if (result){
+        if (result) {
             return "redirect:/admin/customer";
         }
         model.addAttribute("ERRORUPDATE", "CAN NOT CHANGE STATUS ACCOUNT - PLEASE CHECK NETWORKING");
@@ -235,9 +234,8 @@ public class AdminController {
 
 
     /**
-    * Manage all CRUD of Configuration
-    *
-    * */
+     * Manage all CRUD of Configuration
+     */
     @RequestMapping(value = "/config", method = RequestMethod.GET)
     public String showAllConfi(Model model) throws SQLException, ClassNotFoundException {
         List<Configuration> list = service.getAllConfi();
@@ -255,7 +253,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/config/create", method = RequestMethod.GET)
-    public String addNewConfig(){
+    public String addNewConfig() {
         return "createconfigpage";
     }
 
@@ -264,7 +262,7 @@ public class AdminController {
             @RequestParam(value = "txtCfName") String cfName,
             @RequestParam(value = "txtCfValue") String cfValue, Model model) throws SQLException, ClassNotFoundException {
         boolean rs = service.addNewConfiguration(cfName, cfValue);
-        if (rs){
+        if (rs) {
             return "redirect:/home";
         }
         model.addAttribute("ERR", "NEW CONFIGURATION NAME IS DUPLICATED");
@@ -274,20 +272,20 @@ public class AdminController {
     @RequestMapping(value = "/config/save", method = RequestMethod.POST)
     public String saveEditCf(@RequestParam(value = "txtCfName") String cfName,
                              @RequestParam(value = "txtCfValue") String cfValue,
-                            @RequestParam(value = "txtId") String txtId,
+                             @RequestParam(value = "txtId") String txtId,
                              Model model) throws SQLException, ClassNotFoundException {
         int cfId = Integer.parseInt(txtId);
-        boolean rs = service.editConfiguration(cfId, cfName,cfValue);
-        if (rs){
+        boolean rs = service.editConfiguration(cfId, cfName, cfValue);
+        if (rs) {
             return "redirect:/home";
         }
         model.addAttribute("ERROR", "The Configuration Name has been duplicated");
         return "createconfigpage";
     }
 
-    /** Manage all CRUD of Process new Request
-     *
-     * */
+    /**
+     * Manage all CRUD of Process new Request
+     */
     @RequestMapping(value = "/request", method = RequestMethod.GET)
     public String showAllRequest(Model model) throws SQLException, ClassNotFoundException {
         List<NewProductRequest> list = nprService.getAllRequest();
@@ -295,6 +293,32 @@ public class AdminController {
         return "processpage";
     }
 
+    //Handle Request
+    @RequestMapping(value = "request/handle", method = RequestMethod.POST)
+    public String processNewRequest(@RequestParam(value = "txtId") String txtId,
+                                    @RequestParam(value = "chkStatus") String chkStatus,
+                                    @RequestParam(value = "txtDes") String txtDes,
+                                    @RequestParam(value = "txtProId") String txtProId,
+                                    Model model,
+                                    HttpSession session) throws SQLException, ClassNotFoundException {
+        int id = Integer.parseInt(txtId);
+        int proId = Integer.parseInt(txtProId);
+        boolean status = Boolean.parseBoolean(chkStatus);
+        String adminName = String.valueOf(session.getAttribute("USERNAME"));
+        if (status) {
+            boolean rs = nprService.getAcceptRequest(id, adminName, status, proId);
+            if (rs) {
+                return "redirect:/admin/request";
+            }
+        } else {
 
+            boolean rs = nprService.getDenyRequest(id, adminName, status, proId, txtDes);
+            if (rs) {
+                return "redirect:/admin/request";
+            }
+        }
+        model.addAttribute("ERROR", "CAN NOT PROCESS REQUEST, PLEASE CHECK NETWORKING");
+        return "redirect:/request";
+    }
 
 }

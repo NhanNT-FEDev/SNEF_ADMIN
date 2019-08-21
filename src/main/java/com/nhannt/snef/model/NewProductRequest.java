@@ -23,12 +23,13 @@ public class NewProductRequest {
         this.productId = productId;
     }
 
-    public NewProductRequest(int nPRId, boolean status, String storeName, String productName, String imageProduct) {
+    public NewProductRequest(int nPRId, boolean status, String storeName, String productName, String imageProduct, int productId) {
         this.nPRId = nPRId;
         this.status = status;
         this.storeName = storeName;
         this.productName = productName;
         this.imageProduct = imageProduct;
+        this.productId = productId;
     }
 
     public int getnPRId() {

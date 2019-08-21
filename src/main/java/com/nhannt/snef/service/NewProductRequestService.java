@@ -18,4 +18,31 @@ public class NewProductRequestService {
         List<NewProductRequest> listRequest = nprDao.getAllRequest();
         return listRequest;
     }
+
+
+    /**
+     * If status == true => Update Product => Status = true
+     * Field: nprId, Admin name, status, productId,
+     * <p>
+     * If Status == false => Insert Description
+     * Field: productId, message,admin name,nprId
+     */
+
+    public boolean getAcceptRequest(int nprId, String adminName, boolean status, int productId) throws SQLException, ClassNotFoundException {
+        boolean rs = nprDao.acceptRequest(nprId, adminName, status, productId);
+        if (rs) {
+            return true;
+        }
+        return false;
+    }
+
+    //Deny Process
+    public boolean getDenyRequest(int nprId, String adminName, boolean status, int productId, String message) throws SQLException, ClassNotFoundException {
+        boolean rs = nprDao.denyRequest(nprId, adminName, status, message, productId);
+        if (rs) {
+            return true;
+        }
+        return false;
+    }
+
 }

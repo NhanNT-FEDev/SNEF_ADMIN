@@ -19,8 +19,8 @@
 		<link href="../css/all.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="../css/sb-admin-2.css">
 		<link
-										href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-										rel="stylesheet">
+						href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+						rel="stylesheet">
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
 		      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<!-- Latest compiled and minified CSS -->
@@ -116,7 +116,8 @@
 								<div class="bg-white py-2 collapse-inner rounded">
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New
 												Configuration</a>
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration
+												Data</a>
 								</div>
 						</div>
 				</li>
@@ -214,9 +215,8 @@
 																		</thead>
 																		<tbody>
 																		<c:forEach var="rs" items="${list}" varStatus="counter">
-																				<%--																		<form action="../admin/customer/changeStatus" method="POST">--%>
 																				<tr>
-																						<form action="../admin/customer/changeStatus" method="POST">
+																						<form action="${pageContext.request.contextPath}/admin/customer/changeStatus" method="POST">
 
 																								<td>
 																												${counter.count}
@@ -241,7 +241,8 @@
 																								<td>
 																										<div class="checkbox-inline">
 																												<label>
-																														<input type="checkbox" value="${rs.isactive}" id="chkStatus" name=""
+																														<input type="checkbox" value="${rs.isactive}" id="chkStatus"
+																														       name=""
 																														<c:if test="${rs.isactive}">
 																														       checked="checked"
 																														</c:if>
@@ -249,13 +250,15 @@
 																														(Deactive if you unchecked)
 																												</label>
 																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 0 "
+																														<input type="radio" name="chkStatus" id="true" value="true"
+																														       style="opacity: 0 "
 																														<c:if test="${rs.isactive}">
 																														       checked="checked"
 																														</c:if>>
 																												</label>
 																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 0 "
+																														<input type="radio" name="chkStatus" id="false"
+																														       value="false" style="opacity: 0 "
 																														<c:if test="${not rs.isactive}">
 																														       checked="checked"
 																														</c:if>>
@@ -271,7 +274,6 @@
 																		</c:forEach>
 																		</tbody>
 																</table>
-																<%--																</form>--%>
 														</c:if>
 
 												</div>

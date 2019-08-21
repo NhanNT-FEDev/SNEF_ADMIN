@@ -18,8 +18,8 @@
 		<link href="../../css/all.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="../../css/sb-admin-2.css">
 		<link
-										href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-										rel="stylesheet">
+						href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+						rel="stylesheet">
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
 		      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<!-- Latest compiled and minified CSS -->
@@ -114,7 +114,8 @@
 								<div class="bg-white py-2 collapse-inner rounded">
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New
 												Configuration</a>
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration
+												Data</a>
 								</div>
 						</div>
 				</li>
@@ -190,7 +191,7 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Data Process New Request</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
@@ -210,46 +211,57 @@
 																		<tbody>
 																		<c:forEach var="rs" items="${list}" varStatus="count">
 																				<tr>
-																						<td>${count.count}
-																								<input type="text" value="${rs.nPRId}" name="txtId" hidden>
-																						</td>
-																						<td>${rs.storeName}</td>
-																						<td>${rs.productName}</td>
-																						<td>
-																								<div class="form-group">
-																										<div class="checkbox-inline">
-																												<label>
-																														<input type="checkbox" value="${rs.status}" id="chkStatus" name=""
-																														<c:if test="${rs.status}">
-																														       checked="checked"
-																														</c:if>
-																														>
-																														(Check if Active)
-																												</label>
-																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 0 "
-																														<c:if test="${rs.status}">
-																														       checked="checked"
-																														</c:if>>
-																												</label>
-																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 0 "
-																														<c:if test="${not rs.status}">
-																														       checked="checked"
-																														</c:if>
-																												</label>
+																						<form action="${pageContext.request.contextPath}/admin/request/handle"
+																						      method="POST">
+																								<td>${count.count}
+																										<input type="text" value="${rs.nPRId}" name="txtId" hidden>
+																								</td>
+																								<td>${rs.storeName}</td>
+																								<td>
+																												${rs.productName}
+																														<input type="text" value="${rs.productId}" name="txtProId" hidden>
+																								</td>
+																								<td>
+																										<div class="form-group">
+																												<div class="checkbox-inline">
+																														<label>
+																																<input type="checkbox" value="${rs.status}"
+																																       id="chkStatus" name=""
+																																<c:if test="${rs.status}">
+																																       checked="checked"
+																																</c:if>
+																																>
+																																(Check if Active)
+																														</label>
+																														<label class="radio-inline">
+																																<input type="radio" name="chkStatus" id="true"
+																																       value="true" style="opacity: 0 "
+																																<c:if test="${rs.status}">
+																																       checked="checked"
+																																</c:if>>
+																														</label>
+																														<label class="radio-inline">
+																																<input type="radio" name="chkStatus" id="false"
+																																       value="false" style="opacity: 0 "
+																																<c:if test="${not rs.status}">
+																																       checked="checked"
+																																</c:if>
+																														</label>
+																												</div>
 																										</div>
-																								</div>
-																						</td>
-																						<td>
-																								<img src="${rs.imageProduct}" alt="" width="100px" height="100px">
-																						</td>
-																						<td>
-																								<textarea class="form-control" rows="5" cols="15" name="des" style="width: 300px" id="comment"></textarea>
-																						</td>
+																								</td>
+																								<td>
+																										<img src="${rs.imageProduct}" alt="" width="100px" height="100px">
+																								</td>
+																								<td>
+																										<textarea class="form-control" rows="5" cols="15" name="txtDes"
+																										          style="width: 300px" id="comment"></textarea>
+																								</td>
 
-																						<td><input type="submit" value="Response" class="btn btn-primary submit"/></td>
-
+																								<td>
+																										<input type="submit" class="btn btn-primary" value="Change Status">
+																								</td>
+																						</form>
 																				</tr>
 																		</c:forEach>
 																		</tbody>
@@ -328,7 +340,7 @@
             var comment = $.trim($('#comment').val());
             if ($('#chkStatus').prop("checked") == false && comment == '') {
                 $('#comment').focusin;
-                alert('nhap chux vao');
+                alert('Nhập Lý do Từ chối');
             }
         });
     });
