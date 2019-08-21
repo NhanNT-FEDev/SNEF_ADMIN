@@ -64,7 +64,7 @@
 				<a class="sidebar-brand d-flex align-items-center justify-content-center"
 				   href="${pageContext.request.contextPath}/home">
 						<div class="sidebar-brand-icon rotate-n-15">
-								<i class="fas fa-laugh-wink"></i>
+								<i class="fas fa-users-cog"></i>
 						</div>
 						<div class="sidebar-brand-text mx-3">Admin Management</div>
 				</a>
@@ -72,13 +72,12 @@
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
 
-
 				<!-- Nav Item - Stores -->
 				<li class="nav-item">
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
 						   data-target="#collapseTwo"
 						   aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-store-alt"></i>
 								<span>Stores</span>
 						</a>
 						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -94,7 +93,7 @@
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
 						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-users"></i>
 								<span>Customer Account</span>
 						</a>
 						<div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -108,7 +107,7 @@
 
 				<li class="nav-item">
 						<a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-bullhorn"></i>
 								<span>Process New Request</span></a>
 				</li>
 
@@ -124,16 +123,12 @@
 								<div class="bg-white py-2 collapse-inner rounded">
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New
 												Configuration</a>
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration
+												Data</a>
 								</div>
 						</div>
 				</li>
 
-
-				<!-- Sidebar Toggler (Sidebar) -->
-				<div class="text-center d-none d-md-inline">
-						<button class="rounded-circle border-0" id="sidebarToggle"></button>
-				</div>
 
 		</ul>
 		<!-- End of Sidebar -->

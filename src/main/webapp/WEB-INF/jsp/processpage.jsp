@@ -65,7 +65,7 @@
 				<a class="sidebar-brand d-flex align-items-center justify-content-center"
 				   href="${pageContext.request.contextPath}/home">
 						<div class="sidebar-brand-icon rotate-n-15">
-								<i class="fas fa-laugh-wink"></i>
+								<i class="fas fa-users-cog"></i>
 						</div>
 						<div class="sidebar-brand-text mx-3">Admin Management</div>
 				</a>
@@ -78,7 +78,7 @@
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
 						   data-target="#collapseTwo"
 						   aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-store-alt"></i>
 								<span>Stores</span>
 						</a>
 						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -94,7 +94,7 @@
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
 						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-users"></i>
 								<span>Customer Account</span>
 						</a>
 						<div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -108,7 +108,7 @@
 
 				<li class="nav-item">
 						<a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
-								<i class="fas fa-fw fa-cog"></i>
+								<i class="fas fa-bullhorn"></i>
 								<span>Process New Request</span></a>
 				</li>
 
