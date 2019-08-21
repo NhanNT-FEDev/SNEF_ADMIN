@@ -14,7 +14,7 @@ public class HomeController {
     @Autowired
     StoreService storeService;
 
-    @RequestMapping(method = RequestMethod.GET, value = {"/", "/home","/admin"}, produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = {"/home","/admin"}, produces = "application/json")
     public String home(Model model) throws SQLException, ClassNotFoundException {
         model.addAttribute("LISTSTORE", storeService.getAllStores());
         //Set dường dẫn chạy file jsp

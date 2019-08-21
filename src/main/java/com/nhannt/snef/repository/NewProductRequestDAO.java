@@ -34,17 +34,18 @@ public class NewProductRequestDAO {
         try {
             con = MyConnection.myConnection();
             if (con != null){
-                String sql = "SELECT n.NPRId, s.StoreName, p.ProductName, n.Status FROM NewProductRequest n, Store s, Product p " +
-                        "where s.StoreId = n.StoreId AND n.ProductId = p.ProductId AND n.Status = 0 ORDER BY n.NPRId DESC ";
+                String sql = "SELECT n.NPRId, s.StoreName, p.ProductName, p.ImageSrc, n.Status FROM NewProductRequest n, Store s, Product p " +
+                        "where s.StoreId = n.StoreId AND n.ProductId = p.ProductId AND n.Status = 0 AND Message IS NULL ORDER BY n.NPRId DESC ";
                 stm = con.prepareStatement(sql);
                 rs =stm.executeQuery();
                 while (rs.next()){
                     int nprId = rs.getInt("NPRId");
                     String storeName = rs.getString("StoreName");
                     String productName = rs.getString("ProductName");
+                    String proImage =rs.getString("ImageSrc");
                     boolean status = rs.getBoolean("Status");
 
-                    NewProductRequest dto = new NewProductRequest(nprId, status, storeName, productName);
+                    NewProductRequest dto = new NewProductRequest(nprId, status, storeName, productName, proImage);
                     if (listRequest == null)
                         listRequest = new ArrayList<>();
                     listRequest.add(dto);
@@ -57,4 +58,6 @@ public class NewProductRequestDAO {
         }
         return null;
     }
+
+
 }

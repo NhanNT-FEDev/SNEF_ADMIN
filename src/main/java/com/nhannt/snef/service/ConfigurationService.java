@@ -19,24 +19,28 @@ public class ConfigurationService {
     }
 
     public boolean editConfiguration(int cfId, String cfName, String cfValue) throws SQLException, ClassNotFoundException {
-        boolean checkExistName = dao.checkExistCf(cfName);
-        if (!checkExistName){
+
             boolean editCf = dao.updateCf(cfId, cfName, cfValue);
             if (editCf){
                 return true;
             }
-        }
         return false;
     }
 
     public boolean addNewConfiguration(String cfName, String cfValue) throws SQLException, ClassNotFoundException {
         boolean checkExistName = dao.checkExistCf(cfName);
         if (!checkExistName){
-            boolean addCf = dao.insertNewCf(cfName, cfName);
+            boolean addCf = dao.insertNewCf(cfName, cfValue);
             if (addCf){
                 return true;
             }
         }
         return false;
+    }
+
+    public List<Configuration> getCfById(int cfId) throws SQLException, ClassNotFoundException {
+        List<Configuration> cfInfor = dao.getCfById(cfId);
+        return cfInfor;
+
     }
 }

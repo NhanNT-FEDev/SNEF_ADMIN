@@ -116,4 +116,34 @@ public class ConfigurationDAO {
         }
         return false;
     }
+
+
+    public List<Configuration> getCfById(int cfId) throws SQLException, ClassNotFoundException {
+        List<Configuration> getList = null;
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "SELECT configurationId,configurationName, configurationValue FROM Configuration WHERE configurationId = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, cfId);
+                rs = stm.executeQuery();
+                while (rs.next()){
+                    int configurationIdfId = rs.getInt("configurationId");
+                    String cfName = rs.getString("configurationName");
+                    String cfValue = rs.getString("configurationValue");
+
+                    Configuration dto = new Configuration(configurationIdfId,cfName, cfValue);
+                    if (getList == null){
+                        getList = new ArrayList<>();
+                    }
+                    getList.add(dto);
+
+                }
+                return getList;
+            }
+        }finally {
+            closeConnection();
+        }
+        return null;
+    }
 }

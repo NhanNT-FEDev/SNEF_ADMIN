@@ -172,7 +172,7 @@
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
-														<span class="mr-2 d-none d-lg-inline text-gray-600 large">Logout</span>
+														<span class="mr-2 d-none d-lg-inline text-gray-600 large">${sessionScope.USERNAME} |Logout</span>
 
 												</a>
 
@@ -189,7 +189,7 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Data Management Configuration</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
@@ -210,7 +210,7 @@
 																						<td>${rs.configurationName}</td>
 																						<td>${rs.configurationValue}</td>
 																						<td>
-																								<a href="${pageContext.request.contextPath}/admin/edit?configurationId=${rs.configurationId}">
+																								<a href="${pageContext.request.contextPath}/admin/config/edit?configurationId=${rs.configurationId}">
 																										Edit Configuration
 																								</a>
 																						</td>

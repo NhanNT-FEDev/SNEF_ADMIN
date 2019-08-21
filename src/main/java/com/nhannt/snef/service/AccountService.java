@@ -31,6 +31,19 @@ public class AccountService {
         return result;
     }
 
+    public boolean changeStatus(int accountId, boolean status) throws SQLException, ClassNotFoundException {
+        boolean rs = accountDAO.changeStatusAccount(accountId, status);
+        if (rs){
+            return true;
+        }
+        return false;
+    }
 
-
+    public String checkLogin(String username, String password) throws SQLException, ClassNotFoundException {
+        String name = accountDAO.checkAccount(username, password);
+        if (name != null){
+            return name;
+        }
+        return null;
+    }
 }

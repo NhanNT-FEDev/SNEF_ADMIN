@@ -35,13 +35,15 @@ public class AccountDAO {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "Select AccountId,UserName, Password, FirstName, LastName, Phone, Email, Avatar, Gender, isActive From Account WHERE roleId = 3 and IsActive = 1";
+                String sql =
+                        "Select AccountId,UserName, Password, FirstName, LastName, Phone, Email, Avatar, Gender, isActive " +
+                                "From Account WHERE roleId = 3";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int accountId = rs.getInt("AccountId");
                     String username = rs.getString("UserName");
-                    String password = rs.getString("Password");
+
                     String firstName = rs.getString("FirstName");
                     String lastName = rs.getString("LastName");
                     String phone = rs.getString("Phone");
@@ -49,7 +51,7 @@ public class AccountDAO {
                     String email = rs.getString("Email");
                     String avatar = rs.getString("Avatar");
                     boolean gender = rs.getBoolean("Gender");
-                    Account dto = new Account(accountId, username, password, firstName, lastName, phone, isActive, email, avatar, gender);
+                    Account dto = new Account(accountId, username, firstName, lastName, phone, email, isActive, avatar, gender);
                     if (listAccount == null) {
                         listAccount = new ArrayList<>();
                     }
@@ -62,9 +64,6 @@ public class AccountDAO {
         }
         return null;
     }
-
-    //Deactive Account
-
 
     //Check If Account Exist
     public boolean checkExistAccount(String accountName) throws SQLException, ClassNotFoundException {
@@ -127,24 +126,47 @@ public class AccountDAO {
         return 0;
     }
 
+
+    //Deactive Account
     public boolean changeStatusAccount(int accountId, boolean stt) throws SQLException, ClassNotFoundException {
         try {
             con = MyConnection.myConnection();
-            if (con != null){
+            if (con != null) {
                 String sql = "Update (Account) SET isActive = ? WHERE AccountId = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setBoolean(1, stt);
                 stm.setInt(2, accountId);
                 int row = stm.executeUpdate();
-                if (row > 0){
+                if (row > 0) {
                     return true;
                 }
 
             }
 
-        }finally {
+        } finally {
             closeConnection();
         }
         return false;
+    }
+
+    //Check account login
+    public String checkAccount(String username, String password) throws SQLException, ClassNotFoundException {
+        try {
+            con = MyConnection.myConnection();
+            if (con != null) {
+                String sql = "SELECT username, password FROM Account WHERE username = ? AND password = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, password);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String name = rs.getString("username");
+                    return name;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return null;
     }
 }

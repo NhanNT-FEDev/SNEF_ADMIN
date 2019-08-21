@@ -2,10 +2,7 @@ package com.nhannt.snef.controller;
 
 import com.cloudinary.utils.ObjectUtils;
 import com.nhannt.snef.model.*;
-import com.nhannt.snef.service.AccountService;
-import com.nhannt.snef.service.ConfigurationService;
-import com.nhannt.snef.service.NewProductRequestService;
-import com.nhannt.snef.service.StoreService;
+import com.nhannt.snef.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +49,9 @@ public class AdminController {
     @Autowired
     private NewProductRequestService nprService;
 
+    @Autowired
+    private StoreAccountOrderService saoService;
+
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchByName(@RequestParam(value = "name") String name, Model model) throws SQLException, ClassNotFoundException {
         List<Store> getList = storeService.searchByName(name);
@@ -91,18 +91,16 @@ public class AdminController {
 //        float rat = Float.parseFloat(rating);
         boolean status = Boolean.parseBoolean(chkStatus);
         try {
-            //Insert Image to DB
-//            byte[] bytes = file.getBytes();
-//            Path path = Paths.get("" + file.getOriginalFilename());
-//            File myFile = new File(String.valueOf(Files.write(path, bytes)));
-//            HashMap<String, String> config = new HashMap<>();
-//            config.put("cloud_name", CLOUDINARY_CLOUD_NAME);
-//            config.put("api_key", CLOUDINARY_API_KEY);
-//            config.put("api_secret", CLOUDINARY_API_SECRET);
-//            Cloudinary cloudinary = new Cloudinary(config);
-//            HashMap<String, String> uploadResult = (HashMap<String, String>) cloudinary.uploader().upload(myFile, ObjectUtils.emptyMap());
-//            String getUrl = String.valueOf(uploadResult.get("url"));
-            boolean rs = storeService.updateStoreById(parseId, name, address, open, close, status, phone);
+            /**
+             * Get param address
+             * Convert to longitude and latitude
+             * */
+            Map<String, Double> coords;
+            coords = LatLon.getInstance().getCoordinates(address);
+            String longitude = String.valueOf(coords.get("lon"));
+            String latitude = String.valueOf(coords.get("lat"));
+
+            boolean rs = storeService.updateStoreById(parseId, name, address, open, close,longitude, latitude, status, phone);
             if (rs) {
                 return "redirect:/home";
             }
@@ -195,6 +193,14 @@ public class AdminController {
         return "createpage";
     }
 
+    //View Feedback depend on store
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String showAllFeedBack(@RequestParam(value = "storeId") String storeId, Model model) throws SQLException, ClassNotFoundException {
+
+        List<StoreAccountOrder> getList = saoService.getAllFeedBack(Integer.parseInt(storeId));
+        model.addAttribute("FEEDBACK", getList);
+        return "viewfeedback";
+    }
     /*
      * End of Management Store
      * */
@@ -211,6 +217,23 @@ public class AdminController {
         return "customerpage";
     }
 
+    //Change state of customer
+    @RequestMapping(value = "customer/changeStatus", method = RequestMethod.POST)
+    public String changeState(@RequestParam(value = "txtId") String txtId,
+                              @RequestParam(value = "chkStatus") String chkStatus,
+                              Model model) throws SQLException, ClassNotFoundException {
+        boolean status = Boolean.parseBoolean(chkStatus);
+        int accountId = Integer.parseInt(txtId);
+
+        boolean result = accountService.changeStatus(accountId, status);
+        if (result){
+            return "redirect:/admin/customer";
+        }
+        model.addAttribute("ERRORUPDATE", "CAN NOT CHANGE STATUS ACCOUNT - PLEASE CHECK NETWORKING");
+        return "home";
+    }
+
+
     /**
     * Manage all CRUD of Configuration
     *
@@ -222,8 +245,43 @@ public class AdminController {
         return "configpage";
     }
 
+    @RequestMapping(value = "config/edit", method = RequestMethod.GET)
+    public String getEditCf(@RequestParam(value = "configurationId") String cfId,
+                            Model model) throws SQLException, ClassNotFoundException {
+        List<Configuration> rs = service.getCfById(Integer.parseInt(cfId));
+        model.addAttribute("EDITCF", rs);
+
+        return "createconfigpage";
+    }
+
     @RequestMapping(value = "/config/create", method = RequestMethod.GET)
     public String addNewConfig(){
+        return "createconfigpage";
+    }
+
+    @RequestMapping(value = "/config/add", method = RequestMethod.POST)
+    public String insertNewCf(
+            @RequestParam(value = "txtCfName") String cfName,
+            @RequestParam(value = "txtCfValue") String cfValue, Model model) throws SQLException, ClassNotFoundException {
+        boolean rs = service.addNewConfiguration(cfName, cfValue);
+        if (rs){
+            return "redirect:/home";
+        }
+        model.addAttribute("ERR", "NEW CONFIGURATION NAME IS DUPLICATED");
+        return "/config/create";
+    }
+
+    @RequestMapping(value = "/config/save", method = RequestMethod.POST)
+    public String saveEditCf(@RequestParam(value = "txtCfName") String cfName,
+                             @RequestParam(value = "txtCfValue") String cfValue,
+                            @RequestParam(value = "txtId") String txtId,
+                             Model model) throws SQLException, ClassNotFoundException {
+        int cfId = Integer.parseInt(txtId);
+        boolean rs = service.editConfiguration(cfId, cfName,cfValue);
+        if (rs){
+            return "redirect:/home";
+        }
+        model.addAttribute("ERROR", "The Configuration Name has been duplicated");
         return "createconfigpage";
     }
 
@@ -236,5 +294,7 @@ public class AdminController {
         model.addAttribute("REQUEST", list);
         return "processpage";
     }
+
+
 
 }

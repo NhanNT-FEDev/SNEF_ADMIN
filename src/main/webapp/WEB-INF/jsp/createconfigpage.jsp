@@ -43,7 +43,8 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.CONFIGURATION}" />
+<c:set var="list" value="${requestScope.EDITCF}"/>
+
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -81,7 +82,8 @@
 
 				<!-- Nav Item - Customer Account -->
 				<li class="nav-item">
-						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"  data-target="#collapseUtilities"
+						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
+						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
 								<i class="fas fa-fw fa-cog"></i>
 								<span>Customer Account</span>
@@ -111,14 +113,12 @@
 						</a>
 						<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
-										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New Configuration</a>
+										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config/create">Add New
+												Configuration</a>
 										<a class="collapse-item" href="${pageContext.request.contextPath}/admin/config">Configuration Data</a>
 								</div>
 						</div>
 				</li>
-
-
-
 
 
 		</ul>
@@ -174,7 +174,7 @@
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
-														<span class="mr-2 d-none d-lg-inline text-gray-600 large">Logout</span>
+														<span class="mr-2 d-none d-lg-inline text-gray-600 large">${sessionScope.USERNAME} | Logout</span>
 
 												</a>
 
@@ -191,44 +191,50 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Data Configuration</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Edit Configuration</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
 														<c:if test="${list != null}">
-																<form action="/admin/config/edit" method="POST">
-																		<h3>Add New Configuration</h3>
-																				<%-- Add Configuration --%>
-																		<div class="form-group">
-																				<label for="conName">Configuration Name</label>
-																				<input type="text" id="conName" class="form-control" placeholder="Enter Configuraiton Name"
-																				       value="" name="txtCfName">
-																		</div>
-																		<div class="form-group">
-																				<label for="conValue">Configuration Value</label>
-																				<input type="text" id="conValue" class="form-control" placeholder="Enter Configuration Value"
-																				       value="" name="txtCfValue">
-																		</div>
+																<c:forEach var="rs" items="${list}">
 
-																		<input type="submit" value="Back" class="btn-secondary">
-																		<input type="submit" value="Save" class="btn-primary">
 
-																</form>
+																		<form action="/admin/config/save" method="POST">
+																				<h3>Edit New Configuration</h3>
+																				<input type="text" value="${rs.configurationId}" name="txtId" hidden>
+																						<%-- Edot Configuration --%>
+																				<div class="form-group">
+																						<label for="conName">Configuration Name</label>
+																						<input type="text" id="conName" class="form-control" placeholder="Enter Configuraiton Name"
+																						       value="${rs.configurationName}" name="txtCfName">
+																				</div>
+																				<div class="form-group">
+																						<label for="conValue">Configuration Value</label>
+																						<input type="text" id="conValue" class="form-control" placeholder="Enter Configuration Value"
+																						       value="${rs.configurationValue}" name="txtCfValue">
+																				</div>
+
+																				<input type="submit" value="Save" class="btn btn-primary">
+																				<input type="submit" value="Back" class="btn btn-secondary">
+
+																		</form>
+																</c:forEach>
 														</c:if>
 														<c:if test="${list == null}">
 																<form action="/admin/config/add" method="POST">
-																				<h3>Add New Configuration</h3>
+																		<h3>Add New Configuration</h3>
 																				<%-- Add Configuration --%>
-																				<div class="form-group">
-																						<label for="editStoreName">Configuration Name</label>
-																						<input type="text" id="editStoreName" class="form-control" placeholder="Enter Configuraiton Name"
-																						       value="" name="txtCfName">
-																				</div>
-																				<div class="form-group">
-																						<label for="editStoreAddress">Configuration Value</label>
-																						<input type="text" id="editStoreAddress" class="form-control" placeholder="Enter Configuration Value"
-																						       value="" name="txtCfValue">
-																				</div>
+																		<div class="form-group">
+																				<label for="editStoreName">Configuration Name</label>
+																				<input type="text" id="editStoreName" class="form-control" placeholder="Enter Configuraiton Name"
+																				       value="" name="txtCfName">
+																		</div>
+																		<div class="form-group">
+																				<label for="editStoreAddress">Configuration Value</label>
+																				<input type="text" id="editStoreAddress" class="form-control"
+																				       placeholder="Enter Configuration Value"
+																				       value="" name="txtCfValue">
+																		</div>
 
 																		<input type="submit" value="Save" class="btn btn-primary">
 																		<input type="submit" value="Back" class="btn btn-secondary">
@@ -266,7 +272,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
 </a>
-
 
 
 <!-- Bootstrap core JavaScript-->

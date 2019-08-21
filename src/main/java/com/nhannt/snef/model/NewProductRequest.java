@@ -9,7 +9,7 @@ public class NewProductRequest {
     private int productId;
     private String storeName;
     private String productName;
-
+    private String imageProduct;
 
     public NewProductRequest() {
     }
@@ -23,11 +23,12 @@ public class NewProductRequest {
         this.productId = productId;
     }
 
-    public NewProductRequest(int nPRId, boolean status, String storeName, String productName) {
+    public NewProductRequest(int nPRId, boolean status, String storeName, String productName, String imageProduct) {
         this.nPRId = nPRId;
         this.status = status;
         this.storeName = storeName;
         this.productName = productName;
+        this.imageProduct = imageProduct;
     }
 
     public int getnPRId() {
@@ -92,6 +93,14 @@ public class NewProductRequest {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getImageProduct() {
+        return imageProduct;
+    }
+
+    public void setImageProduct(String imageProduct) {
+        this.imageProduct = imageProduct;
     }
 }
 

@@ -150,12 +150,12 @@ public class StoreDAO {
 
     public boolean
     updateStoreById(int id, String storeName, String address, String openHour,
-                    String closeHour, boolean status,  String phone) throws SQLException, ClassNotFoundException {
+                    String closeHour,String longtitude, String latitude, boolean status,  String phone) throws SQLException, ClassNotFoundException {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
                 String sql = "UPDATE (Store s, Account a) " +
-                        "SET s.StoreName = ?, s.Address =?, s.OpenHour= ?, s.CloseHour= ?, s.Status= ?, s.Phone = ? " +
+                        "SET s.StoreName = ?, s.Address =?, s.OpenHour= ?, s.CloseHour= ?, s.Longitude=?, s.Latitude=? ,s.Status= ?, s.Phone = ? " +
                         "WHERE s.StoreId = ? " +
                         "AND s.AccountId = a.AccountID";
                 stm = con.prepareStatement(sql);
@@ -165,9 +165,11 @@ public class StoreDAO {
                 stm.setString(3, openHour);
                 stm.setString(4, closeHour);
 //                stm.setString(5, account);
-                stm.setBoolean(5, status);
-                stm.setString(6, phone );
-                stm.setInt(7, id);
+                stm.setString(5, longtitude);
+                stm.setString(6, latitude);
+                stm.setBoolean(7, status);
+                stm.setString(8, phone );
+                stm.setInt(9, id);
                 int row = stm.executeUpdate();
                 if (row > 0) {
                     return true;
@@ -228,4 +230,5 @@ public class StoreDAO {
         }
         return false;
     }
+
 }

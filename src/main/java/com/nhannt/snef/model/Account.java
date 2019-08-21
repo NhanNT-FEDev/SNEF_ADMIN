@@ -8,7 +8,7 @@ public class Account {
     private String lastName;
     private String phone;
     private String email;
-    private boolean isActive;
+    private boolean isactive;
     private String avatar;
     private boolean gender;
     private int roleId;
@@ -16,19 +16,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String userName, String password, String firstName, String lastName, String phone, String email, boolean isActive, boolean gender, int roleId) {
-        this.userName = userName;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
-        this.isActive = isActive;
-        this.gender = gender;
-        this.roleId = roleId;
-    }
-
-    public Account(int accountId, String userName, String password, String firstName, String lastName, String phone, boolean isActive, String email, String avatar, boolean gender) {
+    public Account(int accountId, String userName, String password, String firstName, String lastName, String phone, String email, boolean isactive, String avatar, boolean gender, int roleId) {
         this.accountId = accountId;
         this.userName = userName;
         this.password = password;
@@ -36,9 +24,30 @@ public class Account {
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.isActive = isActive;
+        this.isactive = isactive;
         this.avatar = avatar;
         this.gender = gender;
+        this.roleId = roleId;
+    }
+
+    public Account(int accountId, String userName, String firstName, String lastName, String phone, String email, boolean isactive, String avatar, boolean gender) {
+        this.accountId = accountId;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.isactive = isactive;
+        this.avatar = avatar;
+        this.gender = gender;
+    }
+
+    public boolean isIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(boolean isactive) {
+        this.isactive = isactive;
     }
 
     public int getAccountId() {
@@ -97,13 +106,7 @@ public class Account {
         this.email = email;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 
     public String getAvatar() {
         return avatar;
@@ -128,4 +131,6 @@ public class Account {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+
 }

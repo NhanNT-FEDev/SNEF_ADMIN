@@ -1,5 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; ISO-8859-1" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -174,7 +175,7 @@
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
-														<span class="mr-2 d-none d-lg-inline text-gray-600 large">Logout</span>
+														<span class="mr-2 d-none d-lg-inline text-gray-600 large">${sessionScope.USERNAME} | Logout</span>
 
 												</a>
 
@@ -212,17 +213,22 @@
 																		</tr>
 																		</thead>
 																		<tbody>
-																		<c:forEach var="rs" items="${list}">
-																				<form action="admin/customer/changeStatus" method="POST">
-																						<tr>
-																								<td>${rs.accountId}</td>
+																		<c:forEach var="rs" items="${list}" varStatus="counter">
+																				<%--																		<form action="../admin/customer/changeStatus" method="POST">--%>
+																				<tr>
+																						<form action="../admin/customer/changeStatus" method="POST">
+
+																								<td>
+																												${counter.count}
+																										<input type="text" value="${rs.accountId}" name="txtId" hidden>
+																								</td>
 																								<td style="width: 100px">${rs.userName}</td>
 																								<td>${rs.firstName}</td>
 																								<td>${rs.lastName}</td>
 																								<td><img src="${rs.avatar}" width="100px" height="100px"/></td>
 																								<td>${rs.phone}</td>
 																								<td>${rs.email}</td>
-																								<td style="width: 150px;">
+																								<td style="width: 50px;">
 																										<c:choose>
 																												<c:when test="${rs.gender}">
 																														<p>Male</p>
@@ -233,19 +239,39 @@
 																										</c:choose>
 																								</td>
 																								<td>
-																										<select name="slStatus">
-																												<option value="1">Active</option>
-																												<option value="0">Deactive</option>
-																										</select>
+																										<div class="checkbox-inline">
+																												<label>
+																														<input type="checkbox" value="${rs.isactive}" id="chkStatus" name=""
+																														<c:if test="${rs.isactive}">
+																														       checked="checked"
+																														</c:if>
+																														>
+																														(Deactive if you unchecked)
+																												</label>
+																												<label class="radio-inline">
+																														<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 0 "
+																														<c:if test="${rs.isactive}">
+																														       checked="checked"
+																														</c:if>>
+																												</label>
+																												<label class="radio-inline">
+																														<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 0 "
+																														<c:if test="${not rs.isactive}">
+																														       checked="checked"
+																														</c:if>>
+																												</label>
+																										</div>
 																								</td>
-																								<td style="width: 50px;"><input type="submit" class="btn btn-primary" value="Change Status">
+																								<td style="width: 50px;">
+																										<input type="submit" class="btn btn-primary" value="Change Status">
 																								</td>
-																						</tr>
-																				</form>
+
+																						</form>
+																				</tr>
 																		</c:forEach>
 																		</tbody>
 																</table>
-
+																<%--																</form>--%>
 														</c:if>
 
 												</div>
@@ -303,7 +329,17 @@
 
 <!-- Page level custom scripts -->
 <%--<script src="js/datatables-demo.js"></script>--%>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#chkStatus').click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#true").prop("checked", true);
+            } else if ($(this).prop("checked") == false) {
+                $("#false").prop("checked", true);
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

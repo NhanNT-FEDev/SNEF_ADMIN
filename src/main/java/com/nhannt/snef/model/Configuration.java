@@ -14,6 +14,11 @@ public class Configuration {
         this.configurationValue = configurationValue;
     }
 
+    public Configuration(String configurationName, String configurationValue) {
+        this.configurationName  = configurationName;
+        this.configurationValue = configurationValue;
+    }
+
     public int getConfigurationId() {
         return configurationId;
     }

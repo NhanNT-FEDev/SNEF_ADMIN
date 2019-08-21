@@ -178,7 +178,7 @@
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
-														<span class="mr-2 d-none d-lg-inline text-gray-600 small">Log Out</span>
+														<span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.USERNAME} |Log Out</span>
 														<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 												</a>
 												<!-- Dropdown - User Information -->
@@ -339,13 +339,13 @@
 																								(Check if Active)
 																						</label>
 																						<label class="radio-inline">
-																								<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 1"
+																								<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 0 "
 																								<c:if test="${rs.status}">
 																								       checked="checked"
 																								</c:if>>
 																						</label>
 																						<label class="radio-inline">
-																								<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 1 "
+																								<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 0 "
 																								<c:if test="${not rs.status}">
 																								       checked="checked"
 																								</c:if>>
@@ -354,8 +354,8 @@
 																		</div>
 
 																</c:forEach>
-																<input type="submit" value="Back" class="btn-secondary">
-																<input type="submit" value="Save" class="btn-primary">
+																<input type="submit" value="Back" class="btn btn-secondary">
+																<input type="submit" value="Save" class="btn btn-primary">
 
 														</form>
 												</c:if>

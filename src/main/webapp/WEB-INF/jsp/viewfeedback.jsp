@@ -15,8 +15,8 @@
 		<title>SNEF - Admin Page</title>
 
 		<!-- Custom fonts for this template -->
-		<link href="../../css/all.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="../../css/sb-admin-2.css">
+		<link href="../css/all.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../css/sb-admin-2.css">
 		<link
 										href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 										rel="stylesheet">
@@ -43,7 +43,7 @@
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.REQUEST}"/>
+<c:set var="list" value="${requestScope.FEEDBACK}"/>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -62,6 +62,7 @@
 
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
+
 
 				<!-- Nav Item - Stores -->
 				<li class="nav-item">
@@ -85,7 +86,7 @@
 						   data-target="#collapseUtilities"
 						   aria-expanded="true" aria-controls="collapseTwo">
 								<i class="fas fa-fw fa-cog"></i>
-								<span>Customer Account</span>
+								<span>View All Feed Back</span>
 						</a>
 						<div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
@@ -118,6 +119,7 @@
 								</div>
 						</div>
 				</li>
+
 
 
 		</ul>
@@ -190,72 +192,35 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Change Status Accounts</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
 														<c:if test="${list != null}">
-																<table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-																		<thead class="thead-dark">
+																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+																		<thead>
 																		<tr>
 																				<th>No.</th>
-																				<th>Store Name</th>
-																				<th>Product Name</th>
-																				<th>Status</th>
-																				<th>Product Image</th>
-																				<th><label>If reject tell the reason</label></th>
-																				<th></th>
+
+																				<th>Customer Name</th>
+																				<th>Customer Contact</th>
+																				<th>Feed Back</th>
 																		</tr>
 																		</thead>
 																		<tbody>
-																		<c:forEach var="rs" items="${list}" varStatus="count">
-																				<tr>
-																						<td>${count.count}
-																								<input type="text" value="${rs.nPRId}" name="txtId" hidden>
-																						</td>
-																						<td>${rs.storeName}</td>
-																						<td>${rs.productName}</td>
-																						<td>
-																								<div class="form-group">
-																										<div class="checkbox-inline">
-																												<label>
-																														<input type="checkbox" value="${rs.status}" id="chkStatus" name=""
-																														<c:if test="${rs.status}">
-																														       checked="checked"
-																														</c:if>
-																														>
-																														(Check if Active)
-																												</label>
-																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="true" value="true" style="opacity: 0 "
-																														<c:if test="${rs.status}">
-																														       checked="checked"
-																														</c:if>>
-																												</label>
-																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="false" value="false" style="opacity: 0 "
-																														<c:if test="${not rs.status}">
-																														       checked="checked"
-																														</c:if>
-																												</label>
-																										</div>
-																								</div>
-																						</td>
-																						<td>
-																								<img src="${rs.imageProduct}" alt="" width="100px" height="100px">
-																						</td>
-																						<td>
-																								<textarea class="form-control" rows="5" cols="15" name="des" style="width: 300px" id="comment"></textarea>
-																						</td>
+																		<c:forEach var="rs" items="${list}" varStatus="counter">
 
-																						<td><input type="submit" value="Response" class="btn btn-primary submit"/></td>
-
-																				</tr>
+																						<tr>
+																								<td>${counter.count}</td>
+																								<td>${rs.username}</td>
+																								<td>${rs.userPhone}</td>
+																								<td>${rs.comment}</td>
+																						</tr>
 																		</c:forEach>
 																		</tbody>
 																</table>
-														</c:if>
 
+														</c:if>
 
 												</div>
 										</div>
@@ -310,29 +275,6 @@
 <%--<script src="js/dataTables.bootstrap4.min.js"></script>--%>
 <script src="js/dataTables.bootstrap4.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#chkStatus').click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#true").prop("checked", true);
-            } else if ($(this).prop("checked") == false) {
-                $("#false").prop("checked", true);
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("input.submit").click(function (event) {
-            event.preventDefault();
-            var comment = $.trim($('#comment').val());
-            if ($('#chkStatus').prop("checked") == false && comment == '') {
-                $('#comment').focusin;
-                alert('nhap chux vao');
-            }
-        });
-    });
-</script>
 <!-- Page level custom scripts -->
 <%--<script src="js/datatables-demo.js"></script>--%>
 

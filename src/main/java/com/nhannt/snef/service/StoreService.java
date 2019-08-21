@@ -33,8 +33,8 @@ public class StoreService {
     }
 
     public boolean updateStoreById(int id, String storeName, String address,  String openHour,
-                                   String closeHour, boolean status, String phone) throws SQLException, ClassNotFoundException {
-        boolean rs = storeDAO.updateStoreById(id, storeName, address, openHour, closeHour, status, phone);
+                                   String closeHour, String longtitude, String latitude ,boolean status, String phone) throws SQLException, ClassNotFoundException {
+        boolean rs = storeDAO.updateStoreById(id, storeName, address, openHour, closeHour, longtitude, latitude, status, phone);
 
         if (rs) {
             return true;
