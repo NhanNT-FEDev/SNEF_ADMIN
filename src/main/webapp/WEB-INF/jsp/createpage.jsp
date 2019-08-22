@@ -183,8 +183,8 @@
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
-														<span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.USERNAME} |Log Out</span>
-														<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+														<span class="mr-2 d-none d-lg-inline text-gray-600 ">${sessionScope.USERNAME} | Log Out</span>
+
 												</a>
 												<!-- Dropdown - User Information -->
 
@@ -200,7 +200,7 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
+												<h5 class="m-0 font-weight-bold text-primary">Store Accounts Management</h5>
 										</div>
 										<div class="card-body">
 												<c:if test="${info == null}">
@@ -295,43 +295,38 @@
 														<form action="/admin/save" method="POST">
 																<c:forEach var="rs" items="${info}">
 																		<h3>Edit Store Account</h3>
-																		<input type="text" value="${rs.storeId}" name="txtId" hidden>
+																		<input type="text" value="${rs.storeId}" name="txtId" hidden >
 
 																		<%-- Edit Store --%>
 																		<div class="form-group">
 																				<label for="editStoreName">Store Name</label>
 																				<input type="text" id="editStoreName" class="form-control" placeholder="Enter Store Name"
-																				       value="${rs.storeName}" name="editStoreName">
+																				       value="${rs.storeName}" name="editStoreName" required>
 																		</div>
 
 																		<div class="form-group">
 																				<label for="editStoreAddress">Store Address</label>
-																				<input type="text" id="editStoreAddress" class="form-control" placeholder="Enter Store Name"
+																				<input type="text" id="editStoreAddress" class="form-control" placeholder="Enter Store Name" required
 																				       value="${rs.address}" name="editStoreAddress">
 																		</div>
 
-<%--																		<div class="form-group">--%>
-<%--																				<img src="${rs.avatar}" width="100px" height="100px">--%>
-<%--																				<input type="file" class="form-control" id="editfile" name="file" value="">--%>
-
-<%--																		</div>--%>
 
 																		<div class="form-group">
 																				<label for="editOpenHour">Store Open Hour</label>
 																				<input type="text" id="editOpenHour" class="form-control" placeholder="Enter Store Open Hour"
-																				       value="${rs.openHour}" name="editOpenHour">
+																				       value="${rs.openHour}" name="editOpenHour" required>
 																		</div>
 
 																		<div class="form-group">
 																				<label for="editCloseHour">Store Close Hour</label>
 																				<input type="text" id="editCloseHour" class="form-control" placeholder="Enter Store Close Hour"
-																				       value="${rs.openHour}" name="editCloseHour">
+																				       value="${rs.openHour}" name="editCloseHour" required>
 																		</div>
 
 																		<div class="form-group">
 																				<label for="editPhoneStore">Store Phone</label>
 																				<input type="text" id="editPhoneStore" class="form-control" placeholder="Enter Store Phone"
-																				       value="${rs.phone}" name="editPhoneStore">
+																				       value="${rs.phone}" name="editPhoneStore" required>
 																		</div>
 																		<div class="form-group">
 																				<div class="checkbox-inline">

@@ -264,7 +264,7 @@
 																										<img src="${rs.imageProduct}" alt="" width="100px" height="100px">
 																								</td>
 																								<td>
-																										<textarea class="form-control" rows="5" cols="15" name="txtDes"
+																										<textarea class="form-control" rows="3" cols="8" name="txtDes"
 																										          style="width: 300px" id="comment"></textarea>
 																								</td>
 
