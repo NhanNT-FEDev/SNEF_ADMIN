@@ -31,6 +31,10 @@
 		<!-- Popper JS -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
+		<!-- Table Sorter -->
+		<script src="../../resources/static/js/jquery.tablesorter.js"></script>
+		<script src="../../js/jquery.tablesorter.min.js"></script>
+		<script src="../../resources/static/js/jquery-latest.js"></script>
 		<!-- Latest compiled JavaScript -->
 
 		<!-- Custom styles for this template -->
@@ -42,12 +46,13 @@
 		<style>
 				*{
 						box-sizing: border-box;
-
+						text-decoration: none!important;
 				}
 				.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
 						color: rgba(255, 255, 255, 0.5);
 						opacity: 0;
 				}
+
 		</style>
 </head>
 
