@@ -2188,7 +2188,7 @@ textarea.form-control {
 }
 
 .form-check-inline {
-  display: -webkit-inline-box;
+
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-align: center;
@@ -3480,7 +3480,7 @@ input[type="button"].btn-block {
 .btn-group,
 .btn-group-vertical {
   position: relative;
-  display: -webkit-inline-box;
+  
   display: -ms-inline-flexbox;
   display: inline-flex;
   vertical-align: middle;
@@ -3823,7 +3823,7 @@ input[type="button"].btn-block {
 }
 
 .custom-control-inline {
-  display: -webkit-inline-box;
+
   display: -ms-inline-flexbox;
   display: inline-flex;
   margin-right: 1rem;
@@ -7229,7 +7229,7 @@ button.bg-dark:focus {
     display: flex !important;
   }
   .d-print-inline-flex {
-    display: -webkit-inline-box !important;
+
     display: -ms-inline-flexbox !important;
     display: inline-flex !important;
   }
@@ -7374,7 +7374,7 @@ button.bg-dark:focus {
 }
 
 .justify-content-around {
-  -ms-flex-pack: distribute !important;
+
   justify-content: space-around !important;
 }
 
@@ -7549,7 +7549,7 @@ button.bg-dark:focus {
     justify-content: space-between !important;
   }
   .justify-content-sm-around {
-    -ms-flex-pack: distribute !important;
+
     justify-content: space-around !important;
   }
   .align-items-sm-start {
