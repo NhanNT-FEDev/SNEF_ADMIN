@@ -44,10 +44,11 @@
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
 		<script src="https://kit.fontawesome.com/85cfd1cc6c.js"></script>
 		<style>
-				*{
+				* {
 						box-sizing: border-box;
-						text-decoration: none!important;
+						text-decoration: none !important;
 				}
+
 				.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
 						color: rgba(255, 255, 255, 0.5);
 						opacity: 0;
@@ -147,12 +148,10 @@
 
 						<!-- Topbar -->
 						<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
 								<!-- Sidebar Toggle (Topbar) -->
 								<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 										<i class="fa fa-bars"></i>
 								</button>
-
 								<!-- Topbar Search -->
 								<%-- Search Store Name Here--%>
 								<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
@@ -166,7 +165,6 @@
 												</div>
 										</div>
 								</form>
-
 								<!-- Topbar Navbar -->
 								<ul class="navbar-nav ml-auto">
 
@@ -178,10 +176,7 @@
 														<i class="fas fa-search fa-fw"></i>
 												</a>
 												<!-- Dropdown - Messages -->
-
 										</li>
-
-
 										<div class="topbar-divider d-none d-sm-block"></div>
 
 										<!-- Nav Item - User Information -->
@@ -191,8 +186,6 @@
 												   data-toggle="dropdown"
 												   aria-haspopup="true" aria-expanded="false">
 														<span class="mr-2 d-none d-lg-inline text-gray-600 large">${sessionScope.USERNAME} | Logout</span>
-
-														<%--														${requestScope.USERNAME}--%>
 												</a>
 
 										</li>
@@ -266,6 +259,18 @@
 																		</c:forEach>
 																		</tbody>
 																</table>
+																<div id="dataTable" align="center">
+
+																		<nav aria-label="Page navigation example">
+																				<ul class="pagination">
+																						<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+																						<li class="page-item"><a class="page-link" href="#">1</a></li>
+																						<li class="page-item"><a class="page-link" href="#">2</a></li>
+																						<li class="page-item"><a class="page-link" href="#">3</a></li>
+																						<li class="page-item"><a class="page-link" href="#">Next</a></li>
+																				</ul>
+																		</nav>
+																</div>
 														</c:if>
 														<c:if test="${search != null}">
 																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
