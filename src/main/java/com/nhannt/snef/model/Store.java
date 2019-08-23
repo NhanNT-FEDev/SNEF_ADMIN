@@ -31,6 +31,13 @@ public class Store {
         this.storeManager = storeManager;
     }
 
+    public Store(int storeId, String storeName, String address, String phone) {
+        this.storeId = storeId;
+        this.storeName = storeName;
+        this.address= address;
+        this.phone = phone;
+    }
+
     public int getStoreId() {
         return storeId;
     }
