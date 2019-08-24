@@ -282,7 +282,7 @@
 																								</td>
 																								<td style="width: 50px;">
 																										<input type="submit" class="btn btn-primary" value="Change Status">
-																										<input type="text" name="txtPageNO" value="${currentPage}">
+																										<input type="text" name="txtPageNO" value="${currentPage}" hidden>
 																								</td>
 
 																						</form>

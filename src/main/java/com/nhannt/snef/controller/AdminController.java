@@ -223,12 +223,61 @@ public class AdminController {
 
     //View Feedback depend on store
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String showAllFeedBack(@RequestParam(value = "storeId") String storeId, Model model) throws SQLException, ClassNotFoundException {
+    public String showAllFeedBack(@RequestParam(value = "storeId") String storeId, Model model)
+            throws SQLException, ClassNotFoundException {
+        int page = 1;
+        int totalRecords = saoService.countRecords(Integer.parseInt(storeId));
 
-        List<StoreAccountOrder> getList = saoService.getAllFeedBack(Integer.parseInt(storeId));
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+
+        //Get Data page 1
+
+        List<StoreAccountOrder> getList = saoService.getAllFeedBack(Integer.parseInt(storeId), (page - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+        model.addAttribute("STOREID", Integer.parseInt(storeId));
         model.addAttribute("FEEDBACK", getList);
+        model.addAttribute("CURRENTPAGE", page);
+        model.addAttribute("NOOFPAGE", noOfPage);
         return "viewfeedback";
     }
+
+    //Show Page Store Account Order
+    @RequestMapping(value = "/view/page", method = RequestMethod.GET)
+    public String showByPage(@RequestParam(value = "storeId") String storeId,
+                             @RequestParam(value = "page") String page,
+                             Model model) throws SQLException, ClassNotFoundException {
+        //If page = null -> page = 1
+        // If page != null -> return currentPage
+        int totalRecords = saoService.countRecords(Integer.parseInt(storeId));
+        int stId = Integer.parseInt(storeId);
+        System.out.println("storeId: " + stId);
+        System.out.println("Page: " + page);
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+        int currentPage = 0;
+        if (page == null || page == "") {
+            currentPage = 1;
+            List<StoreAccountOrder> rs = saoService.getAllFeedBack(stId, (currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("FEEDBACK", rs);
+        } else {
+            currentPage = Integer.parseInt(page);
+            List<StoreAccountOrder> rs = saoService.getAllFeedBack(stId,
+                    (currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("FEEDBACK", rs);
+
+            for (int i = 0; i < rs.size(); i++) {
+                System.out.println(rs.get(i).getStoreId()+" - " + rs.get(i).getUsername()+ " - " + rs.get(i).getComment());
+
+            }
+        }
+        model.addAttribute("CURRENTPAGE", currentPage);
+        model.addAttribute("NOOFPAGE", noOfPage);
+        model.addAttribute("STOREID", stId);
+
+        //Load Total Records From DB
+        return "viewfeedback";
+    }
+
     /*
      * End of Management Store
      * */
@@ -261,7 +310,8 @@ public class AdminController {
     //Return data by page
     @RequestMapping(value = "/customer/page", method = RequestMethod.GET)
     public String loadAllCustomer(Model model,
-                                  @RequestParam(value = "page") String page) throws SQLException, ClassNotFoundException {
+                                  @RequestParam(value = "page") String page)
+            throws SQLException, ClassNotFoundException {
 //        List<Account> rs = accountService.getAllAccount();
         //If page = null -> page = 1
         // If page != null -> return currentPage
@@ -413,7 +463,7 @@ public class AdminController {
 
         //Calculate Records per Page
         int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
-        System.out.println("CT: " +  totalRecords*1.0/NUMBER_RECORDS_PER_PAGE);
+        System.out.println("CT: " + totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
         System.out.println(noOfPage);
         //Get Data page 1
 

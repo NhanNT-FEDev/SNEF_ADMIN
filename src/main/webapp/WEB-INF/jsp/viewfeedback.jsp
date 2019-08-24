@@ -15,11 +15,11 @@
 		<title>SNEF - Admin Page</title>
 
 		<!-- Custom fonts for this template -->
-		<link href="../css/all.css" rel="stylesheet" type="text/css">
+		<link href="../../css/all.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="../css/sb-admin-2.css">
 		<link
-										href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-										rel="stylesheet">
+						href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+						rel="stylesheet">
 		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
 		      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 		<!-- Latest compiled and minified CSS -->
@@ -34,7 +34,7 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 		<!-- Custom styles for this template -->
-		<link rel="stylesheet" href="css/sb-admin-2.css">
+		<link rel="stylesheet" href="../../css/sb-admin-2.css">
 		<!-- Custom styles for this page -->
 		<link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
@@ -48,12 +48,21 @@
 						color: rgba(255, 255, 255, 0.5);
 						opacity: 0;
 				}
+				.no-active {
+						pointer-events: none;
+						cursor: default;
+						text-decoration: none;
+						opacity: 0.8;
+				}
 		</style>
 </head>
 
 <body id="page-top">
 <!-- Get Data From API -->
 <c:set var="list" value="${requestScope.FEEDBACK}"/>
+<c:set var="total" value="${requestScope.NOOFPAGE}"/>
+<c:set var="currentPage" value="${requestScope.CURRENTPAGE}"/>
+<c:set var="storeId" value="${requestScope.STOREID}"/>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -219,16 +228,85 @@
 																		<tbody>
 																		<c:forEach var="rs" items="${list}" varStatus="counter">
 
-																						<tr>
-																								<td>${counter.count}</td>
-																								<td>${rs.username}</td>
-																								<td>${rs.userPhone}</td>
-																								<td>${rs.comment}</td>
-																						</tr>
+																				<tr>
+																						<td>
+																										${counter.count}
+																												<input type="text" value="${rs.storeId}" name="storeId" hidden>
+																						</td>
+																						<td>${rs.username}</td>
+																						<td>${rs.userPhone}</td>
+																						<td>${rs.comment}</td>
+																				</tr>
 																		</c:forEach>
 																		</tbody>
 																</table>
+																<%--Pagination --%>
+																<nav aria-label="Page navigation example ">
+																		<ul class="pagination">
+																				<c:choose>
+																						<c:when test="${(currentPage - 1) < 1 }">
+																								<li class="page-item">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage-1}&storeId=${storeId}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage-1}&storeId=${storeId}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																				<c:forEach var="page" begin="1" end="${total}" step="1">
+																						<li class="page-item">
+																								<c:choose>
+																										<c:when test="${currentPage eq page}">
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/view/page?page=${page}&storeId=${storeId}"
+																												   style="color: grey;">
+																																		<span class="font-weight-bolder">
+																																						${page}
+																																		</span>
+																												</a>
+																										</c:when>
+																										<c:otherwise>
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/view/page?page=${page}&storeId=${storeId}">
+																																			<span class="font-weight-bolder">
+																																							${page}
+																																			</span>
+																												</a>
+																										</c:otherwise>
+																								</c:choose>
+																						</li>
 
+																				</c:forEach>
+
+																				<c:choose>
+																						<c:when test="${(currentPage + 1) > total}">
+																								<li class="page-item" aria-disabled="true">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage + 1}&storeId=${storeId}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage + 1}&storeId=${storeId}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																		</ul>
+																</nav>
+																<%--End Of Pagination--%>
 														</c:if>
 
 												</div>

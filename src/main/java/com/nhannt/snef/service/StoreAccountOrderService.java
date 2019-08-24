@@ -14,10 +14,15 @@ public class StoreAccountOrderService {
     @Autowired
     private StoreAccountOrderDao storeAccountOrder;
 
-    public List<StoreAccountOrder> getAllFeedBack(int storeId) throws SQLException, ClassNotFoundException {
-        List<StoreAccountOrder> rs = storeAccountOrder.getAllComment(storeId);
+    public List<StoreAccountOrder> getAllFeedBack(int storeId, int offset, int noOfRecords) throws SQLException, ClassNotFoundException {
+        List<StoreAccountOrder> rs = storeAccountOrder.getAllComment(storeId, offset, noOfRecords);
 
         return rs;
 
+    }
+
+    public int countRecords(int storeId) throws SQLException, ClassNotFoundException {
+        int record = storeAccountOrder.countRecords(storeId);
+        return record;
     }
 }

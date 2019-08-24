@@ -31,17 +31,24 @@ public class StoreAccountOrderDao {
         }
     }
 
-    public List<StoreAccountOrder> getAllComment(int storeId) throws SQLException, ClassNotFoundException {
+    //Load Per Page
+    public List<StoreAccountOrder> getAllComment(int storeId, int offset, int noOfRecord)
+            throws SQLException, ClassNotFoundException {
         List<StoreAccountOrder> listComment = null;
         try{
             con = MyConnection.myConnection();
             if (con != null){
                 String sql =
-                        "Select s.StoreId, s.StoreName, s.Phone, s.Address , o.Comment, a.UserName, a.Phone as UserContact " +
+                        "Select SQL_CALC_FOUND_ROWS s.StoreId, s.StoreName, s.Phone, s.Address , o.Comment, a.UserName, a.Phone as UserContact " +
                                 "From `snef_part2`.Order o, Account a, Store s " +
-                                "Where  o.storeId = s.StoreId AND o.accountId = a.AccountId AND s.storeId = ? AND o.Comment IS NOT NULL ";
+                                "Where  o.storeId = s.StoreId " +
+                                "AND o.accountId = a.AccountId " +
+                                "AND s.storeId = ? " +
+                                "AND o.Comment IS NOT NULL limit ?, ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, storeId);
+                stm.setInt(2, offset);
+                stm.setInt(3, noOfRecord);
                 rs = stm.executeQuery();
                 while (rs.next()){
                     int stId = rs.getInt("StoreId");
@@ -64,5 +71,29 @@ public class StoreAccountOrderDao {
             closeConnection();
         }
         return null;
+    }
+
+    //Get total
+    public int countRecords(int storeId) throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "Select COUNT(s.StoreId) AS TotalRecords " +
+                        "From `snef_part2`.Order o, Account a, Store s " +
+                        "Where  o.storeId = s.StoreId " +
+                        "AND o.accountId = a.AccountId AND s.storeId = ? " +
+                        "AND o.Comment IS NOT NULL";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, storeId);
+                rs = stm.executeQuery();
+                if (rs.next()){
+                    int count = rs.getInt("TotalRecords");
+                    return count;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return 0;
     }
 }
