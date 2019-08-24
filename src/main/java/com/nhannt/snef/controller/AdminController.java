@@ -30,7 +30,7 @@ public class AdminController {
     private static final String CLOUDINARY_CLOUD_NAME = "dr4hpc9gi";
     private static final String CLOUDINARY_API_KEY = "166957351197671";
     private static final String CLOUDINARY_API_SECRET = "zakaWJRkTxjvVutIlhrhqOxpWDk";
-
+    public static final int NUMBER_RECORDS_PER_PAGE = 3;
     /**
      * All function belong to Management Store
      * At this moment some field still not update validation
@@ -50,6 +50,34 @@ public class AdminController {
 
     @Autowired
     private StoreAccountOrderService saoService;
+
+    //Load Store depend on Pages
+    @RequestMapping(value = "page", method = RequestMethod.GET)
+    public String showStoreByPage(Model model,
+                                  @RequestParam(value = "page") String page) throws SQLException, ClassNotFoundException {
+        //If page = null -> page = 1
+        // If page != null -> return currentPage
+
+        //Load Total Records From DB
+        int totalRecords = storeService.getRecords();
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+        System.out.println("Page: " + page);
+        int currentPage = 0;
+
+        if (page == null || page == "") {
+            currentPage = 1;
+            List<Store> getList = storeService.getPaginator((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("LISTSTORE", getList);
+        } else {
+            currentPage = Integer.parseInt(page);
+            List<Store> getList = storeService.getPaginator((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("LISTSTORE", getList);
+        }
+        model.addAttribute("CURRENTPAGE", currentPage);
+        model.addAttribute("NOOFPAGE", noOfPage);
+        return "homepage";
+    }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchByName(@RequestParam(value = "name") String name, Model model) throws SQLException, ClassNotFoundException {
@@ -192,6 +220,7 @@ public class AdminController {
         return "createpage";
     }
 
+
     //View Feedback depend on store
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String showAllFeedBack(@RequestParam(value = "storeId") String storeId, Model model) throws SQLException, ClassNotFoundException {
@@ -209,10 +238,55 @@ public class AdminController {
      * At the moment some field still not validation
      */
 
+    //Get Page 1
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
-    public String loadAllCustomer(Model model) throws SQLException, ClassNotFoundException {
-        List<Account> rs = accountService.getAllAccount();
+    public String loadCustomerPage(Model model) throws SQLException, ClassNotFoundException {
+        int page = 1;
+        int totalRecords = accountService.totalAccount();
+
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+
+        //Get Data page 1
+        List<Account> rs = accountService.getListByPage((page - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+
         model.addAttribute("CUSTOMER", rs);
+        model.addAttribute("CURRENTPAGE", page);
+        model.addAttribute("NOOFPAGE", noOfPage);
+
+
+        return "customerpage";
+    }
+
+    //Return data by page
+    @RequestMapping(value = "/customer/page", method = RequestMethod.GET)
+    public String loadAllCustomer(Model model,
+                                  @RequestParam(value = "page") String page) throws SQLException, ClassNotFoundException {
+//        List<Account> rs = accountService.getAllAccount();
+        //If page = null -> page = 1
+        // If page != null -> return currentPage
+
+
+        //Load Total Records From DB
+        int totalRecords = accountService.totalAccount();
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+        System.out.println("Page: " + page);
+
+        int currentPage = 0;
+        if (page == null || page == "") {
+            currentPage = 1;
+            List<Account> rs = accountService.getListByPage((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("CUSTOMER", rs);
+        } else {
+            currentPage = Integer.parseInt(page);
+            List<Account> rs = accountService.getListByPage((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("CUSTOMER", rs);
+        }
+        model.addAttribute("CURRENTPAGE", currentPage);
+        model.addAttribute("NOOFPAGE", noOfPage);
+
+
         return "customerpage";
     }
 
@@ -220,13 +294,14 @@ public class AdminController {
     @RequestMapping(value = "customer/changeStatus", method = RequestMethod.POST)
     public String changeState(@RequestParam(value = "txtId") String txtId,
                               @RequestParam(value = "chkStatus") String chkStatus,
+                              @RequestParam(value = "txtPageNO") String currentPage,
                               Model model) throws SQLException, ClassNotFoundException {
         boolean status = Boolean.parseBoolean(chkStatus);
         int accountId = Integer.parseInt(txtId);
-
+        int page = Integer.parseInt(currentPage);
         boolean result = accountService.changeStatus(accountId, status);
         if (result) {
-            return "redirect:/admin/customer";
+            return "redirect:/admin/customer/page?page=" + page;
         }
         model.addAttribute("ERRORUPDATE", "CAN NOT CHANGE STATUS ACCOUNT - PLEASE CHECK NETWORKING");
         return "home";
@@ -236,10 +311,52 @@ public class AdminController {
     /**
      * Manage all CRUD of Configuration
      */
+    //Page 1
     @RequestMapping(value = "/config", method = RequestMethod.GET)
     public String showAllConfi(Model model) throws SQLException, ClassNotFoundException {
-        List<Configuration> list = service.getAllConfi();
+        int page = 1;
+
+        int totalRecords = service.getTotal();
+
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+
+        List<Configuration> list = service.getAllConfi((page - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
         model.addAttribute("CONFIGURATION", list);
+        model.addAttribute("CURRENTPAGE", page);
+        model.addAttribute("NOOFPAGE", noOfPage);
+
+        return "configpage";
+    }
+
+    //Request Page
+    @RequestMapping(value = "/config/page", method = RequestMethod.GET)
+    public String getCfByPage(Model model,
+                              @RequestParam(value = "page") String page) throws SQLException, ClassNotFoundException {
+
+        //If page = null -> page = 1
+        // If page != null -> return currentPage
+
+        //Load Total Records From DB
+        int totalRecords = service.getTotal();
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+
+        System.out.println("Page: " + page);
+
+        int currentPage = 0;
+
+        if (page == null || page == "") {
+            currentPage = 1;
+            List<Configuration> rss = service.getAllConfi((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("CONFIGURATION", rss);
+        } else {
+            currentPage = Integer.parseInt(page);
+            List<Configuration> rss = service.getAllConfi((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("CONFIGURATION", rss);
+        }
+        model.addAttribute("CURRENTPAGE", currentPage);
+        model.addAttribute("NOOFPAGE", noOfPage);
         return "configpage";
     }
 
@@ -288,10 +405,52 @@ public class AdminController {
      */
     @RequestMapping(value = "/request", method = RequestMethod.GET)
     public String showAllRequest(Model model) throws SQLException, ClassNotFoundException {
-        List<NewProductRequest> list = nprService.getAllRequest();
+        int page = 1;
+
+        //Get all records
+        int totalRecords = nprService.totalRequest();
+        System.out.println("Total: " + totalRecords);
+
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+        System.out.println("CT: " +  totalRecords*1.0/NUMBER_RECORDS_PER_PAGE);
+        System.out.println(noOfPage);
+        //Get Data page 1
+
+        List<NewProductRequest> list = nprService.getAllRequest((page - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
         model.addAttribute("REQUEST", list);
+        model.addAttribute("CURRENTPAGE", page);
+        model.addAttribute("NOOFPAGE", noOfPage);
         return "processpage";
     }
+
+    //Request Pagination
+    @RequestMapping(value = "/request/page", method = RequestMethod.GET)
+    public String getRequestByPage(Model model,
+                                   @RequestParam(value = "page") String page) throws SQLException, ClassNotFoundException {
+
+        //Load Total Records From DB
+        int totalRecords = nprService.totalRequest();
+        //Calculate Records per Page
+        int noOfPage = (int) Math.ceil(totalRecords * 1.0 / NUMBER_RECORDS_PER_PAGE);
+        System.out.println("noOfPage: " + noOfPage);
+
+        int currentPage = 0;
+        if (page == null || page == "") {
+            currentPage = 1;
+            List<NewProductRequest> listReq = nprService.getAllRequest((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("REQUEST", listReq);
+        } else {
+            currentPage = Integer.parseInt(page);
+            List<NewProductRequest> listReq = nprService.getAllRequest((currentPage - 1) * NUMBER_RECORDS_PER_PAGE, NUMBER_RECORDS_PER_PAGE);
+            model.addAttribute("REQUEST", listReq);
+        }
+        model.addAttribute("CURRENTPAGE", currentPage);
+        model.addAttribute("NOOFPAGE", noOfPage);
+
+        return "processpage";
+    }
+
 
     //Handle Request
     @RequestMapping(value = "request/handle", method = RequestMethod.POST)

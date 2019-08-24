@@ -31,6 +31,16 @@ public class AccountService {
         return result;
     }
 
+    public List<Account> getListByPage(int offset, int noOfRecord) throws SQLException, ClassNotFoundException {
+        List<Account> accounts = accountDAO.getAccountByPage(offset, noOfRecord);
+        return accounts;
+    }
+
+    public int totalAccount() throws SQLException, ClassNotFoundException {
+        int totalAcc = accountDAO.countAccount();
+        return totalAcc;
+    }
+
     public boolean changeStatus(int accountId, boolean status) throws SQLException, ClassNotFoundException {
         boolean rs = accountDAO.changeStatusAccount(accountId, status);
         if (rs){

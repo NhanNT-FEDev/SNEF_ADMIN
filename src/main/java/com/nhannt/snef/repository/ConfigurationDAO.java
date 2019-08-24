@@ -30,13 +30,15 @@ public class ConfigurationDAO {
         }
     }
 
-    public List<Configuration> getAllCf() throws SQLException, ClassNotFoundException {
+    public List<Configuration> getAllCf(int offset, int noOfRecords) throws SQLException, ClassNotFoundException {
         List<Configuration> listCon = null;
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "SELECT configurationId, configurationName, configurationValue FROM Configuration";
+                String sql = "SELECT SQL_CALC_FOUND_ROWS configurationId, configurationName, configurationValue FROM Configuration limit ?, ?";
                 stm = con.prepareStatement(sql);
+                stm.setInt(1, offset);
+                stm.setInt(2, noOfRecords);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int conId = rs.getInt("configurationId");
@@ -56,6 +58,25 @@ public class ConfigurationDAO {
             closeConnection();
         }
         return null;
+    }
+
+    //Get Total
+    public int getTotalCf() throws SQLException, ClassNotFoundException {
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "SELECT COUNT(configurationId) AS TotalCf FROM Configuration";
+                stm  = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()){
+                    int count = rs.getInt("TotalCf");
+                    return count;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return 0;
     }
 
     public boolean checkExistCf(String cfName) throws SQLException, ClassNotFoundException {

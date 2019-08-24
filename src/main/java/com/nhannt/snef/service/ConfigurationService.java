@@ -13,9 +13,14 @@ public class ConfigurationService {
     @Autowired
     private ConfigurationDAO dao;
 
-    public List<Configuration> getAllConfi() throws SQLException, ClassNotFoundException {
-        List<Configuration> getListConfi = dao.getAllCf();
+    public List<Configuration> getAllConfi(int offset, int noOfRecords) throws SQLException, ClassNotFoundException {
+        List<Configuration> getListConfi = dao.getAllCf(offset, noOfRecords);
         return getListConfi;
+    }
+
+    public int getTotal() throws SQLException, ClassNotFoundException {
+        int totalCf = dao.getTotalCf();
+        return totalCf;
     }
 
     public boolean editConfiguration(int cfId, String cfName, String cfValue) throws SQLException, ClassNotFoundException {

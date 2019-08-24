@@ -69,6 +69,63 @@ public class StoreDAO {
         return null;
     }
 
+    //Get Pagination
+    public List<Store> getStoreByPage(int offset, int noOfRecord) throws SQLException, ClassNotFoundException {
+        List<Store> storeList = null;
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "SELECT SQL_CALC_FOUND_ROWS s.StoreId, s.StoreName, s.Address, s.RatingPoint, s.Avatar, s.OpenHour, s.CloseHour, s.Status, s.Phone, a.UserName " +
+                        "FROM Store s, Account a " +
+                        "WHERE s.accountId = a.AccountId limit ?, ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, offset);
+                stm.setInt(2, noOfRecord);
+                rs = stm.executeQuery();
+                while (rs.next()){
+                    int storeId = rs.getInt("StoreId");
+                    String storeName = rs.getString("StoreName");
+                    String address = rs.getString("Address");
+                    float rating = rs.getFloat("RatingPoint");
+                    String avatar = rs.getString("Avatar");
+                    String open = rs.getString("OpenHour");
+                    String close = rs.getString("CloseHour");
+                    boolean status = rs.getBoolean("Status");
+                    String phone = rs.getString("Phone");
+                    String storeManager = rs.getString("Username");
+                    Store dto = new Store(storeId, storeName, address, rating, avatar, open, close, status, phone, storeManager);
+                    if (storeList == null){
+                        storeList = new ArrayList<>();
+                    }
+                    storeList.add(dto);
+                }
+                return storeList;
+            }
+        }finally {
+            closeConnection();
+        }
+        return null;
+    }
+
+    //Get Total Records
+    public int getTotal() throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "Select COUNT(StoreId) AS TotalRecords From Store";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()){
+                    int totalRecords = rs.getInt("TotalRecords");
+                    return totalRecords;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return 0;
+    }
+
     public List<Store> searchStoreByName(String name) throws SQLException, ClassNotFoundException {
         List<Store> searchValue = null;
         try {

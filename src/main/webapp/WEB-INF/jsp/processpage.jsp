@@ -43,17 +43,25 @@
 				*{
 						box-sizing: border-box;
 
-		}
-		.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
-		color: rgba(255, 255, 255, 0.5);
-		opacity: 0;
-		}
+				}
+				.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
+						color: rgba(255, 255, 255, 0.5);
+						opacity: 0;
+				}
+				.no-active {
+						pointer-events: none;
+						cursor: default;
+						text-decoration: none;
+						opacity: 0.8;
+				}
 		</style>
 </head>
 
 <body id="page-top">
 <!-- Get Data From API -->
 <c:set var="list" value="${requestScope.REQUEST}"/>
+<c:set var="total" value="${requestScope.NOOFPAGE}"/>
+<c:set var="currentPage" value="${requestScope.CURRENTPAGE}"/>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -201,7 +209,7 @@
 								<!-- DataTales Example -->
 								<div class="card shadow mb-4">
 										<div class="card-header py-3">
-												<h6 class="m-0 font-weight-bold text-primary">Data Process New Request</h6>
+												<h6 class="m-0 font-weight-bold text-primary">Process New Request</h6>
 										</div>
 										<div class="card-body">
 												<div class="table-responsive">
@@ -276,6 +284,73 @@
 																		</c:forEach>
 																		</tbody>
 																</table>
+																<%--Pagination --%>
+																<nav aria-label="Page navigation example ">
+																		<ul class="pagination">
+																				<c:choose>
+																						<c:when test="${(currentPage - 1) < 1 }">
+																								<li class="page-item">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/request/page?page=${currentPage-1}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/request/page?page=${currentPage-1}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																				<c:forEach var="page" begin="1" end="${total}" step="1">
+																						<li class="page-item">
+																								<c:choose>
+																										<c:when test="${currentPage eq page}">
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/request/page?page=${page}"
+																												   style="color: grey;">
+																																		<span class="font-weight-bolder">
+																																						${page}
+																																		</span>
+																												</a>
+																										</c:when>
+																										<c:otherwise>
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/request/page?page=${page}">
+																																			<span class="font-weight-bolder">
+																																							${page}
+																																			</span>
+																												</a>
+																										</c:otherwise>
+																								</c:choose>
+																						</li>
+
+																				</c:forEach>
+
+																				<c:choose>
+																						<c:when test="${(currentPage + 1) > total}">
+																								<li class="page-item" aria-disabled="true">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/request/page?page=${currentPage + 1}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/request/page?page=${currentPage + 1}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																		</ul>
+																</nav>
+																<%--End Of Pagination--%>
 														</c:if>
 
 
@@ -348,7 +423,7 @@
         $("input.submit").click(function (event) {
             event.preventDefault();
             var comment = $.trim($('#comment').val());
-            if ($('#chkStatus').prop("checked") == false && comment == '') {
+            if ($('#chkStatus').prop("checked") == false && (comment == '' || comment == null)) {
                 $('#comment').focusin;
                 alert('Nhập Lý do Từ chối');
             }

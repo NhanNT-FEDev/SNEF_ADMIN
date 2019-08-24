@@ -26,7 +26,10 @@ public class LoginController {
     private PaginationService paginationService;
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET, produces = "application/json")
-    public String loginPage (Model model) throws SQLException, ClassNotFoundException {
+    public String loginPage(){
+        return "login";
+    }
+//    public String loginPage (Model model) throws SQLException, ClassNotFoundException {
 //        int page = 1;
 //        int recordsPage  = 3;
 //
@@ -43,9 +46,9 @@ public class LoginController {
 //        model.addAttribute("LIST", result);
 //        model.addAttribute("PAGE", noOfPage);
 //        model.addAttribute("CURRENTPAGE", page);
-
-        return "login";
-    }
+//
+//        return "pagination";
+//    }
 
     @RequestMapping(value = {"/page"}, method = RequestMethod.GET, produces = "application/json")
     public String receivePage(

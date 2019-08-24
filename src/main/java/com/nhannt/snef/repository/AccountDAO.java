@@ -65,6 +65,62 @@ public class AccountDAO {
         return null;
     }
 
+    //Load Account Depend on Page
+    public List<Account> getAccountByPage(int offset, int noOfRecord) throws SQLException, ClassNotFoundException {
+        List<Account> listAccount = null;
+        try {
+            con = MyConnection.myConnection();
+            if (con != null) {
+                String sql =
+                        "Select SQL_CALC_FOUND_ROWS AccountId,UserName, Password, FirstName, LastName, Phone, Email, Avatar, Gender, isActive " +
+                                "From Account WHERE roleId = 3 limit ?, ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, offset);
+                stm.setInt(2, noOfRecord);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int accountId = rs.getInt("AccountId");
+                    String username = rs.getString("UserName");
+
+                    String firstName = rs.getString("FirstName");
+                    String lastName = rs.getString("LastName");
+                    String phone = rs.getString("Phone");
+                    boolean isActive = rs.getBoolean("isActive");
+                    String email = rs.getString("Email");
+                    String avatar = rs.getString("Avatar");
+                    boolean gender = rs.getBoolean("Gender");
+                    Account dto = new Account(accountId, username, firstName, lastName, phone, email, isActive, avatar, gender);
+                    if (listAccount == null) {
+                        listAccount = new ArrayList<>();
+                    }
+                    listAccount.add(dto);
+                }
+                return listAccount;
+            }
+        } finally {
+            closeConnection();
+        }
+        return null;
+    }
+
+    //Get Total Account in table
+    public int countAccount() throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "Select COUNT(AccountId) AS TotalAccount From Account WHERE roleId = 3";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()){
+                    int totalAccount = rs.getInt("TotalAccount");
+                    return totalAccount;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return 0;
+    }
     //Check If Account Exist
     public boolean checkExistAccount(String accountName) throws SQLException, ClassNotFoundException {
         try {

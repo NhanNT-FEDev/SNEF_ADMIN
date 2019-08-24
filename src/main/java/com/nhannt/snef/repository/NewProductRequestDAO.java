@@ -29,17 +29,20 @@ public class NewProductRequestDAO {
         }
     }
 
-    public List<NewProductRequest> getAllRequest() throws SQLException, ClassNotFoundException {
+    //Get All Request Page1
+    public List<NewProductRequest> getAllRequest(int offset, int noOfRecord) throws SQLException, ClassNotFoundException {
         List<NewProductRequest> listRequest = null;
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "SELECT n.NPRId, s.StoreName, p.ProductName, p.ImageSrc, n.Status, n.ProductId " +
+                String sql = "SELECT SQL_CALC_FOUND_ROWS n.NPRId, s.StoreName, p.ProductName, p.ImageSrc, n.Status, n.ProductId " +
                         "FROM NewProductRequest n, Store s, Product p " +
                         "where s.StoreId = n.StoreId " +
                         "AND n.ProductId = p.ProductId " +
-                        "AND n.Status = 0 AND  (Message =\"\" OR Message IS NULL)";
+                        "AND n.Status = 0 AND  (Message ='' OR Message IS NULL) limit ?, ?";
                 stm = con.prepareStatement(sql);
+                stm.setInt(1, offset);
+                stm.setInt(2, noOfRecord);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int nprId = rs.getInt("NPRId");
@@ -62,6 +65,28 @@ public class NewProductRequestDAO {
         return null;
     }
 
+    //Get Total Record of request
+    public int getTotalRequest() throws SQLException, ClassNotFoundException {
+        try{
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql="SELECT SQL_CALC_FOUND_ROWS COUNT(n.NPRId) AS TotalReq " +
+                        "FROM NewProductRequest n, Store s, Product p " +
+                        "WHERE s.StoreId = n.StoreId AND n.ProductId = p.ProductId " +
+                        "AND n.Status = 0 " +
+                        "AND  (Message ='' OR Message IS NULL)";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()){
+                    int count = rs.getInt("TotalReq");
+                    return count;
+                }
+            }
+        }finally {
+            closeConnection();
+        }
+        return 0;
+    }
     /**
      * If status == true => Update Product => Status = true
      * <p>

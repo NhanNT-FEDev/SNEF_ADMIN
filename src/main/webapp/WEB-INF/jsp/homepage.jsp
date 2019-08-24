@@ -54,6 +54,12 @@
 						opacity: 0;
 				}
 
+				.no-active {
+						pointer-events: none;
+						cursor: default;
+						text-decoration: none;
+						opacity: 0.8;
+				}
 		</style>
 </head>
 
@@ -61,12 +67,13 @@
 <!-- Get Data From API -->
 <c:set var="list" value="${requestScope.LISTSTORE}"/>
 <c:set var="search" value="${requestScope.SEARCHVALUE}"/>
+<c:set var="total" value="${requestScope.NOOFPAGE}"/>
+<c:set var="currentPage" value="${requestScope.CURRENTPAGE}"/>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
 		<!-- Sidebar -->
 		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
 				<!-- Sidebar - Brand -->
 				<a class="sidebar-brand d-flex align-items-center justify-content-center"
 				   href="${pageContext.request.contextPath}/home">
@@ -75,10 +82,8 @@
 						</div>
 						<div class="sidebar-brand-text mx-3">Admin Management</div>
 				</a>
-
 				<!-- Divider -->
 				<hr class="sidebar-divider my-0">
-
 				<!-- Nav Item - Stores -->
 				<li class="nav-item">
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
@@ -109,15 +114,12 @@
 								</div>
 						</div>
 				</li>
-
 				<!-- Nav Item - Process New Request-->
-
 				<li class="nav-item">
 						<a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
 								<i class="fas fa-bullhorn"></i>
 								<span>Process New Request</span></a>
 				</li>
-
 				<!-- Nav Item - Process New Configuration-->
 				<li class="nav-item">
 						<a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/config" data-toggle="collapse"
@@ -135,17 +137,12 @@
 								</div>
 						</div>
 				</li>
-
-
 		</ul>
 		<!-- End of Sidebar -->
-
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
 				<!-- Main Content -->
 				<div id="content">
-
 						<!-- Topbar -->
 						<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 								<!-- Sidebar Toggle (Topbar) -->
@@ -169,18 +166,8 @@
 								<ul class="navbar-nav ml-auto">
 
 										<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-										<li class="nav-item dropdown no-arrow d-sm-none">
-												<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-												   data-toggle="dropdown"
-												   aria-haspopup="true" aria-expanded="false">
-														<i class="fas fa-search fa-fw"></i>
-												</a>
-												<!-- Dropdown - Messages -->
-										</li>
 										<div class="topbar-divider d-none d-sm-block"></div>
-
 										<!-- Nav Item - User Information -->
-
 										<li class="nav-item dropdown no-arrow">
 												<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 												   data-toggle="dropdown"
@@ -226,7 +213,8 @@
 																		<c:forEach var="rs" items="${list}" varStatus="counter">
 																				<tr>
 																						<td>
-																										${counter.count}
+																										<%--																										${counter.count}--%>
+																										${rs.storeId}
 																								<input type="text" value="${rs.storeId}" hidden>
 																						</td>
 																						<td style="width: 100px">${rs.storeName}</td>
@@ -259,18 +247,73 @@
 																		</c:forEach>
 																		</tbody>
 																</table>
-																<div id="dataTable" align="center">
+																<%--Pagination --%>
+																<nav aria-label="Page navigation example ">
+																		<ul class="pagination">
+																				<c:choose>
+																						<c:when test="${(currentPage - 1) < 1 }">
+																								<li class="page-item">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/page?page=${currentPage-1}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/page?page=${currentPage-1}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																				<c:forEach var="page" begin="1" end="${total}" step="1">
+																						<li class="page-item">
+																								<c:choose>
+																										<c:when test="${currentPage eq page}">
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/page?page=${page}"
+																												   style="color: grey;">
+																																		<span class="font-weight-bolder">
+																																						${page}
+																																		</span>
+																												</a>
+																										</c:when>
+																										<c:otherwise>
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/page?page=${page}">
+																																			<span class="font-weight-bolder">
+																																							${page}
+																																			</span>
+																												</a>
+																										</c:otherwise>
+																								</c:choose>
+																						</li>
 
-																		<nav aria-label="Page navigation example">
-																				<ul class="pagination">
-																						<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-																						<li class="page-item"><a class="page-link" href="#">1</a></li>
-																						<li class="page-item"><a class="page-link" href="#">2</a></li>
-																						<li class="page-item"><a class="page-link" href="#">3</a></li>
-																						<li class="page-item"><a class="page-link" href="#">Next</a></li>
-																				</ul>
-																		</nav>
-																</div>
+																				</c:forEach>
+
+																				<c:choose>
+																						<c:when test="${(currentPage + 1) > total}">
+																								<li class="page-item" aria-disabled="true">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/page?page=${currentPage + 1}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/page?page=${currentPage + 1}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																		</ul>
+																</nav>
+																<%--End Of Pagination--%>
 														</c:if>
 														<c:if test="${search != null}">
 																<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

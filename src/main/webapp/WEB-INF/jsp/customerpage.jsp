@@ -16,8 +16,8 @@
 		<title>SNEF - Admin Page</title>
 
 		<!-- Custom fonts for this template -->
-		<link href="../css/all.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="../css/sb-admin-2.css">
+		<link href="../../css/all.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../../css/sb-admin-2.css">
 		<link
 						href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 						rel="stylesheet">
@@ -34,8 +34,6 @@
 
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<!-- Custom styles for this template -->
-		<link rel="stylesheet" href="css/sb-admin-2.css">
 		<!-- Custom styles for this page -->
 		<link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
@@ -49,12 +47,20 @@
 						color: rgba(255, 255, 255, 0.5);
 						opacity: 0;
 				}
+				.no-active {
+						pointer-events: none;
+						cursor: default;
+						text-decoration: none;
+						opacity: 0.8;
+				}
 		</style>
 </head>
 
 <body id="page-top">
 <!-- Get Data From API -->
 <c:set var="list" value="${requestScope.CUSTOMER}"/>
+<c:set var="total" value="${requestScope.NOOFPAGE}"/>
+<c:set var="currentPage" value="${requestScope.CURRENTPAGE}"/>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -276,6 +282,7 @@
 																								</td>
 																								<td style="width: 50px;">
 																										<input type="submit" class="btn btn-primary" value="Change Status">
+																										<input type="text" name="txtPageNO" value="${currentPage}">
 																								</td>
 
 																						</form>
@@ -283,6 +290,73 @@
 																		</c:forEach>
 																		</tbody>
 																</table>
+																<%--Pagination --%>
+																<nav aria-label="Page navigation example ">
+																		<ul class="pagination">
+																				<c:choose>
+																						<c:when test="${(currentPage - 1) < 1 }">
+																								<li class="page-item">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage-1}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage-1}">
+																												<span class="font-weight-bold">Previous</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																				<c:forEach var="page" begin="1" end="${total}" step="1">
+																						<li class="page-item">
+																								<c:choose>
+																										<c:when test="${currentPage eq page}">
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/customer/page?page=${page}"
+																												   style="color: grey;">
+																																		<span class="font-weight-bolder">
+																																						${page}
+																																		</span>
+																												</a>
+																										</c:when>
+																										<c:otherwise>
+																												<a class="page-link"
+																												   href="${pageContext.request.contextPath}/admin/customer/page?page=${page}">
+																																			<span class="font-weight-bolder">
+																																							${page}
+																																			</span>
+																												</a>
+																										</c:otherwise>
+																								</c:choose>
+																						</li>
+
+																				</c:forEach>
+
+																				<c:choose>
+																						<c:when test="${(currentPage + 1) > total}">
+																								<li class="page-item" aria-disabled="true">
+																										<a class="page-link no-active"
+																										   href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage + 1}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:when>
+																						<c:otherwise>
+																								<li class="page-item" aria-disabled="false">
+																										<a class="page-link"
+																										   href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage + 1}">
+																												<span class="font-weight-bolder">Next</span>
+																										</a>
+																								</li>
+																						</c:otherwise>
+																				</c:choose>
+																		</ul>
+																</nav>
+																<%--End Of Pagination--%>
 														</c:if>
 
 												</div>

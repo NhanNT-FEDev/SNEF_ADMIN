@@ -14,9 +14,15 @@ public class NewProductRequestService {
     @Autowired
     private NewProductRequestDAO nprDao;
 
-    public List<NewProductRequest> getAllRequest() throws SQLException, ClassNotFoundException {
-        List<NewProductRequest> listRequest = nprDao.getAllRequest();
+    public List<NewProductRequest> getAllRequest(int offset, int noOfRecords) throws SQLException, ClassNotFoundException {
+        List<NewProductRequest> listRequest = nprDao.getAllRequest(offset, noOfRecords);
         return listRequest;
+    }
+
+    //Get Total Request
+    public int totalRequest() throws SQLException, ClassNotFoundException {
+        int totalReq = nprDao.getTotalRequest();
+        return totalReq;
     }
 
 

@@ -53,4 +53,13 @@ public class StoreService {
         return false;
     }
 
+    public List<Store> getPaginator(int offset, int noOfRecord) throws SQLException, ClassNotFoundException {
+        List<Store> getList = storeDAO.getStoreByPage(offset, noOfRecord);
+        return getList;
+    }
+
+    public int getRecords() throws SQLException, ClassNotFoundException {
+        int totalRecords = storeDAO.getTotal();
+        return totalRecords;
+    }
 }
