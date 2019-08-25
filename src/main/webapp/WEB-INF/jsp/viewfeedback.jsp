@@ -9,23 +9,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<<<<<<< Updated upstream
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="bootstrap/css/sb-admin-2.css">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <script src="bootstrap/js/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
-    <title>SNEF - Admin Page</title>
-
-=======
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>SNEF - Admin Page</title>
 
     <!-- Custom fonts for this template -->
-    <link href="../css/all.css" rel="stylesheet" type="text/css">
+    <link href="../../css/all.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="../css/sb-admin-2.css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -33,7 +23,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -41,14 +31,10 @@
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-    <!-- Table Sorter -->
-    <script src="../../resources/static/js/jquery.tablesorter.js"></script>
-    <script src="../../js/jquery.tablesorter.min.js"></script>
-    <script src="../../resources/static/js/jquery-latest.js"></script>
     <!-- Latest compiled JavaScript -->
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/sb-admin-2.css">
+    <link rel="stylesheet" href="../../css/sb-admin-2.css">
     <!-- Custom styles for this page -->
     <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
@@ -56,7 +42,7 @@
     <style>
         * {
             box-sizing: border-box;
-            text-decoration: none !important;
+
         }
 
         .sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
@@ -71,111 +57,72 @@
             opacity: 0.8;
         }
     </style>
->>>>>>> Stashed changes
 </head>
 
 <body id="page-top">
 <!-- Get Data From API -->
-<c:set var="list" value="${requestScope.LISTSTORE}"/>
-<c:set var="search" value="${requestScope.SEARCHVALUE}"/>
+<c:set var="list" value="${requestScope.FEEDBACK}"/>
+<c:set var="total" value="${requestScope.NOOFPAGE}"/>
+<c:set var="currentPage" value="${requestScope.CURRENTPAGE}"/>
+<c:set var="storeId" value="${requestScope.STOREID}"/>
+
 <!-- Page Wrapper -->
 <div id="wrapper">
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center"
            href="${pageContext.request.contextPath}/home">
             <div class="sidebar-brand-icon rotate-n-15">
-<<<<<<< Updated upstream
-                <i class="fas fa-laugh-wink"></i>
-=======
                 <i class="fas fa-users-cog"></i>
->>>>>>> Stashed changes
             </div>
             <div class="sidebar-brand-text mx-3">Admin Management</div>
         </a>
+
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
+
         <!-- Nav Item - Stores -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="${pageContext.request.contextPath}/home" data-toggle="collapse"
                data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
-<<<<<<< Updated upstream
-                <i class="fas fa-fw fa-cog"></i>
-=======
                 <i class="fas fa-store-alt"></i>
->>>>>>> Stashed changes
                 <span>Stores</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="${pageContext.request.contextPath}/admin/create">Add Store</a>
-<<<<<<< Updated upstream
-<%--                    <a class="collapse-item" href="${pageContext.request.contextPath}/admin/update">Update Store</a>--%>
-=======
                     <a class="collapse-item" href="${pageContext.request.contextPath}/home">Store Data</a>
                 </div>
             </div>
         </li>
-<<<<<<< Updated upstream
-        <!-- Nav Item - Customer Account -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="account.html" data-toggle="collapse" data-target="#collapseUtilities"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
 
+        <!-- Nav Item - Customer Account -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
                data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-users"></i>
->>>>>>> Stashed changes
                 <span>Customer Account</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-<<<<<<< Updated upstream
-                    <a class="collapse-item" href="createUpdateCus.html">Create New Customer</a>
-<%--                    <a class="collapse-item" href="createUpdateCus.html">Update Customer</a>--%>
-                    <a class="collapse-item" href="account.html">Customer Data</a>
-                </div>
-            </div>
-        </li>
-        <!-- Nav Item - Product-->
-        <li class="nav-item">
-            <a class="nav-link" href="product.html">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Configuration Settings</span></a>
-        </li>
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
-        <div id="content">
-
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-=======
                     <a class="collapse-item" href="${pageContext.request.contextPath}/admin/customer">Customer Data</a>
                 </div>
             </div>
         </li>
+
         <!-- Nav Item - Process New Request-->
+
         <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/admin/request">
                 <i class="fas fa-bullhorn"></i>
                 <span>Process New Request</span></a>
         </li>
+
         <!-- Nav Item - Process New Configuration-->
         <li class="nav-item">
             <a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/config" data-toggle="collapse"
@@ -193,23 +140,25 @@
                 </div>
             </div>
         </li>
+
+
     </ul>
     <!-- End of Sidebar -->
+
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
+
         <!-- Main Content -->
         <div id="content">
+
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
->>>>>>> Stashed changes
+
                 <!-- Sidebar Toggle (Topbar) -->
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
                 <!-- Topbar Search -->
                 <%-- Search Store Name Here--%>
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
@@ -223,15 +172,11 @@
                         </div>
                     </div>
                 </form>
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-<<<<<<< Updated upstream
                     <li class="nav-item dropdown no-arrow d-sm-none">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                            data-toggle="dropdown"
@@ -245,44 +190,16 @@
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
-=======
-                    <div class="topbar-divider d-none d-sm-block"></div>
->>>>>>> Stashed changes
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-<<<<<<< Updated upstream
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>
-=======
                             <span class="mr-2 d-none d-lg-inline text-gray-600 large">${sessionScope.USERNAME} | Logout</span>
+
                         </a>
 
->>>>>>> Stashed changes
+
                     </li>
 
                 </ul>
@@ -295,95 +212,36 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Data Store Accounts</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Change Status Accounts</h6>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive table-hover">
                             <c:if test="${list != null}">
-<<<<<<< Updated upstream
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-=======
-                                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
->>>>>>> Stashed changes
                                     <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Store Name</th>
-                                        <th>Address</th>
-                                        <th>Rating Point</th>
-                                        <th>Avatar</th>
-                                        <th>Open Hour</th>
-                                        <th>Close Hour</th>
-<<<<<<< Updated upstream
-                                        <th>Store Manager</th>
-                                        <th>Store Contact</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="rs" items="${list}">
-                                        <tr>
-                                            <td>${rs.storeId}</td>
-=======
-                                        <th>Store Contact</th>
-                                        <th>Store Manager</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                        <th></th>
+
+                                        <th>Customer Name</th>
+                                        <th>Customer Contact</th>
+                                        <th>Feed Back</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach var="rs" items="${list}" varStatus="counter">
+
                                         <tr>
                                             <td>
-                                                    <%--																										${counter.count}--%>
-                                                    ${rs.storeId}
-                                                <input type="text" value="${rs.storeId}" hidden>
+                                                    ${counter.count}
+                                                <input type="text" value="${rs.storeId}" name="storeId" hidden>
                                             </td>
->>>>>>> Stashed changes
-                                            <td style="width: 100px">${rs.storeName}</td>
-                                            <td>${rs.address}</td>
-                                            <td>${rs.ratingPoint}</td>
-                                            <td><img src="${rs.avatar}" width="100px" height="100px"/></td>
-                                            <td>${rs.openHour}</td>
-                                            <td>${rs.closeHour}</td>
-                                            <td style="width: 150px;">${rs.phone}</td>
-                                            <td>${rs.storeManager}</td>
-                                            <c:choose>
-                                                <c:when test="${rs.status}">
-<<<<<<< Updated upstream
-                                                    <td><p>InActive</p></td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td><p>Active</p></td>
-=======
-                                                    <td><p>Active</p></td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td><p>InActive</p></td>
->>>>>>> Stashed changes
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/admin/edit?storeId=${rs.storeId}">
-                                                    Edit Store
-                                                </a>
-                                            </td>
-<<<<<<< Updated upstream
-=======
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/admin/view?storeId=${rs.storeId}">
-                                                    View FeedBack
-                                                </a>
-                                            </td>
->>>>>>> Stashed changes
+                                            <td>${rs.username}</td>
+                                            <td>${rs.userPhone}</td>
+                                            <td>${rs.comment}</td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
-<<<<<<< Updated upstream
-=======
                                 <%--Pagination --%>
                                 <nav aria-label="Page navigation example ">
                                     <ul class="pagination justify-content-center">
@@ -391,7 +249,7 @@
                                             <c:when test="${(currentPage - 1) < 1 }">
                                                 <li class="page-item">
                                                     <a class="page-link no-active"
-                                                       href="${pageContext.request.contextPath}/admin/page?page=${currentPage-1}">
+                                                       href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage-1}&storeId=${storeId}">
                                                         <span class="font-weight-bold">Previous</span>
                                                     </a>
                                                 </li>
@@ -399,7 +257,7 @@
                                             <c:otherwise>
                                                 <li class="page-item" aria-disabled="false">
                                                     <a class="page-link"
-                                                       href="${pageContext.request.contextPath}/admin/page?page=${currentPage-1}">
+                                                       href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage-1}&storeId=${storeId}">
                                                         <span class="font-weight-bold">Previous</span>
                                                     </a>
                                                 </li>
@@ -410,7 +268,7 @@
                                                 <c:choose>
                                                     <c:when test="${currentPage eq page}">
                                                         <a class="page-link"
-                                                           href="${pageContext.request.contextPath}/admin/page?page=${page}"
+                                                           href="${pageContext.request.contextPath}/admin/view/page?page=${page}&storeId=${storeId}"
                                                            style="color: grey;">
 																																		<span class="font-weight-bolder">
                                                                                                                                                 ${page}
@@ -419,7 +277,7 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <a class="page-link"
-                                                           href="${pageContext.request.contextPath}/admin/page?page=${page}">
+                                                           href="${pageContext.request.contextPath}/admin/view/page?page=${page}&storeId=${storeId}">
 																																			<span class="font-weight-bolder">
                                                                                                                                                     ${page}
                                                                                                                                             </span>
@@ -434,7 +292,7 @@
                                             <c:when test="${(currentPage + 1) > total}">
                                                 <li class="page-item" aria-disabled="true">
                                                     <a class="page-link no-active"
-                                                       href="${pageContext.request.contextPath}/admin/page?page=${currentPage + 1}">
+                                                       href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage + 1}&storeId=${storeId}">
                                                         <span class="font-weight-bolder">Next</span>
                                                     </a>
                                                 </li>
@@ -442,7 +300,7 @@
                                             <c:otherwise>
                                                 <li class="page-item" aria-disabled="false">
                                                     <a class="page-link"
-                                                       href="${pageContext.request.contextPath}/admin/page?page=${currentPage + 1}">
+                                                       href="${pageContext.request.contextPath}/admin/view/page?page=${currentPage + 1}&storeId=${storeId}">
                                                         <span class="font-weight-bolder">Next</span>
                                                     </a>
                                                 </li>
@@ -451,88 +309,6 @@
                                     </ul>
                                 </nav>
                                 <%--End Of Pagination--%>
->>>>>>> Stashed changes
-                            </c:if>
-                            <c:if test="${search != null}">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Store Name</th>
-                                        <th>Address</th>
-                                        <th>Rating Point</th>
-                                        <th>Avatar</th>
-                                        <th>Open Hour</th>
-                                        <th>Close Hour</th>
-                                        <th>Store Contact</th>
-                                        <th>Store Manager</th>
-                                        <th>Status</th>
-                                        <th></th>
-<<<<<<< Updated upstream
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="rs" items="${search}">
-                                        <tr>
-                                            <td>${rs.storeId}</td>
-=======
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="rs" items="${search}" varStatus="counter">
-                                        <tr>
-                                            <td>
-                                                    ${counter.count}
-                                                <input type="text" value="${rs.storeId}" hidden>
-                                            </td>
->>>>>>> Stashed changes
-                                            <td>${rs.storeName}</td>
-                                            <td>${rs.address}</td>
-                                            <td>${rs.ratingPoint}</td>
-                                            <td><img src="${rs.avatar}" width="100px" height="100px"/></td>
-                                            <td>${rs.openHour}</td>
-                                            <td>${rs.closeHour}</td>
-                                            <td>${rs.phone}</td>
-                                            <td>${rs.storeManager}</td>
-<<<<<<< Updated upstream
-                                            <c:choose>
-                                                <c:when test="${rs.status}">
-                                                    <td><p>InActive</p></td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td><p>Active</p></td>
-=======
-
-                                            <c:choose>
-                                                <c:when test="${rs.status}">
-                                                    <td><p>Active</p></td>
-                                                </c:when>
-                                                <c:when test="${!rs.status}">
-                                                    <td><p>InActive</p></td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td><p>InActive</p></td>
->>>>>>> Stashed changes
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/admin/edit?storeId=${rs.storeId}">
-                                                    Edit Store
-                                                </a>
-                                            </td>
-<<<<<<< Updated upstream
-=======
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/admin/edit?storeId=${rs.storeId}">
-                                                    View FeedBack
-                                                </a>
-                                            </td>
->>>>>>> Stashed changes
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
                             </c:if>
 
                         </div>
@@ -566,25 +342,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Bootstrap core JavaScript-->
 <%--<script src="js/jquery.min.js"></script>--%>
