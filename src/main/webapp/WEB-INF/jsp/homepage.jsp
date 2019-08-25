@@ -115,6 +115,7 @@
 <<<<<<< Updated upstream
 <%--                    <a class="collapse-item" href="${pageContext.request.contextPath}/admin/update">Update Store</a>--%>
 =======
+>>>>>>> Stashed changes
                     <a class="collapse-item" href="${pageContext.request.contextPath}/home">Store Data</a>
                 </div>
             </div>
@@ -125,7 +126,9 @@
             <a class="nav-link collapsed" href="account.html" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
+=======
 
+        <!-- Nav Item - Customer Account -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="${pageContext.request.contextPath}/admin/customer"
                data-target="#collapseUtilities"
