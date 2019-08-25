@@ -33,13 +33,24 @@ public class StoreService {
     }
 
     public boolean updateStoreById(int id, String storeName, String address,  String openHour,
-                                   String closeHour, String longtitude, String latitude ,boolean status, String phone) throws SQLException, ClassNotFoundException {
-        boolean rs = storeDAO.updateStoreById(id, storeName, address, openHour, closeHour, longtitude, latitude, status, phone);
+                                   String closeHour, String longtitude, String latitude ,boolean status, String phone)
+            throws SQLException, ClassNotFoundException {
 
-        if (rs) {
-            return true;
-        }
+            boolean rs = storeDAO.updateStoreById(id, storeName, address, openHour, closeHour, longtitude, latitude, status, phone);
+            if (rs) {
+                return true;
+            }
         return false;
+    }
+
+    public boolean checkExistStoreName(String storename) throws SQLException, ClassNotFoundException {
+        boolean existName =  storeDAO.checkExistName(storename);
+        if (!existName){
+            // Name is not exist
+            return false;
+        }
+        // Name is exist
+        return true;
     }
 
     public boolean insertNewStore(String storeName, String address, String avatar, String openHour, String closeHour, String longitude, String latitude, String phone, int accountID) throws SQLException, ClassNotFoundException {

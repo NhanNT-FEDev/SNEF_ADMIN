@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -94,6 +95,7 @@ public class AdminController {
         List<Store> getDetail = storeService.getStoreById(getId);
 
         model.addAttribute("STOREDETAIL", getDetail);
+        model.addAttribute("STOREID", getId);
         return "createpage";
     }
 
@@ -103,19 +105,15 @@ public class AdminController {
                             @RequestParam(value = "editStoreName") String name,
 
                             @RequestParam(value = "editStoreAddress") String address,
-//                            @RequestParam(value = "txtRating") String rating,
-//                            @RequestParam(value = "file") MultipartFile file,
+
                             @RequestParam(value = "editOpenHour") String open,
                             @RequestParam(value = "editCloseHour") String close,
-//                            @RequestParam(value = "txtAccount") String account,
                             @RequestParam(value = "editPhoneStore") String phone,
                             @RequestParam(name = "chkStatus") String chkStatus,
+                            RedirectAttributes redirectAttributes,
                             Model model) throws SQLException, ClassNotFoundException {
         int parseId = Integer.parseInt(id);
 
-//        int storeManager = Integer.parseInt(manager);
-//        int location = Integer.parseInt(local);
-//        float rat = Float.parseFloat(rating);
         boolean status = Boolean.parseBoolean(chkStatus);
         try {
             /**
@@ -127,18 +125,25 @@ public class AdminController {
             String longitude = String.valueOf(coords.get("lon"));
             String latitude = String.valueOf(coords.get("lat"));
 
-            boolean rs = storeService.updateStoreById(parseId, name, address, open, close, longitude, latitude, status, phone);
-            if (rs) {
-                return "redirect:/home";
+            //Check Exist StoreName
+            boolean checkExistStoreName = storeService.checkExistStoreName(name);
+            if (!checkExistStoreName) {
+                boolean rs = storeService.updateStoreById(parseId, name, address, open, close, longitude, latitude, status, phone);
+                if (rs) {
+                    return "redirect:/home";
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("ERROR", "THE NAME OF STORE HAD BEEN EXISTED");
+
+                return "redirect:/admin/edit?storeId=" + parseId;
             }
-
-
         } catch (Exception e) {
             Logger.getLogger("SERVER ERROR" + e);
         }
+//        model.addAttribute("ERROR", "USERNAME OR PASSWORD IS NOT CORRECT");
 
-        model.addAttribute("msg", "Update not successful");
-        return "createpage";
+        redirectAttributes.addFlashAttribute("msg", "UPDATE NOT SUCCESSFUL - CHECK YOUR NETWORKING");
+        return "redirect:/admin/edit?storeId=" + parseId;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -266,7 +271,7 @@ public class AdminController {
             model.addAttribute("FEEDBACK", rs);
 
             for (int i = 0; i < rs.size(); i++) {
-                System.out.println(rs.get(i).getStoreId()+" - " + rs.get(i).getUsername()+ " - " + rs.get(i).getComment());
+                System.out.println(rs.get(i).getStoreId() + " - " + rs.get(i).getUsername() + " - " + rs.get(i).getComment());
 
             }
         }

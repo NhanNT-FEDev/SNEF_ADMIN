@@ -29,7 +29,6 @@
 		<!--===============================================================================================-->
 </head>
 <body>
-
 <div class="limiter">
 		<div class="container-login100">
 				<div class="wrap-login100">
@@ -38,7 +37,7 @@
 						</div>
 						<form class="login100-form validate-form" action="/login/check" method="POST">
 								<h2 class="login100-form-title font-weight-bolder">
-											Admin Management
+										Admin Management
 								</h2>
 
 								<div class="wrap-input100 validate-input" data-validate="Name can't be blank">
@@ -47,17 +46,24 @@
 										<span class="symbol-input100">
 														<i class="fas fa-user" aria-hidden="true"></i>
 
-								</span>
+										</span>
+
 								</div>
 
 								<div class="wrap-input100 validate-input" data-validate="Password is required">
-										<input class="input100" type="password" name="txtPass" placeholder="Password" minlength="5" maxlength="6">
+										<input class="input100" type="password" name="txtPass" placeholder="Password" minlength="5"
+										       maxlength="6">
 										<span class="focus-input100"></span>
 										<span class="symbol-input100">
 									<i class="fa fa-lock" aria-hidden="true"></i>
 								</span>
 								</div>
 
+								<span style="color: red; font-size: 15px;">
+														<c:if test="${not empty ERROR}">
+																Error: ${ERROR}
+														</c:if>
+												</span>
 								<div class="container-login100-form-btn">
 										<input type="submit" class="login100-form-btn" value="Login"/>
 								</div>

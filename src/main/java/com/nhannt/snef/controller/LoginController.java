@@ -64,13 +64,16 @@ public class LoginController {
     @RequestMapping(value = {"/check"}, method = RequestMethod.POST)
     public String checkLogin(@RequestParam(value = "txtName") String name,
                              @RequestParam(value = "txtPass") String pass,
-                             HttpSession session
+                             HttpSession session,
+                             Model model
                              ) throws SQLException, ClassNotFoundException {
         String username = accountService.checkLogin(name, pass);
         if (username != null){
             session.setAttribute("USERNAME", username);
             return "redirect:/home";
         }
+
+        model.addAttribute("ERROR", "USERNAME OR PASSWORD IS NOT CORRECT");
         return "login";
     }
 }
