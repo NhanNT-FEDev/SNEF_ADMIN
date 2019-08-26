@@ -335,75 +335,75 @@
 																												   href="${pageContext.request.contextPath}/admin/customer/page?page=${page}"
 																												   style="color: grey;">
 																																		<span class="font-weight-bolder">
-																																						${page}
-																																		</span>
-																												</a>
-																										</c:when>
-																										<c:otherwise>
-																												<a class="page-link"
-																												   href="${pageContext.request.contextPath}/admin/customer/page?page=${page}">
+                                                                                                                                                ${page}
+                                                                                                                                        </span>
+                                                        </a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a class="page-link"
+                                                           href="${pageContext.request.contextPath}/admin/customer/page?page=${page}">
 																																			<span class="font-weight-bolder">
-																																							${page}
-																																			</span>
-																												</a>
-																										</c:otherwise>
-																								</c:choose>
-																						</li>
+                                                                                                                                                    ${page}
+                                                                                                                                            </span>
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </li>
 
-																				</c:forEach>
+                                        </c:forEach>
 
-																				<c:choose>
-																						<c:when test="${(currentPage + 1) > total}">
-																								<li class="page-item" aria-disabled="true">
-																										<a class="page-link no-active"
-																										   href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage + 1}">
-																												<span class="font-weight-bolder">Next</span>
-																										</a>
-																								</li>
-																						</c:when>
-																						<c:otherwise>
-																								<li class="page-item" aria-disabled="false">
-																										<a class="page-link"
-																										   href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage + 1}">
-																												<span class="font-weight-bolder">Next</span>
-																										</a>
-																								</li>
-																						</c:otherwise>
-																				</c:choose>
-																		</ul>
-																</nav>
-																<%--End Of Pagination--%>
-														</c:if>
+                                        <c:choose>
+                                            <c:when test="${(currentPage + 1) > total}">
+                                                <li class="page-item" aria-disabled="true">
+                                                    <a class="page-link no-active"
+                                                       href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage + 1}">
+                                                        <span class="font-weight-bolder">Next</span>
+                                                    </a>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item" aria-disabled="false">
+                                                    <a class="page-link"
+                                                       href="${pageContext.request.contextPath}/admin/customer/page?page=${currentPage + 1}">
+                                                        <span class="font-weight-bolder">Next</span>
+                                                    </a>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </ul>
+                                </nav>
+                                <%--End Of Pagination--%>
+                            </c:if>
 
-												</div>
-										</div>
-								</div>
+                        </div>
+                    </div>
+                </div>
 
-						</div>
-						<!-- /.container-fluid -->
+            </div>
+            <!-- /.container-fluid -->
 
-				</div>
-				<!-- End of Main Content -->
+        </div>
+        <!-- End of Main Content -->
 
-				<!-- Footer -->
-				<footer class="sticky-footer bg-white">
-						<div class="container my-auto">
-								<div class="copyright text-center my-auto">
-										<span>Copyright &copy; SNEF 2019</span>
-								</div>
-						</div>
-				</footer>
-				<!-- End of Footer -->
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; SNEF 2019</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
-		</div>
-		<!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-		<i class="fas fa-angle-up"></i>
+    <i class="fas fa-angle-up"></i>
 </a>
 
 

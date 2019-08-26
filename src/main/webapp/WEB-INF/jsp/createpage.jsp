@@ -6,62 +6,68 @@
 
 <head>
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-		<title>SNEF - Admin Page</title>
+    <title>SNEF - Admin Page</title>
 
-		<!-- Custom fonts for this template -->
-		<link href="../css/all.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="../css/sb-admin-2.css">
-		<link
-						href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-						rel="stylesheet">
-		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-		      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom fonts for this template -->
+    <link href="../css/all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/sb-admin-2.css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-		<!-- jQuery library -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-		<!-- Popper JS -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-		<!-- Latest compiled JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<!-- Custom styles for this template -->
-		<link rel="stylesheet" href="css/sb-admin-2.css">
-		<!-- Custom styles for this page -->
-		<link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
-		<script src="https://kit.fontawesome.com/85cfd1cc6c.js"></script>
-		<style>
-				* {
-						box-sizing: border-box;
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="css/sb-admin-2.css">
+    <!-- Custom styles for this page -->
+    <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/dataTables.bootstrap4.css">
+    <script src="https://kit.fontawesome.com/85cfd1cc6c.js"></script>
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-				}
+        * {
+            box-sizing: border-box;
 
-				.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
-						color: rgba(255, 255, 255, 0.5);
-						opacity: 0;
-				}
+        }
 
-				.button {
-						font: bold 11px Arial;
-						text-decoration: none;
-						background-color: #EEEEEE;
-						color: #333333;
-						padding: 2px 6px 2px 6px;
-						border-top: 1px solid #CCCCCC;
-						border-right: 1px solid #333333;
-						border-bottom: 1px solid #333333;
-						border-left: 1px solid #CCCCCC;
-				}
-		</style>
+        .sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
+            color: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+        }
+
+        .button {
+            font: bold 11px Arial;
+            text-decoration: none;
+            background-color: #EEEEEE;
+            color: #333333;
+            padding: 2px 6px 2px 6px;
+            border-top: 1px solid #CCCCCC;
+            border-right: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            border-left: 1px solid #CCCCCC;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -442,27 +448,27 @@
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-		<i class="fas fa-angle-up"></i>
+    <i class="fas fa-angle-up"></i>
 </a>
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-		<div class="modal-dialog" role="document">
-				<div class="modal-content">
-						<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">×</span>
-								</button>
-						</div>
-						<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-						<div class="modal-footer">
-								<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-								<a class="btn btn-primary" href="login.html">Logout</a>
-						</div>
-				</div>
-		</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Bootstrap core JavaScript-->
@@ -470,18 +476,20 @@
 
 <script type="text/javascript">
     const myForm = document.getElementById("myForm")
-		function validateForm(evt) {
+
+    function validateForm(evt) {
         var phone = myForm["editPhoneStore"].value
 
         console.log('Checking phone:', phone)
         // console.log('Is valid phone:', phone)
         if (!phone.test(/^\d*$/)) {
-            document.getElementById("err").style.color='blue';
+            document.getElementById("err").style.color = 'blue';
             evt.preventDefault();
             return false;
         }
         return true;
     }
+
     // myForm.addEventListener("submit", validateForm)
 
 </script>
