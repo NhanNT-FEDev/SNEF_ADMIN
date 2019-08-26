@@ -167,8 +167,6 @@ public class AdminController {
             @RequestParam(value = "txtPassword") String password,
             @RequestParam(value = "txtFirstname") String firstName,
             @RequestParam(value = "txtLastName") String lastName,
-            @RequestParam(value = "txtContact") String phone,
-            @RequestParam(value = "txtEmail") String email,
             @RequestParam(value = "slGender") String gender,
             @RequestParam(value = "txtStoreName") String storeName,
             @RequestParam(value = "txtStoreAddress") String address,
@@ -179,7 +177,7 @@ public class AdminController {
             Model model) throws SQLException, ClassNotFoundException {
         try {
             int parseGender = Integer.parseInt(gender);
-            int accountId = accountService.insertNewAccount(username, password, firstName, lastName, phone, email, parseGender);
+            int accountId = accountService.insertNewAccount(username, password, firstName, lastName, parseGender);
             System.out.println("Insert Account Success: " + accountId);
             //If accountId == null -> message error name
             if (accountId > 0) {
@@ -215,10 +213,16 @@ public class AdminController {
                         storeService.insertNewStore(storeName, address, getUrl, open, close, longitude, latitude, phoneStore, accountId);
                 if (createStore) {
                     return "redirect:/home";
+                }else {
+                    model.addAttribute("error", "STORE NAME HAD BEEN EXISTED");
+                    return "createpage";
                 }
 
+            } else {
+                model.addAttribute("ERR", "ACCOUNT NAME HAD BEEN EXISTED");
+                return "createpage";
             }
-            model.addAttribute("ERR", "Insert not successful");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -352,6 +356,7 @@ public class AdminController {
                               @RequestParam(value = "txtPageNO") String currentPage,
                               Model model) throws SQLException, ClassNotFoundException {
         boolean status = Boolean.parseBoolean(chkStatus);
+        System.out.println("Status: " + chkStatus);
         int accountId = Integer.parseInt(txtId);
         int page = Integer.parseInt(currentPage);
         boolean result = accountService.changeStatus(accountId, status);
@@ -511,7 +516,7 @@ public class AdminController {
     @RequestMapping(value = "request/handle", method = RequestMethod.POST)
     public String processNewRequest(@RequestParam(value = "txtId") String txtId,
                                     @RequestParam(value = "chkStatus") String chkStatus,
-                                    @RequestParam(value = "txtDes") String txtDes,
+                                    @RequestParam(value = "txtDes", defaultValue = "false") String txtDes,
                                     @RequestParam(value = "txtProId") String txtProId,
                                     Model model,
                                     HttpSession session) throws SQLException, ClassNotFoundException {

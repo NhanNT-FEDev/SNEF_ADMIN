@@ -143,22 +143,19 @@ public class AccountDAO {
     //Insert new Store Account Information
     public int
     insertNewStoreAccount(String username, String password, String firstName,
-                          String lastName, String phone,
-                          String email, int gender)
+                          String lastName,  int gender)
             throws SQLException, ClassNotFoundException {
         try {
             con = MyConnection.myConnection();
             if (con != null) {
-                String sql = "INSERT INTO Account(Username,Password,FirstName,LastName,Phone,Email,isActive,Gender,RoleId) " +
-                        "VALUES (?,?,?,?,?, ?,?,1, (Select roleId From Role where roleId = 2 ))";
+                String sql = "INSERT INTO Account(Username,Password,FirstName,LastName,Gender,isActive,RoleId) " +
+                        "VALUES (?,?,?,?,?,1, (Select roleId From Role where roleId = 2 ))";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, username);
                 stm.setString(2, password);
                 stm.setString(3, firstName);
                 stm.setString(4, lastName);
-                stm.setString(5, phone);
-                stm.setString(6, email);
-                stm.setInt(7, gender);
+                stm.setInt(5, gender);
 
                 int row = stm.executeUpdate();
                 if (row > 0) {
@@ -194,7 +191,7 @@ public class AccountDAO {
                 stm.setInt(2, accountId);
                 int row = stm.executeUpdate();
                 if (row > 0) {
-                    return true;
+                        return true;
                 }
 
             }

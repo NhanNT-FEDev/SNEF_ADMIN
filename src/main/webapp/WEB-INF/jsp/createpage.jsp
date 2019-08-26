@@ -226,49 +226,53 @@
 																		<label for="txtUsername">Username</label>
 																		<input type="text" id="txtUsername" class="form-control"
 																		       placeholder="Enter Store Account"
-																		       value="" name="txtUsername">
+																		       value="${param.txtUsername}" name="txtUsername">
+																		<c:if test="${not empty ERR}">
+																				<span style="color: red">
+																						${ERR}
+																				</span>
+																		</c:if>
 																</div>
 
 																<div class="form-group">
 																		<label for="txtPassword">Password</label>
-																		<input type="text" id="txtPassword" class="form-control"
+																		<input type="password" id="txtPassword" class="form-control"
 																		       placeholder="Enter Account Password"
-																		       value="" name="txtPassword">
+																		       value="" name="txtPassword" required>
 																</div>
 
 																<div class="form-group">
 																		<label for="txtFirstname">First Name</label>
 																		<input type="text" id="txtFirstname" class="form-control"
 																		       placeholder="Enter Account First Name"
-																		       value="" name="txtFirstname">
+																		       value="${param.txtFirstname}" name="txtFirstname">
 																</div>
 																<div class="form-group">
 																		<label for="txtLastName">Last Name</label>
 																		<input type="text" id="txtLastName" class="form-control"
 																		       placeholder="Enter Account Last Name"
-																		       value="" name="txtLastName">
+																		       value="${param.txtLastName}" name="txtLastName">
 																</div>
 
-																<div class="form-group">
-																		<label for="txtContact"> Account Contact </label>
-																		<input type="text" id="txtContact" class="form-control"
-																		       placeholder="Enter Account Contact"
-																		       value="" name="txtContact">
-																</div>
+<%--																<div class="form-group">--%>
+<%--																		<label for="txtContact"> Account Contact </label>--%>
+<%--																		<input type="number" id="txtContact" class="form-control"--%>
+<%--																		       placeholder="Enter Account Contact"--%>
+<%--																		       value="" name="txtContact">--%>
+<%--																</div>--%>
 
-																<div class="form-group">
-																		<label for="txtEmail"> Account Email </label>
-																		<input type="text" id="txtEmail" class="form-control"
-																		       placeholder="Enter Account Email"
-																		       value="" name="txtEmail">
-																</div>
+<%--																<div class="form-group">--%>
+<%--																		<label for="txtEmail"> Account Email </label>--%>
+<%--																		<input type="email" id="txtEmail" class="form-control"--%>
+<%--																		       placeholder="Enter Account Email"--%>
+<%--																		       value="" name="txtEmail">--%>
+<%--																</div>--%>
 																<div class="form-group">
 																		<label for="slGender"></label>
 																		<select class="mdb-select md-form" id="slGender" name="slGender">
 																				<option selected>Choose Gender</option>
 																				<option value="0">Female</option>
 																				<option value="1">Male</option>
-																				<option value="2">Other</option>
 																		</select>
 																</div>
 
@@ -277,14 +281,20 @@
 																		<label for="txtStoreName">Store Name</label>
 																		<input type="text" id="txtStoreName" class="form-control"
 																		       placeholder="Enter Store Name"
-																		       value="" name="txtStoreName">
+																		       value="${param.txtStoreName}" name="txtStoreName">
+
+																		<c:if test="${not empty error}">
+																				<span style="color: red;">
+																						${error}
+																				</span>
+																		</c:if>
 																</div>
 
 																<div class="form-group">
 																		<label for="txtStoreAddress">Store Address</label>
 																		<input type="text" id="txtStoreAddress" class="form-control"
 																		       placeholder="Enter Store Name"
-																		       value="" name="txtStoreAddress">
+																		       value="${param.txtStoreAddress}" name="txtStoreAddress">
 																</div>
 
 																<div class="form-group">
@@ -297,21 +307,21 @@
 																		<label for="txtOpenHour">Store Open Hour</label>
 																		<input type="text" id="txtOpenHour" class="form-control"
 																		       placeholder="Enter Store Open Hour"
-																		       value="" name="txtOpenHour">
+																		       value="${param.txtOpenHour}" name="txtOpenHour">
 																</div>
 
 																<div class="form-group">
 																		<label for="txtCloseHour">Store Close Hour</label>
 																		<input type="text" id="txtCloseHour" class="form-control"
 																		       placeholder="Enter Store Close Hour"
-																		       value="" name="txtCloseHour">
+																		       value="${param.txtCloseHour}" name="txtCloseHour">
 																</div>
 
 																<div class="form-group">
 																		<label for="txtPhoneStore">Store Phone</label>
 																		<input type="text" id="txtPhoneStore" class="form-control"
 																		       placeholder="Enter Store Phone"
-																		       value="" name="txtPhoneStore">
+																		       value="${param.txtPhoneStore}" name="txtPhoneStore">
 																</div>
 
 																<input type="submit" class="btn btn-primary" name="Save">
@@ -364,9 +374,9 @@
 																				<input type="text" id="editPhoneStore" class="form-control"
 																				       placeholder="Enter Store Phone"
 																				       value="${rs.phone}" name="editPhoneStore" required>
-																				<span id="err" style="color: red; display: block">
-																						PHONE SHOULD BE NUMBER!
-																				</span>
+<%--																				<span id="err" style="color: red; display: block">--%>
+<%--																						PHONE SHOULD BE NUMBER!--%>
+<%--																				</span>--%>
 																		</div>
 																		<div class="form-group">
 																				<div class="checkbox-inline">

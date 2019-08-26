@@ -39,6 +39,8 @@
 		<link href="css/dataTables.bootstrap4.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
 		<script src="https://kit.fontawesome.com/85cfd1cc6c.js"></script>
+<%--		Handle Process Js--%>
+		<script src="../../js/process.js" type="text/javascript"></script>
 		<style>
 				*{
 						box-sizing: border-box;
@@ -244,7 +246,9 @@
 																												<div class="checkbox-inline">
 																														<label>
 																																<input type="checkbox" value="${rs.status}"
-																																       id="chkStatus" name=""
+																																       class="chkStatus" name=""
+																																       id="chkStatus-${rs.productId}"
+																																       data-comment="comment-${rs.productId}"
 																																<c:if test="${rs.status}">
 																																       checked="checked"
 																																</c:if>
@@ -252,14 +256,14 @@
 																																(Check if Active)
 																														</label>
 																														<label class="radio-inline">
-																																<input type="radio" name="chkStatus" id="true"
+																																<input type="radio" name="chkStatus" for="chkStatus-${rs.productId}"
 																																       value="true" style="opacity: 0 "
 																																<c:if test="${rs.status}">
 																																       checked="checked"
 																																</c:if>>
 																														</label>
 																														<label class="radio-inline">
-																																<input type="radio" name="chkStatus" id="false"
+																																<input type="radio" name="chkStatus" for="chkStatus-${rs.productId}"
 																																       value="false" style="opacity: 0 "
 																																<c:if test="${not rs.status}">
 																																       checked="checked"
@@ -273,11 +277,13 @@
 																								</td>
 																								<td>
 																										<textarea class="form-control" rows="3" cols="8" name="txtDes"
-																										          style="width: 300px" id="comment"></textarea>
+																										          style="width: 300px" id="comment-${rs.productId}"></textarea>
 																								</td>
 
 																								<td>
-																										<input type="submit" class="btn btn-primary" value="Change Status">
+																										<input type="submit" class="btn btn-primary" value="Change Status"
+																								       data-chbx="chkStatus-${rs.productId}"
+																										>
 																								</td>
 																						</form>
 																				</tr>
@@ -407,29 +413,6 @@
 <%--<script src="js/dataTables.bootstrap4.min.js"></script>--%>
 <script src="js/dataTables.bootstrap4.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#chkStatus').click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#true").prop("checked", true);
-            } else if ($(this).prop("checked") == false) {
-                $("#false").prop("checked", true);
-            }
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $("input.submit").click(function (event) {
-            event.preventDefault();
-            var comment = $.trim($('#comment').val());
-            if ($('#chkStatus').prop("checked") == false && (comment == '' || comment == null)) {
-                $('#comment').focusin;
-                alert('Nhập Lý do Từ chối');
-            }
-        });
-    });
-</script>
 <!-- Page level custom scripts -->
 <%--<script src="js/datatables-demo.js"></script>--%>
 

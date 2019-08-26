@@ -39,14 +39,16 @@
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.css">
 		<script src="https://kit.fontawesome.com/85cfd1cc6c.js"></script>
 		<style>
-				*{
+				* {
 						box-sizing: border-box;
 
 				}
+
 				.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
 						color: rgba(255, 255, 255, 0.5);
 						opacity: 0;
 				}
+
 				.no-active {
 						pointer-events: none;
 						cursor: default;
@@ -231,7 +233,8 @@
 																		<tbody>
 																		<c:forEach var="rs" items="${list}" varStatus="counter">
 																				<tr>
-																						<form action="${pageContext.request.contextPath}/admin/customer/changeStatus" method="POST">
+																						<form action="${pageContext.request.contextPath}/admin/customer/changeStatus"
+																						      method="POST">
 
 																								<td>
 																												${counter.count}
@@ -255,29 +258,42 @@
 																								</td>
 																								<td>
 																										<div class="checkbox-inline">
-																												<label>
-																														<input type="checkbox" value="${rs.isactive}" id="chkStatus"
-																														       name=""
-																														<c:if test="${rs.isactive}">
-																														       checked="checked"
-																														</c:if>
-																														>
-																														(Deactive if you unchecked)
-																												</label>
-																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="true" value="true"
-																														       style="opacity: 0 "
-																														<c:if test="${rs.isactive}">
-																														       checked="checked"
-																														</c:if>>
-																												</label>
-																												<label class="radio-inline">
-																														<input type="radio" name="chkStatus" id="false"
-																														       value="false" style="opacity: 0 "
-																														<c:if test="${not rs.isactive}">
-																														       checked="checked"
-																														</c:if>>
-																												</label>
+																														<%--																												<label>--%>
+																														<%--																														<input type="checkbox" value="${rs.isactive}" id="chkStatus"--%>
+																														<%--																														       name=""--%>
+																														<%--																														<c:if test="${rs.isactive}">--%>
+																														<%--																														       checked="checked"--%>
+																														<%--																														</c:if>--%>
+																														<%--																														>--%>
+																														<%--																														(Deactive if you unchecked)--%>
+																														<%--																												</label>--%>
+																														<%--																												<label class="radio-inline">--%>
+																														<%--																														<input type="radio" name="chkStatus" id="true" value="true"--%>
+																														<%--																														       style="opacity: 0 "--%>
+																														<%--																														<c:if test="${rs.isactive}">--%>
+																														<%--																														       checked="checked"--%>
+																														<%--																														</c:if>>--%>
+																														<%--																												</label>--%>
+																														<%--																												<label class="radio-inline">--%>
+																														<%--																														<input type="radio" name="chkStatus" id="false"--%>
+																														<%--																														       value="false" style="opacity: 0 "--%>
+																														<%--																														<c:if test="${not rs.isactive}">--%>
+																														<%--																														       checked="checked"--%>
+																														<%--																														</c:if>>--%>
+																														<%--																												</label>--%>
+
+																												<select name="chkStatus">
+																														<option value="true"
+																																		<c:if test="${rs.isactive}">
+																																				selected
+																																		</c:if>>Active
+																														</option>
+																														<option value="false"
+																																		<c:if test="${not rs.isactive}">
+																																				selected
+																																		</c:if>>Inactive
+																														</option>
+																												</select>
 																										</div>
 																								</td>
 																								<td style="width: 50px;">
